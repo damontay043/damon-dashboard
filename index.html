@@ -30,6 +30,7 @@
   .progress .section-header { background: #1a1500; border-left: 3px solid #d29922; }
   .kiv .section-header { background: #0d1530; border-left: 3px solid #58a6ff; }
   .blocked .section-header { background: #1a0f00; border-left: 3px solid #f0883e; }
+  .abandoned .section-header { background: #1a1015; border-left: 3px solid #8b6c5c; }
   .done .section-header { background: #0d1f0d; border-left: 3px solid #3fb950; }
   .archived .section-header { background: #161b22; border-left: 3px solid #484f58; }
   .task { 
@@ -46,6 +47,7 @@
   .dot-yellow { background: #d29922; }
   .dot-blue { background: #58a6ff; }
   .dot-orange { background: #f0883e; }
+  .dot-brown { background: #8b6c5c; }
   .dot-green { background: #3fb950; }
   .dot-grey { background: #484f58; }
   .refresh-note { 
@@ -57,7 +59,7 @@
 <body>
 
 <h1>📋 Damon Dashboard</h1>
-<div class="subtitle">Last updated: <span id="updated">2026-01-28 15:27 SGT</span></div>
+<div class="subtitle">Last updated: <span id="updated">2026-01-28 16:30 SGT</span> · Auto-refreshes every 5 min</div>
 
 <!-- ACTIVE -->
 <div class="section active">
@@ -67,28 +69,16 @@
 
 <!-- IN PROGRESS -->
 <div class="section progress">
-  <div class="section-header"><span class="dot dot-yellow"></span> IN PROGRESS <span class="count">1</span></div>
-  <div class="task">
-    <div class="task-title">Perp DEX API Monitor</div>
-    <div class="task-desc">Tested Hyperliquid API successfully (funding rates, OI, prices). Paradex + Variational APIs not yet wired up. Need to build heartbeat check logic for alerts.</div>
-    <div class="task-date">Started 2026-01-28</div>
-  </div>
+  <div class="section-header"><span class="dot dot-yellow"></span> IN PROGRESS <span class="count">0</span></div>
+  <div class="empty">Nothing in progress</div>
 </div>
 
 <!-- KIV -->
 <div class="section kiv">
-  <div class="section-header"><span class="dot dot-blue"></span> KIV <span class="count">3</span></div>
+  <div class="section-header"><span class="dot dot-blue"></span> KIV <span class="count">1</span></div>
   <div class="task">
     <div class="task-title">Discord Sentiment Monitoring</div>
-    <div class="task-desc">Use Browser Relay on Edge to check perp DEX Discord channels (Hyperliquid, Paradex, Variational) for FUD every 30min. Requires browser extension setup.</div>
-  </div>
-  <div class="task">
-    <div class="task-title">App Building Project</div>
-    <div class="task-desc">Brainstormed 8 app ideas. Top picks: Funding Rate Dashboard (80/100) and Health Newsletter (75/100). Waiting for decision on which to pursue.</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Email/Calendar via Momo</div>
-    <div class="task-desc">Momo handles Gmail/Sheets on local PC. Potential to set up email checking from VPS in future.</div>
+    <div class="task-desc">Momo has peterpoon account with Paradex access + extraction scripts on bro's PC. Damon to provide API-based data (funding rates, OI) as complementary signal. VPS browser approach abandoned (datacenter IP risk).</div>
   </div>
 </div>
 
@@ -101,17 +91,42 @@
   </div>
 </div>
 
+<!-- ABANDONED -->
+<div class="section abandoned">
+  <div class="section-header"><span class="dot dot-brown"></span> ABANDONED <span class="count">2</span></div>
+  <div class="task">
+    <div class="task-title">Perp DEX API Monitor</div>
+    <div class="task-desc">Tested Hyperliquid API successfully (funding rates, OI, prices). Paradex + Variational not wired up. Parked indefinitely.</div>
+    <div class="task-date">Abandoned 2026-01-28 · Auto-archives after 30 days</div>
+  </div>
+  <div class="task">
+    <div class="task-title">App Building Project</div>
+    <div class="task-desc">Brainstormed 8 app ideas. Top picks: Funding Rate Dashboard (80/100) and Health Newsletter (75/100). No follow-up planned.</div>
+    <div class="task-date">Abandoned 2026-01-28 · Auto-archives after 30 days</div>
+  </div>
+</div>
+
 <!-- COMPLETED -->
 <div class="section done">
-  <div class="section-header"><span class="dot dot-green"></span> COMPLETED <span class="count">8</span></div>
+  <div class="section-header"><span class="dot dot-green"></span> COMPLETED <span class="count">10</span></div>
+  <div class="task">
+    <div class="task-title">GitHub Account + Dashboard</div>
+    <div class="task-desc">damontay043 account, damon-dashboard repo, GitHub Pages live. Auto-refresh every 5 min.</div>
+    <div class="task-date">✅ 2026-01-28</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Google Calendar Integration</div>
+    <div class="task-desc">iCal feed connected, parser built, 3-day / 1-day / same-day reminders in heartbeat.</div>
+    <div class="task-date">✅ 2026-01-28</div>
+  </div>
   <div class="task">
     <div class="task-title">Groq Audio Transcription</div>
     <div class="task-desc">Whisper voice-to-text via Groq API. Working on WhatsApp voice notes.</div>
     <div class="task-date">✅ 2026-01-28</div>
   </div>
   <div class="task">
-    <div class="task-title">Google Calendar Integration</div>
-    <div class="task-desc">iCal feed connected, parser built, 3-day / 1-day / same-day reminders in heartbeat.</div>
+    <div class="task-title">Chrome Browser on VPS</div>
+    <div class="task-desc">Google Chrome installed, Playwright available for web automation.</div>
     <div class="task-date">✅ 2026-01-28</div>
   </div>
   <div class="task">
@@ -149,12 +164,11 @@
 <!-- ARCHIVED -->
 <div class="section archived">
   <div class="section-header"><span class="dot dot-grey"></span> ARCHIVED <span class="count">0</span></div>
-  <div class="empty">Completed items auto-archive after 14 days</div>
+  <div class="empty">Completed items auto-archive after 14 days · Abandoned items after 30 days</div>
 </div>
 
 <div class="refresh-note">
-  This file is updated by Damon whenever tasks change.<br>
-  Refresh the page (F5) to see the latest version.
+  Auto-refreshes every 5 minutes · Updated by Damon on task changes
 </div>
 
 </body>
