@@ -59,7 +59,7 @@
 <body>
 
 <h1>📋 Damon Dashboard</h1>
-<div class="subtitle">Last updated: <span id="updated">2026-01-28 17:52 SGT</span> · Auto-refreshes every 5 min</div>
+<div class="subtitle">Last updated: <span id="updated">2026-01-28 17:55 SGT</span> · Auto-refreshes every 5 min</div>
 
 <!-- ACTIVE -->
 <div class="section active">
@@ -69,17 +69,8 @@
 
 <!-- IN PROGRESS -->
 <div class="section progress">
-  <div class="section-header"><span class="dot dot-yellow"></span> IN PROGRESS <span class="count">2</span></div>
-  <div class="task">
-    <div class="task-title">Discord Sentiment Monitoring</div>
-    <div class="task-desc">Browser Relay pipeline working! Can read Paradex #general live via peterpoon. Auto-start configured. Need to: add heartbeat automation, test multi-channel rotation.</div>
-    <div class="task-date">Started 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Momo ↔ Damon Direct Comms</div>
-    <div class="task-desc">WhatsApp MCP bridge working. [Momo] prefix convention. Limitation: Momo has sync lag reading replies. Bro still needed as relay for time-sensitive coordination.</div>
-    <div class="task-date">Started 2026-01-28</div>
-  </div>
+  <div class="section-header"><span class="dot dot-yellow"></span> IN PROGRESS <span class="count">0</span></div>
+  <div class="empty">Nothing in progress</div>
 </div>
 
 <!-- KIV -->
@@ -114,7 +105,17 @@
 
 <!-- COMPLETED -->
 <div class="section done">
-  <div class="section-header"><span class="dot dot-green"></span> COMPLETED <span class="count">11</span></div>
+  <div class="section-header"><span class="dot dot-green"></span> COMPLETED <span class="count">13</span></div>
+  <div class="task">
+    <div class="task-title">Discord Sentiment Monitoring</div>
+    <div class="task-desc">Full Browser Relay pipeline: Chrome → Tailscale → VPS. Paradex #general live via peterpoon. Multi-channel navigation, sentiment scoring (0-100), FUD alerts.</div>
+    <div class="task-date">✅ 2026-01-28</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Momo ↔ Damon Direct Comms</div>
+    <div class="task-desc">WhatsApp MCP bridge working. [Momo] prefix convention. Async but functional.</div>
+    <div class="task-date">✅ 2026-01-28</div>
+  </div>
   <div class="task">
     <div class="task-title">GitHub Account + Dashboard</div>
     <div class="task-desc">damontay043 account, damon-dashboard repo, GitHub Pages live. Auto-refresh every 5 min.</div>
