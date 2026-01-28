@@ -1,237 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="300">
-<title>Damon Dashboard</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #0d1117; color: #c9d1d9; padding: 24px;
-    max-width: 900px; margin: 0 auto;
-  }
-  h1 { color: #58a6ff; font-size: 1.6em; margin-bottom: 4px; }
-  .subtitle { color: #8b949e; font-size: 0.85em; margin-bottom: 24px; }
-  .section { 
-    background: #161b22; border: 1px solid #30363d; border-radius: 8px; 
-    margin-bottom: 16px; overflow: hidden;
-  }
-  .section-header { 
-    padding: 12px 16px; font-weight: 600; font-size: 0.95em;
-    border-bottom: 1px solid #30363d; display: flex; align-items: center; gap: 8px;
-  }
-  .section-header .count { 
-    background: #30363d; color: #8b949e; border-radius: 10px; 
-    padding: 1px 8px; font-size: 0.8em; font-weight: normal;
-  }
-  .active .section-header { background: #1a0000; border-left: 3px solid #f85149; }
-  .progress .section-header { background: #1a1500; border-left: 3px solid #d29922; }
-  .kiv .section-header { background: #0d1530; border-left: 3px solid #58a6ff; }
-  .blocked .section-header { background: #1a0f00; border-left: 3px solid #f0883e; }
-  .observing .section-header { background: #1a0d1f; border-left: 3px solid #a371f7; }
-  .abandoned .section-header { background: #1a1015; border-left: 3px solid #8b6c5c; }
-  .done .section-header { background: #0d1f0d; border-left: 3px solid #3fb950; }
-  .archived .section-header { background: #161b22; border-left: 3px solid #484f58; }
-  .task { 
-    padding: 10px 16px; border-bottom: 1px solid #21262d; 
-    font-size: 0.9em; line-height: 1.5;
-  }
-  .task:last-child { border-bottom: none; }
-  .task-title { font-weight: 600; color: #e6edf3; }
-  .task-desc { color: #8b949e; margin-top: 2px; }
-  .task-date { color: #484f58; font-size: 0.8em; margin-top: 4px; }
-  .empty { padding: 16px; color: #484f58; font-style: italic; font-size: 0.85em; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-  .dot-red { background: #f85149; }
-  .dot-yellow { background: #d29922; }
-  .dot-blue { background: #58a6ff; }
-  .dot-orange { background: #f0883e; }
-  .dot-purple { background: #a371f7; }
-  .dot-brown { background: #8b6c5c; }
-  .dot-green { background: #3fb950; }
-  .dot-grey { background: #484f58; }
-  .refresh-note { 
-    text-align: center; color: #484f58; font-size: 0.75em; 
-    margin-top: 16px; padding: 8px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300">
+    <title>Damon Dashboard</title>
+    <style>
+        :root { --bg: #1a1a2e; --card: #16213e; --accent: #e94560; --text: #eaeaea; --muted: #a0a0a0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; max-width: 900px; margin: 0 auto; }
+        h1 { color: var(--accent); margin-bottom: 10px; }
+        h2 { color: var(--accent); margin-top: 30px; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid var(--accent); }
+        h3 { color: var(--text); margin-top: 20px; }
+        p { margin-bottom: 10px; color: var(--muted); }
+        em { color: var(--muted); }
+        strong { color: var(--text); }
+        ul, ol { margin-left: 20px; margin-bottom: 15px; }
+        li { margin-bottom: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: var(--card); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--bg); }
+        th { background: var(--accent); color: white; font-weight: 600; }
+        tr:hover { background: rgba(233, 69, 96, 0.1); }
+        hr { border: none; border-top: 1px solid var(--card); margin: 30px 0; }
+        code { background: var(--card); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        .footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 0.85em; }
+    </style>
 </head>
 <body>
-
-<h1>📋 Damon Dashboard</h1>
-<div class="subtitle">Last updated: <span id="updated">2026-01-28 21:13 SGT</span> · Auto-refreshes every 5 min</div>
-
-<!-- ACTIVE -->
-<div class="section active">
-  <div class="section-header"><span class="dot dot-red"></span> ACTIVE <span class="count">0</span></div>
-  <div class="empty">Nothing currently in progress</div>
-</div>
-
-<!-- IN PROGRESS -->
-<div class="section progress">
-  <div class="section-header"><span class="dot dot-yellow"></span> IN PROGRESS <span class="count">0</span></div>
-  <div class="empty">Nothing in progress</div>
-</div>
-
-<!-- OBSERVING -->
-<div class="section observing">
-  <div class="section-header"><span class="dot dot-purple"></span> OBSERVING <span class="count">3</span></div>
-  <div class="task">
-    <div class="task-title">Discord Sentiment Monitoring</div>
-    <div class="task-desc">Full Browser Relay pipeline working. Watching for: Chrome/extension disconnects, Tailscale drops, sentiment accuracy.</div>
-    <div class="task-date">Since 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Momo ↔ Damon Direct Comms</div>
-    <div class="task-desc">WhatsApp MCP bridge working. Watching for: sync lag issues, message delivery failures.</div>
-    <div class="task-date">Since 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Dashboard Auto-Sync</div>
-    <div class="task-desc">Heartbeat checks DASHBOARD.md changes and pushes to GitHub Pages. Watching for: push failures, stale dashboard.</div>
-    <div class="task-date">Since 2026-01-28</div>
-  </div>
-</div>
-
-<!-- KIV -->
-<div class="section kiv">
-  <div class="section-header"><span class="dot dot-blue"></span> KIV <span class="count">1</span></div>
-  <div class="task">
-    <div class="task-title">Multi-DEX Discord Monitoring</div>
-    <div class="task-desc">When bro deploys capital on other perp DEXes, add their Discords to sentiment rotation. peterpoon needs to join first. Can scale to 3 DEXes (~3 min per cycle).</div>
-  </div>
-</div>
-
-<!-- BLOCKED ON BRO -->
-<div class="section blocked">
-  <div class="section-header"><span class="dot dot-orange"></span> BLOCKED ON BRO <span class="count">0</span></div>
-  <div class="empty">Nothing blocked</div>
-</div>
-
-<!-- ABANDONED -->
-<div class="section abandoned">
-  <div class="section-header"><span class="dot dot-brown"></span> ABANDONED <span class="count">2</span></div>
-  <div class="task">
-    <div class="task-title">Perp DEX API Monitor</div>
-    <div class="task-desc">Tested Hyperliquid API successfully (funding rates, OI, prices). Paradex + Variational not wired up. Parked indefinitely.</div>
-    <div class="task-date">Abandoned 2026-01-28 · Auto-archives after 30 days</div>
-  </div>
-  <div class="task">
-    <div class="task-title">App Building Project</div>
-    <div class="task-desc">Brainstormed 8 app ideas. Top picks: Funding Rate Dashboard (80/100) and Health Newsletter (75/100). No follow-up planned.</div>
-    <div class="task-date">Abandoned 2026-01-28 · Auto-archives after 30 days</div>
-  </div>
-</div>
-
-<!-- COMPLETED -->
-<div class="section done">
-  <div class="section-header"><span class="dot dot-green"></span> COMPLETED <span class="count">11</span></div>
-  <div class="task">
-    <div class="task-title">GitHub Account + Dashboard</div>
-    <div class="task-desc">damontay043 account, damon-dashboard repo, GitHub Pages live. Auto-refresh every 5 min.</div>
-    <div class="task-date">✅ 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Google Calendar Integration</div>
-    <div class="task-desc">iCal feed connected, parser built, 3-day / 1-day / same-day reminders in heartbeat.</div>
-    <div class="task-date">✅ 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Groq Audio Transcription</div>
-    <div class="task-desc">Whisper voice-to-text via Groq API. Working on WhatsApp voice notes.</div>
-    <div class="task-date">✅ 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Brave Search API</div>
-    <div class="task-desc">Web search enabled, free tier.</div>
-    <div class="task-date">✅ 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Chrome Browser on VPS</div>
-    <div class="task-desc">Google Chrome installed, Playwright available for web automation.</div>
-    <div class="task-date">✅ 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">AQI Monitoring</div>
-    <div class="task-desc">3 regions (South/Central/East) checked every heartbeat, 6am–11pm SGT.</div>
-    <div class="task-date">✅ 2026-01-27</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Crypto Movers Monitoring</div>
-    <div class="task-desc">Top 20 coins checked every heartbeat, alerts on ±8% moves.</div>
-    <div class="task-date">✅ 2026-01-27</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Morning Briefing Cron</div>
-    <div class="task-desc">7am SGT daily: weather, AQI, workspace changes, node status.</div>
-    <div class="task-date">✅ 2026-01-27</div>
-  </div>
-  <div class="task">
-    <div class="task-title">TTS Setup</div>
-    <div class="task-desc">Edge TTS with en-SG-WayneNeural voice (Singapore male).</div>
-    <div class="task-date">✅ 2026-01-27</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Node Host Connection</div>
-    <div class="task-desc">Scarlet2023 paired and working.</div>
-    <div class="task-date">✅ 2026-01-27</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Chat Logging</div>
-    <div class="task-desc">Self-logging to clawdbot-chatlogs.md on node.</div>
-    <div class="task-date">✅ 2026-01-27</div>
-  </div>
-</div>
-
-<!-- ARCHIVED -->
-<div class="section archived">
-  <div class="section-header"><span class="dot dot-grey"></span> ARCHIVED <span class="count">0</span></div>
-  <div class="empty">Completed items auto-archive after 14 days · Abandoned items after 30 days</div>
-</div>
-
-<!-- ROUTINES -->
-<div class="section" style="border-left: none;">
-  <div class="section-header" style="background: #0d1520; border-left: 3px solid #79c0ff;">⏰ HEARTBEAT ROUTINE (every 30 min)</div>
-  <div class="task"><div class="task-title">1. AQI Monitor</div><div class="task-desc">South/Central/East Singapore — 6am-11pm SGT. Always reports.</div></div>
-  <div class="task"><div class="task-title">2. Crypto Movers</div><div class="task-desc">Top 20 by market cap. Silent unless any coin moves ±8% in 24h.</div></div>
-  <div class="task"><div class="task-title">3. Calendar Reminders</div><div class="task-desc">3-day, 1-day, and same-day reminders. Deduped so each fires once.</div></div>
-  <div class="task"><div class="task-title">4. Dashboard Sync</div><div class="task-desc">Auto-pushes to GitHub Pages if DASHBOARD.md changed. Silent.</div></div>
-  <div class="task"><div class="task-title">5. Discord Sentiment</div><div class="task-desc">Paradex #general + key channels — 6am-11pm SGT. Alerts if score &lt;40, drop &gt;15pts, exploit/hack/rug keywords, OR if infra is down (browser relay disconnected).</div></div>
-  <div class="task"><div class="task-title">6. Node Health</div><div class="task-desc">Scarlet2023 connection check. Silent unless offline.</div></div>
-  <div class="task"><div class="task-title">7. Memory Maintenance</div><div class="task-desc">Periodic consolidation of daily notes into MEMORY.md. Every few days.</div></div>
-</div>
-
-<div class="section" style="border-left: none;">
-  <div class="section-header" style="background: #0d1520; border-left: 3px solid #f0883e;">🌅 MORNING BRIEFING (7am SGT daily)</div>
-  <div class="task"><div class="task-title">1. 🌤️ Weather</div><div class="task-desc">Singapore forecast for the day.</div></div>
-  <div class="task"><div class="task-title">2. 🫁 AQI</div><div class="task-desc">All 3 regions with assessment.</div></div>
-  <div class="task"><div class="task-title">3. 📅 Calendar</div><div class="task-desc">Events in next 24-48 hours.</div></div>
-  <div class="task"><div class="task-title">4. 📰 News</div><div class="task-desc">Moltbot updates, crypto headlines.</div></div>
-  <div class="task"><div class="task-title">5. 📈 Market Ratios</div><div class="task-desc">BTC price, Gold price (PAXGUSDT), BTC/Gold ratio, Gold/AISC ratio ($1,550 hardcoded, staleness reminder after Feb 11).</div></div>
-  <div class="task"><div class="task-title">6. 💰 Crypto Overnight</div><div class="task-desc">Any significant moves while bro slept.</div></div>
-  <div class="task"><div class="task-title">7. 📡 Discord Overnight</div><div class="task-desc">Any overnight FUD or announcements on Paradex.</div></div>
-  <div class="task"><div class="task-title">8. 📂 Workspace Changes</div><div class="task-desc">Any overnight updates to files, cron jobs, etc.</div></div>
-  <div class="task"><div class="task-title">9. 🎲 Vault Nudge</div><div class="task-desc">Random nudge from bro's vault.</div></div>
-  <div class="task"><div class="task-title">10. 🖥️ Node Status</div><div class="task-desc">Scarlet2023 connection check.</div></div>
-  <div class="task"><div class="task-title">11. 💡 Joke of the Day</div><div class="task-desc">1-3 lines, keep it light.</div></div>
-</div>
-
-<!-- CORE PRINCIPLES -->
-<div class="section" style="border-left: none;">
-  <div class="section-header" style="background: #0d1520; border-left: 3px solid #f778ba;">🧭 CORE OPERATING PRINCIPLES</div>
-  <div class="task"><div class="task-title">1. Process > Memory</div><div class="task-desc">Context gets compacted. Processes survive. If it's not written down, it doesn't exist.</div></div>
-  <div class="task"><div class="task-title">2. Dashboard = Single Source of Truth</div><div class="task-desc">Any new process, check, or workflow change gets added HERE immediately. No "I'll add it later."</div></div>
-  <div class="task"><div class="task-title">3. Bro = Safety Check</div><div class="task-desc">Dashboard is visible to bro. If Damon's internal records drift, bro can catch it and correct.</div></div>
-  <div class="task"><div class="task-title">4. Defense in Depth</div><div class="task-desc">Dashboard (processes) + MEMORY.md (context) + HEARTBEAT.md (standing orders) + daily notes (raw logs). Multiple layers against amnesia.</div></div>
-  <div class="task"><div class="task-title">5. Text > Brain</div><div class="task-desc">Write it to a file. Mental notes don't survive compaction. Files do.</div></div>
-  <div class="task"><div class="task-title">6. Don't Lose Jingzhou</div><div class="task-desc">Check what exists before building new. Coordinate with Momo. Don't overreach.</div></div>
-</div>
-
-<div class="refresh-note">
-  Auto-refreshes every 5 minutes · Updated by Damon on task changes
-</div>
-
+<h1 id="dashboard-task-tracker">📋 DASHBOARD — Task Tracker</h1>
+<p><em>Last updated: 2026-01-29 07:20 SGT</em></p>
+<hr />
+<h2 id="active-doing-now">🔴 ACTIVE (doing now)</h2>
+<p><em>Nothing currently in progress</em></p>
+<hr />
+<h2 id="in-progress-halfway-done">🟡 IN PROGRESS (halfway done)</h2>
+<p><em>Nothing in progress</em></p>
+<hr />
+<h2 id="observing-live-monitoring-for-issues">👁️ OBSERVING (live,
+monitoring for issues)</h2>
+<ul>
+<li><strong>Discord Sentiment Monitoring</strong> — Full Browser Relay
+pipeline working. Watching for: Chrome/extension disconnects, Tailscale
+drops, sentiment accuracy. <em>(since 2026-01-28)</em></li>
+<li><strong>Momo ↔︎ Damon Direct Comms</strong> — WhatsApp MCP bridge
+working. Watching for: sync lag issues, message delivery failures.
+<em>(since 2026-01-28)</em></li>
+<li><strong>Dashboard Auto-Sync</strong> — Heartbeat checks DASHBOARD.md
+changes and pushes to GitHub Pages. Watching for: push failures, stale
+dashboard. <em>(since 2026-01-28)</em></li>
+</ul>
+<hr />
+<h2 id="kiv-discussed-parked-for-later">🔵 KIV (discussed, parked for
+later)</h2>
+<ul>
+<li><strong>Multi-DEX Discord Monitoring</strong> — When bro deploys
+capital on other perp DEXes, add their Discords to sentiment rotation.
+peterpoon needs to join first. Can scale to 3 DEXes (~3 min per
+heartbeat cycle).</li>
+</ul>
+<hr />
+<h2 id="blocked-on-bro">🟠 BLOCKED ON BRO</h2>
+<p><em>Nothing blocked</em></p>
+<hr />
+<h2 id="abandoned-probably-wont-do-auto-archives-after-30-days">🟤
+ABANDONED (probably won’t do, auto-archives after 30 days)</h2>
+<ul>
+<li><strong>Perp DEX API Monitor</strong> — Tested Hyperliquid API
+successfully (funding rates, OI, prices). Paradex + Variational not
+wired up. Parked indefinitely. <em>(2026-01-28)</em></li>
+<li><strong>App Building Project</strong> — Brainstormed 8 app ideas.
+Top picks: Funding Rate Dashboard (80/100) and Health Newsletter
+(75/100). No follow-up planned. <em>(2026-01-28)</em></li>
+</ul>
+<hr />
+<h2 id="completed">✅ COMPLETED</h2>
+<ul>
+<li><strong>GitHub Account + Dashboard</strong> — damontay043 account,
+damon-dashboard repo, GitHub Pages live at
+damontay043.github.io/damon-dashboard. Auto-refresh every 5 min.
+<em>(2026-01-28)</em></li>
+<li><strong>Google Calendar Integration</strong> — iCal feed connected,
+parser built, 3-day / 1-day / same-day reminders in heartbeat.
+Email/Calendar via Momo no longer needed. <em>(2026-01-28)</em></li>
+<li><strong>Groq Audio Transcription</strong> — Whisper voice-to-text
+via Groq API. Working on WhatsApp voice notes.
+<em>(2026-01-28)</em></li>
+<li><strong>Brave Search API</strong> — Web search enabled, free tier.
+<em>(2026-01-28)</em></li>
+<li><strong>Chrome Browser on VPS</strong> — Google Chrome installed,
+Playwright available for web automation. <em>(2026-01-28)</em></li>
+<li><strong>AQI Monitoring</strong> — 3 regions (South/Central/East)
+checked every heartbeat, 7am–8pm SGT. <em>(2026-01-27)</em></li>
+<li><strong>Crypto Movers Monitoring</strong> — Top 20 coins checked
+every heartbeat, alerts on ±8% moves. <em>(2026-01-27)</em></li>
+<li><strong>Morning Briefing Cron</strong> — 7am SGT daily: weather,
+AQI, workspace changes, node status. <em>(2026-01-27)</em></li>
+<li><strong>TTS Setup</strong> — Edge TTS with en-SG-WayneNeural voice
+(Singapore male). <em>(2026-01-27)</em></li>
+<li><strong>Node Host Connection</strong> — Scarlet2023 paired and
+working. <em>(2026-01-27)</em></li>
+<li><strong>Chat Logging</strong> — Self-logging to clawdbot-chatlogs.md
+on node. <em>(2026-01-27)</em></li>
+</ul>
+<hr />
+<h2 id="archived">🗄️ ARCHIVED</h2>
+<p><em>Completed items older than 14 days and abandoned items older than
+30 days get moved here. Cleared monthly.</em></p>
+<hr />
+<hr />
+<h2 id="heartbeat-routine-every-30-min">⏰ HEARTBEAT ROUTINE (every 30
+min)</h2>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 21%" />
+<col style="width: 18%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Check</th>
+<th>When</th>
+<th>Alert Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>AQI (South/Central/East)</td>
+<td>6am-11pm SGT</td>
+<td>Always report</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Crypto movers (top 20)</td>
+<td>Every heartbeat</td>
+<td>Only if any coin ±8% in 24h</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Calendar reminders</td>
+<td>Every heartbeat</td>
+<td>3-day, 1-day, same-day before events</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Dashboard sync</td>
+<td>Every heartbeat</td>
+<td>Silent — auto-pushes if DASHBOARD.md changed</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Discord sentiment (Paradex)</td>
+<td>6am-11pm SGT</td>
+<td>If score &lt;40, drop &gt;15pts, exploit/hack/rug keywords, OR if
+infra is down (browser relay disconnected, snapshot fails)</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Node health</td>
+<td>Every heartbeat</td>
+<td>Silent unless Scarlet2023 goes offline</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Memory maintenance</td>
+<td>Periodic (every few days)</td>
+<td>Silent — consolidates daily notes into MEMORY.md</td>
+</tr>
+</tbody>
+</table>
+<h2 id="morning-briefing-7am-sgt-daily">🌅 MORNING BRIEFING (7am SGT
+daily)</h2>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 33%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Item</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>🌤️ Weather</td>
+<td>Singapore forecast for the day</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>🫁 AQI</td>
+<td>All 3 regions with assessment</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>📅 Calendar</td>
+<td>Events in next 24-48 hours</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>📰 News</td>
+<td>Moltbot updates, crypto headlines</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>📈 Market Ratios</td>
+<td>BTC price, Gold price (PAXGUSDT), BTC/Gold ratio, Gold/AISC ratio
+($1,550 hardcoded, staleness reminder after Feb 11)</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>💰 Crypto overnight</td>
+<td>Any significant moves while bro slept</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>📡 Discord overnight</td>
+<td>Any overnight FUD or announcements on Paradex</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>📂 Workspace changes</td>
+<td>Any overnight updates to files, cron jobs, etc.</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>🎲 Vault nudge</td>
+<td>Random nudge from bro’s vault</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>🖥️ Node status</td>
+<td>Scarlet2023 connected?</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>📊 Hyperliquid OI</td>
+<td>Top 10 perps by open interest with USD values</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>💡 Joke of the day</td>
+<td>1-3 lines, keep it light</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<hr />
+<h2 id="core-operating-principles">🧭 CORE OPERATING PRINCIPLES</h2>
+<ol type="1">
+<li><strong>Process &gt; Memory</strong> — Context gets compacted.
+Processes survive. If it’s not written down, it doesn’t exist.</li>
+<li><strong>Dashboard = Single Source of Truth</strong> — Any new
+process, check, or workflow change gets added HERE immediately. No “I’ll
+add it later.”</li>
+<li><strong>Bro = Safety Check</strong> — Dashboard is visible to bro.
+If Damon’s internal records drift, bro can catch it and correct.</li>
+<li><strong>Defense in Depth</strong> — Dashboard (processes) +
+MEMORY.md (context) + HEARTBEAT.md (standing orders) + daily notes (raw
+logs). Multiple layers against amnesia.</li>
+<li><strong>Text &gt; Brain</strong> — Write it to a file. Mental notes
+don’t survive compaction. Files do.</li>
+<li><strong>Don’t Lose Jingzhou</strong> — Check what exists before
+building new. Coordinate with Momo. Don’t overreach.</li>
+</ol>
+<hr />
+<h3 id="how-this-works">How this works</h3>
+<ul>
+<li>I update this file as tasks change status</li>
+<li>Heartbeat auto-syncs changes to GitHub Pages</li>
+<li>Check it anytime by asking “what’s on the dashboard”</li>
+<li>Items in ✅ COMPLETED auto-archive after 14 days</li>
+<li>Items in 🟤 ABANDONED auto-archive after 30 days</li>
+</ul>
+    <div class="footer">Auto-refreshes every 5 minutes | Powered by Damon 🤖</div>
 </body>
 </html>
