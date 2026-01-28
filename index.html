@@ -6,321 +6,208 @@
     <meta http-equiv="refresh" content="300">
     <title>Damon Dashboard</title>
     <style>
-        :root { --bg: #1a1a2e; --card: #16213e; --accent: #e94560; --text: #eaeaea; --muted: #a0a0a0; }
+        :root { 
+            --bg: #1a1a2e; 
+            --card: #16213e; 
+            --accent: #e94560; 
+            --accent2: #0f3460;
+            --text: #eaeaea; 
+            --muted: #a0a0a0;
+            --success: #4ade80;
+            --warning: #fbbf24;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px; max-width: 900px; margin: 0 auto; }
-        h1 { color: var(--accent); margin-bottom: 10px; }
-        h2 { color: var(--accent); margin-top: 30px; margin-bottom: 15px; padding-bottom: 5px; border-bottom: 2px solid var(--accent); }
-        h3 { color: var(--text); margin-top: 20px; }
-        p { margin-bottom: 10px; color: var(--muted); }
-        em { color: var(--muted); }
-        strong { color: var(--text); }
-        ul, ol { margin-left: 20px; margin-bottom: 15px; }
-        li { margin-bottom: 5px; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: var(--card); border-radius: 8px; overflow: hidden; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--bg); }
-        th { background: var(--accent); color: white; font-weight: 600; }
-        tr:hover { background: rgba(233, 69, 96, 0.1); }
-        hr { border: none; border-top: 1px solid var(--card); margin: 30px 0; }
-        code { background: var(--card); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
-        .footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 0.85em; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.5; 
+            padding: 20px;
+            font-size: 14px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+        }
+        .header h1 { color: var(--accent); font-size: 1.8em; margin-bottom: 5px; }
+        .header .updated { color: var(--muted); font-size: 0.85em; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 1000px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+        
+        .card {
+            background: var(--card);
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+        }
+        .card.green { border-left-color: var(--success); }
+        .card.yellow { border-left-color: var(--warning); }
+        .card.blue { border-left-color: #60a5fa; }
+        .card.purple { border-left-color: #a78bfa; }
+        
+        .card h2 { 
+            color: var(--accent); 
+            font-size: 1em; 
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card.green h2 { color: var(--success); }
+        .card.yellow h2 { color: var(--warning); }
+        .card.blue h2 { color: #60a5fa; }
+        .card.purple h2 { color: #a78bfa; }
+        
+        .card ul { margin: 0; padding-left: 18px; }
+        .card li { margin-bottom: 6px; color: var(--muted); font-size: 0.9em; }
+        .card li strong { color: var(--text); }
+        
+        .card p { color: var(--muted); font-size: 0.85em; font-style: italic; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+        th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--bg); }
+        th { background: var(--accent2); color: var(--text); font-weight: 600; font-size: 0.8em; }
+        td { color: var(--muted); }
+        td strong { color: var(--text); }
+        
+        .wide { grid-column: span 2; }
+        @media (max-width: 600px) {
+            .wide { grid-column: span 1; }
+        }
+        
+        .footer { 
+            text-align: center; 
+            color: var(--muted); 
+            font-size: 0.8em; 
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid var(--card);
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--accent2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
-<h1 id="dashboard-task-tracker">📋 DASHBOARD — Task Tracker</h1>
-<p><em>Last updated: 2026-01-29 07:58 SGT</em></p>
-<hr />
-<h2 id="active-doing-now">🔴 ACTIVE (doing now)</h2>
-<p><em>Nothing currently in progress</em></p>
-<hr />
-<h2 id="in-progress-halfway-done">🟡 IN PROGRESS (halfway done)</h2>
-<p><em>Nothing in progress</em></p>
-<hr />
-<h2 id="observing-live-monitoring-for-issues">👁️ OBSERVING (live,
-monitoring for issues)</h2>
-<ul>
-<li><strong>Discord Sentiment Monitoring</strong> — Full Browser Relay
-pipeline working. Watching for: Chrome/extension disconnects, Tailscale
-drops, sentiment accuracy. <em>(since 2026-01-28)</em></li>
-<li><strong>Momo ↔︎ Damon Direct Comms</strong> — WhatsApp MCP bridge
-working. Watching for: sync lag issues, message delivery failures.
-<em>(since 2026-01-28)</em></li>
-<li><strong>Dashboard Auto-Sync</strong> — Heartbeat checks DASHBOARD.md
-changes and pushes to GitHub Pages. Watching for: push failures, stale
-dashboard. <em>(since 2026-01-28)</em></li>
-</ul>
-<hr />
-<h2 id="kiv-discussed-parked-for-later">🔵 KIV (discussed, parked for
-later)</h2>
-<ul>
-<li><strong>Multi-DEX Discord Monitoring</strong> — When bro deploys
-capital on other perp DEXes, add their Discords to sentiment rotation.
-peterpoon needs to join first. Can scale to 3 DEXes (~3 min per
-heartbeat cycle).</li>
-</ul>
-<hr />
-<h2 id="blocked-on-bro">🟠 BLOCKED ON BRO</h2>
-<p><em>Nothing blocked</em></p>
-<hr />
-<h2 id="abandoned-probably-wont-do-auto-archives-after-30-days">🟤
-ABANDONED (probably won’t do, auto-archives after 30 days)</h2>
-<ul>
-<li><strong>Perp DEX API Monitor</strong> — Tested Hyperliquid API
-successfully (funding rates, OI, prices). Paradex + Variational not
-wired up. Parked indefinitely. <em>(2026-01-28)</em></li>
-<li><strong>App Building Project</strong> — Brainstormed 8 app ideas.
-Top picks: Funding Rate Dashboard (80/100) and Health Newsletter
-(75/100). No follow-up planned. <em>(2026-01-28)</em></li>
-</ul>
-<hr />
-<h2 id="completed">✅ COMPLETED</h2>
-<ul>
-<li><strong>Straits Times Headlines Extraction</strong> — Playwright
-mobile view extraction of top 10 curated headlines from SG Edition.
-Method: mobile viewport (390x844), root URL (not /global), scroll &amp;
-extract by Y position. <em>(2026-01-29)</em></li>
-<li><strong>GitHub CLI Auth</strong> — <code>gh</code> CLI authenticated
-as damontay043 via device flow. Dashboard auto-push now works.
-<em>(2026-01-29)</em></li>
-<li><strong>GitHub Account + Dashboard</strong> — damontay043 account,
-damon-dashboard repo, GitHub Pages live at
-damontay043.github.io/damon-dashboard. Auto-refresh every 5 min.
-<em>(2026-01-28)</em></li>
-<li><strong>Google Calendar Integration</strong> — iCal feed connected,
-parser built, 3-day / 1-day / same-day reminders in heartbeat.
-Email/Calendar via Momo no longer needed. <em>(2026-01-28)</em></li>
-<li><strong>Groq Audio Transcription</strong> — Whisper voice-to-text
-via Groq API. Working on WhatsApp voice notes.
-<em>(2026-01-28)</em></li>
-<li><strong>Brave Search API</strong> — Web search enabled, free tier.
-<em>(2026-01-28)</em></li>
-<li><strong>Chrome Browser on VPS</strong> — Google Chrome installed,
-Playwright available for web automation. <em>(2026-01-28)</em></li>
-<li><strong>AQI Monitoring</strong> — 3 regions (South/Central/East)
-checked every heartbeat, 7am–8pm SGT. <em>(2026-01-27)</em></li>
-<li><strong>Crypto Movers Monitoring</strong> — Top 20 coins checked
-every heartbeat, alerts on ±8% moves. <em>(2026-01-27)</em></li>
-<li><strong>Morning Briefing Cron</strong> — 7am SGT daily: weather,
-AQI, workspace changes, node status. <em>(2026-01-27)</em></li>
-<li><strong>TTS Setup</strong> — Edge TTS with en-SG-WayneNeural voice
-(Singapore male). <em>(2026-01-27)</em></li>
-<li><strong>Node Host Connection</strong> — Scarlet2023 paired and
-working. <em>(2026-01-27)</em></li>
-<li><strong>Chat Logging</strong> — Self-logging to clawdbot-chatlogs.md
-on node. <em>(2026-01-27)</em></li>
-</ul>
-<hr />
-<h2 id="skills-special-powers">🧙 SKILLS (special powers)</h2>
-<p>Custom skills we’ve built together. Invoke by name: “Damon, use
-[skill]”</p>
-<table>
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 45%" />
-<col style="width: 32%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Skill</th>
-<th>What it does</th>
-<th>Location</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>straits-times-headlines</strong></td>
-<td>Extract top 10 curated headlines from ST Singapore Edition using
-Playwright mobile view</td>
-<td><code>/root/clawd/skills/straits-times-headlines/</code></td>
-</tr>
-</tbody>
-</table>
-<p><em>Future skills to build:</em> - <code>hyperliquid-oi</code> —
-Fetch top 10 perps by open interest - <code>paradex-sentiment</code> —
-Discord sentiment analysis - <code>aqi-singapore</code> — Air quality
-check for 3 regions - <code>crypto-movers</code> — Top 20 coins with
-significant moves</p>
-<hr />
-<h2 id="archived">🗄️ ARCHIVED</h2>
-<p><em>Completed items older than 14 days and abandoned items older than
-30 days get moved here. Cleared monthly.</em></p>
-<hr />
-<hr />
-<h2 id="heartbeat-routine-every-30-min">⏰ HEARTBEAT ROUTINE (every 30
-min)</h2>
-<table>
-<colgroup>
-<col style="width: 9%" />
-<col style="width: 21%" />
-<col style="width: 18%" />
-<col style="width: 51%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>#</th>
-<th>Check</th>
-<th>When</th>
-<th>Alert Condition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>AQI (South/Central/East)</td>
-<td>6am-11pm SGT</td>
-<td>Always report</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Crypto movers (top 20)</td>
-<td>Every heartbeat</td>
-<td>Only if any coin ±8% in 24h</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Calendar reminders</td>
-<td>Every heartbeat</td>
-<td>3-day, 1-day, same-day before events</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Dashboard sync</td>
-<td>Every heartbeat</td>
-<td>Silent — auto-pushes if DASHBOARD.md changed</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>Discord sentiment (Paradex)</td>
-<td>6am-11pm SGT</td>
-<td>If score &lt;40, drop &gt;15pts, exploit/hack/rug keywords, OR if
-infra is down (browser relay disconnected, snapshot fails)</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>Node health</td>
-<td>Every heartbeat</td>
-<td>Silent unless Scarlet2023 goes offline</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>Memory maintenance</td>
-<td>Periodic (every few days)</td>
-<td>Silent — consolidates daily notes into MEMORY.md</td>
-</tr>
-</tbody>
-</table>
-<h2 id="morning-briefing-7am-sgt-daily">🌅 MORNING BRIEFING (7am SGT
-daily)</h2>
-<table>
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 33%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>#</th>
-<th>Item</th>
-<th>Details</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>🌤️ Weather</td>
-<td>Singapore forecast for the day</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>🫁 AQI</td>
-<td>All 3 regions with assessment</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>📅 Calendar</td>
-<td>Events in next 24-48 hours</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>📰 News</td>
-<td>Moltbot updates, crypto headlines</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>📈 Market Ratios</td>
-<td>BTC price, Gold price (PAXGUSDT), BTC/Gold ratio, Gold/AISC ratio
-($1,550 hardcoded, staleness reminder after Feb 11)</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>💰 Crypto overnight</td>
-<td>Any significant moves while bro slept</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>📡 Discord overnight</td>
-<td>Any overnight FUD or announcements on Paradex</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>📂 Workspace changes</td>
-<td>Any overnight updates to files, cron jobs, etc.</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>🎲 Vault nudge</td>
-<td>Random nudge from bro’s vault</td>
-</tr>
-<tr class="even">
-<td>10</td>
-<td>🖥️ Node status</td>
-<td>Scarlet2023 connected?</td>
-</tr>
-<tr class="odd">
-<td>11</td>
-<td>📊 Hyperliquid OI</td>
-<td>Top 10 perps by open interest with USD values</td>
-</tr>
-<tr class="even">
-<td>12</td>
-<td>📰 Straits Times</td>
-<td>Top 10 curated headlines (SG Edition, mobile view extraction)</td>
-</tr>
-<tr class="odd">
-<td>13</td>
-<td>💡 Joke of the day</td>
-<td>1-3 lines, keep it light</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<hr />
-<h2 id="core-operating-principles">🧭 CORE OPERATING PRINCIPLES</h2>
-<ol type="1">
-<li><strong>Process &gt; Memory</strong> — Context gets compacted.
-Processes survive. If it’s not written down, it doesn’t exist.</li>
-<li><strong>Dashboard = Single Source of Truth</strong> — Any new
-process, check, or workflow change gets added HERE immediately. No “I’ll
-add it later.”</li>
-<li><strong>Bro = Safety Check</strong> — Dashboard is visible to bro.
-If Damon’s internal records drift, bro can catch it and correct.</li>
-<li><strong>Defense in Depth</strong> — Dashboard (processes) +
-MEMORY.md (context) + HEARTBEAT.md (standing orders) + daily notes (raw
-logs). Multiple layers against amnesia.</li>
-<li><strong>Text &gt; Brain</strong> — Write it to a file. Mental notes
-don’t survive compaction. Files do.</li>
-<li><strong>Don’t Lose Jingzhou</strong> — Check what exists before
-building new. Coordinate with Momo. Don’t overreach.</li>
-</ol>
-<hr />
-<h3 id="how-this-works">How this works</h3>
-<ul>
-<li>I update this file as tasks change status</li>
-<li>Heartbeat auto-syncs changes to GitHub Pages</li>
-<li>Check it anytime by asking “what’s on the dashboard”</li>
-<li>Items in ✅ COMPLETED auto-archive after 14 days</li>
-<li>Items in 🟤 ABANDONED auto-archive after 30 days</li>
-</ul>
-    <div class="footer">Auto-refreshes every 5 minutes | Powered by Damon 🤖</div>
+    <div class="header">
+        <h1>📋 Damon Dashboard</h1>
+        <div class="updated">Last updated: 2026-01-29 08:00 SGT • Auto-refreshes every 5 min</div>
+    </div>
+
+    <div class="grid">
+        <!-- Row 1: Status Cards -->
+        <div class="card">
+            <h2>🔴 ACTIVE</h2>
+            <p>Nothing currently in progress</p>
+        </div>
+        
+        <div class="card yellow">
+            <h2>👁️ OBSERVING</h2>
+            <ul>
+                <li><strong>Discord Sentiment</strong> — Browser Relay pipeline</li>
+                <li><strong>Momo ↔ Damon</strong> — WhatsApp MCP bridge</li>
+                <li><strong>Dashboard Sync</strong> — GitHub Pages auto-push</li>
+            </ul>
+        </div>
+        
+        <div class="card blue">
+            <h2>🔵 KIV</h2>
+            <ul>
+                <li><strong>Multi-DEX Discord</strong> — Scale to 3 DEXes when needed</li>
+            </ul>
+        </div>
+
+        <!-- Row 2: Skills & Completed -->
+        <div class="card purple">
+            <h2>🧙 SKILLS</h2>
+            <table>
+                <tr><th>Skill</th><th>Function</th></tr>
+                <tr><td><strong>straits-times-headlines</strong></td><td>Top 10 ST headlines</td></tr>
+            </table>
+            <p style="margin-top: 10px;">Future: hyperliquid-oi, paradex-sentiment, aqi-singapore</p>
+        </div>
+        
+        <div class="card green wide">
+            <h2>✅ COMPLETED</h2>
+            <ul>
+                <li><strong>ST Headlines Extraction</strong> — Playwright mobile view <span class="tag">01-29</span></li>
+                <li><strong>GitHub CLI Auth</strong> — damontay043 device flow <span class="tag">01-29</span></li>
+                <li><strong>Dashboard + GitHub Pages</strong> — Auto-refresh <span class="tag">01-28</span></li>
+                <li><strong>Calendar Integration</strong> — iCal + 3-tier reminders <span class="tag">01-28</span></li>
+                <li><strong>Groq Transcription</strong> — WhatsApp voice notes <span class="tag">01-28</span></li>
+                <li><strong>AQI + Crypto Monitoring</strong> — Heartbeat checks <span class="tag">01-27</span></li>
+                <li><strong>Morning Briefing Cron</strong> — 7am SGT daily <span class="tag">01-27</span></li>
+            </ul>
+        </div>
+
+        <!-- Row 3: Routines -->
+        <div class="card wide">
+            <h2>⏰ HEARTBEAT ROUTINE (every 30 min)</h2>
+            <table>
+                <tr><th>#</th><th>Check</th><th>When</th><th>Alert</th></tr>
+                <tr><td>1</td><td><strong>AQI</strong></td><td>6am-11pm</td><td>Always report</td></tr>
+                <tr><td>2</td><td><strong>Crypto</strong></td><td>Always</td><td>If ±8%</td></tr>
+                <tr><td>3</td><td><strong>Calendar</strong></td><td>Always</td><td>3d/1d/same-day</td></tr>
+                <tr><td>4</td><td><strong>Dashboard</strong></td><td>Always</td><td>Silent push</td></tr>
+                <tr><td>5</td><td><strong>Discord</strong></td><td>6am-11pm</td><td>Score &lt;40 or FUD</td></tr>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2>🌅 MORNING BRIEFING (7am)</h2>
+            <ul>
+                <li>🌤️ Weather</li>
+                <li>🫁 AQI (3 regions)</li>
+                <li>📅 Calendar (24-48h)</li>
+                <li>📈 Market Ratios</li>
+                <li>📊 Hyperliquid OI</li>
+                <li>📰 ST Headlines</li>
+                <li>💡 Joke of the day</li>
+            </ul>
+        </div>
+
+        <!-- Row 4: Principles -->
+        <div class="card wide">
+            <h2>🧭 CORE PRINCIPLES</h2>
+            <ul>
+                <li><strong>Process > Memory</strong> — Context compacts. Files survive.</li>
+                <li><strong>Dashboard = Truth</strong> — Changes go here immediately.</li>
+                <li><strong>Text > Brain</strong> — Write it down. Mental notes die.</li>
+                <li><strong>Don't Lose Jingzhou</strong> — Check before building.</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>🟤 PARKED</h2>
+            <ul>
+                <li><strong>Perp DEX API</strong> — HL works, others TBD</li>
+                <li><strong>App Building</strong> — Ideas documented</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        Powered by Damon 🤖 • <a href="https://github.com/damontay043/damon-dashboard" style="color: var(--accent);">GitHub</a>
+    </div>
 </body>
 </html>
