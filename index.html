@@ -30,6 +30,7 @@
   .progress .section-header { background: #1a1500; border-left: 3px solid #d29922; }
   .kiv .section-header { background: #0d1530; border-left: 3px solid #58a6ff; }
   .blocked .section-header { background: #1a0f00; border-left: 3px solid #f0883e; }
+  .observing .section-header { background: #1a0d1f; border-left: 3px solid #a371f7; }
   .abandoned .section-header { background: #1a1015; border-left: 3px solid #8b6c5c; }
   .done .section-header { background: #0d1f0d; border-left: 3px solid #3fb950; }
   .archived .section-header { background: #161b22; border-left: 3px solid #484f58; }
@@ -47,6 +48,7 @@
   .dot-yellow { background: #d29922; }
   .dot-blue { background: #58a6ff; }
   .dot-orange { background: #f0883e; }
+  .dot-purple { background: #a371f7; }
   .dot-brown { background: #8b6c5c; }
   .dot-green { background: #3fb950; }
   .dot-grey { background: #484f58; }
@@ -59,7 +61,7 @@
 <body>
 
 <h1>📋 Damon Dashboard</h1>
-<div class="subtitle">Last updated: <span id="updated">2026-01-28 17:55 SGT</span> · Auto-refreshes every 5 min</div>
+<div class="subtitle">Last updated: <span id="updated">2026-01-28 17:56 SGT</span> · Auto-refreshes every 5 min</div>
 
 <!-- ACTIVE -->
 <div class="section active">
@@ -71,6 +73,26 @@
 <div class="section progress">
   <div class="section-header"><span class="dot dot-yellow"></span> IN PROGRESS <span class="count">0</span></div>
   <div class="empty">Nothing in progress</div>
+</div>
+
+<!-- OBSERVING -->
+<div class="section observing">
+  <div class="section-header"><span class="dot dot-purple"></span> OBSERVING <span class="count">3</span></div>
+  <div class="task">
+    <div class="task-title">Discord Sentiment Monitoring</div>
+    <div class="task-desc">Full Browser Relay pipeline working. Watching for: Chrome/extension disconnects, Tailscale drops, sentiment accuracy.</div>
+    <div class="task-date">Since 2026-01-28</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Momo ↔ Damon Direct Comms</div>
+    <div class="task-desc">WhatsApp MCP bridge working. Watching for: sync lag issues, message delivery failures.</div>
+    <div class="task-date">Since 2026-01-28</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Dashboard Auto-Sync</div>
+    <div class="task-desc">Heartbeat checks DASHBOARD.md changes and pushes to GitHub Pages. Watching for: push failures, stale dashboard.</div>
+    <div class="task-date">Since 2026-01-28</div>
+  </div>
 </div>
 
 <!-- KIV -->
@@ -105,17 +127,7 @@
 
 <!-- COMPLETED -->
 <div class="section done">
-  <div class="section-header"><span class="dot dot-green"></span> COMPLETED <span class="count">13</span></div>
-  <div class="task">
-    <div class="task-title">Discord Sentiment Monitoring</div>
-    <div class="task-desc">Full Browser Relay pipeline: Chrome → Tailscale → VPS. Paradex #general live via peterpoon. Multi-channel navigation, sentiment scoring (0-100), FUD alerts.</div>
-    <div class="task-date">✅ 2026-01-28</div>
-  </div>
-  <div class="task">
-    <div class="task-title">Momo ↔ Damon Direct Comms</div>
-    <div class="task-desc">WhatsApp MCP bridge working. [Momo] prefix convention. Async but functional.</div>
-    <div class="task-date">✅ 2026-01-28</div>
-  </div>
+  <div class="section-header"><span class="dot dot-green"></span> COMPLETED <span class="count">11</span></div>
   <div class="task">
     <div class="task-title">GitHub Account + Dashboard</div>
     <div class="task-desc">damontay043 account, damon-dashboard repo, GitHub Pages live. Auto-refresh every 5 min.</div>
