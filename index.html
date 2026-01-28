@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damon Dashboard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0d1117; color: #c9d1d9; padding: 24px;
+    max-width: 900px; margin: 0 auto;
+  }
+  h1 { color: #58a6ff; font-size: 1.6em; margin-bottom: 4px; }
+  .subtitle { color: #8b949e; font-size: 0.85em; margin-bottom: 24px; }
+  .section { 
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px; 
+    margin-bottom: 16px; overflow: hidden;
+  }
+  .section-header { 
+    padding: 12px 16px; font-weight: 600; font-size: 0.95em;
+    border-bottom: 1px solid #30363d; display: flex; align-items: center; gap: 8px;
+  }
+  .section-header .count { 
+    background: #30363d; color: #8b949e; border-radius: 10px; 
+    padding: 1px 8px; font-size: 0.8em; font-weight: normal;
+  }
+  .active .section-header { background: #1a0000; border-left: 3px solid #f85149; }
+  .progress .section-header { background: #1a1500; border-left: 3px solid #d29922; }
+  .kiv .section-header { background: #0d1530; border-left: 3px solid #58a6ff; }
+  .blocked .section-header { background: #1a0f00; border-left: 3px solid #f0883e; }
+  .done .section-header { background: #0d1f0d; border-left: 3px solid #3fb950; }
+  .archived .section-header { background: #161b22; border-left: 3px solid #484f58; }
+  .task { 
+    padding: 10px 16px; border-bottom: 1px solid #21262d; 
+    font-size: 0.9em; line-height: 1.5;
+  }
+  .task:last-child { border-bottom: none; }
+  .task-title { font-weight: 600; color: #e6edf3; }
+  .task-desc { color: #8b949e; margin-top: 2px; }
+  .task-date { color: #484f58; font-size: 0.8em; margin-top: 4px; }
+  .empty { padding: 16px; color: #484f58; font-style: italic; font-size: 0.85em; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dot-red { background: #f85149; }
+  .dot-yellow { background: #d29922; }
+  .dot-blue { background: #58a6ff; }
+  .dot-orange { background: #f0883e; }
+  .dot-green { background: #3fb950; }
+  .dot-grey { background: #484f58; }
+  .refresh-note { 
+    text-align: center; color: #484f58; font-size: 0.75em; 
+    margin-top: 16px; padding: 8px;
+  }
+</style>
+</head>
+<body>
+
+<h1>📋 Damon Dashboard</h1>
+<div class="subtitle">Last updated: <span id="updated">2026-01-28 15:27 SGT</span></div>
+
+<!-- ACTIVE -->
+<div class="section active">
+  <div class="section-header"><span class="dot dot-red"></span> ACTIVE <span class="count">0</span></div>
+  <div class="empty">Nothing currently in progress</div>
+</div>
+
+<!-- IN PROGRESS -->
+<div class="section progress">
+  <div class="section-header"><span class="dot dot-yellow"></span> IN PROGRESS <span class="count">1</span></div>
+  <div class="task">
+    <div class="task-title">Perp DEX API Monitor</div>
+    <div class="task-desc">Tested Hyperliquid API successfully (funding rates, OI, prices). Paradex + Variational APIs not yet wired up. Need to build heartbeat check logic for alerts.</div>
+    <div class="task-date">Started 2026-01-28</div>
+  </div>
+</div>
+
+<!-- KIV -->
+<div class="section kiv">
+  <div class="section-header"><span class="dot dot-blue"></span> KIV <span class="count">3</span></div>
+  <div class="task">
+    <div class="task-title">Discord Sentiment Monitoring</div>
+    <div class="task-desc">Use Browser Relay on Edge to check perp DEX Discord channels (Hyperliquid, Paradex, Variational) for FUD every 30min. Requires browser extension setup.</div>
+  </div>
+  <div class="task">
+    <div class="task-title">App Building Project</div>
+    <div class="task-desc">Brainstormed 8 app ideas. Top picks: Funding Rate Dashboard (80/100) and Health Newsletter (75/100). Waiting for decision on which to pursue.</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Email/Calendar via Momo</div>
+    <div class="task-desc">Momo handles Gmail/Sheets on local PC. Potential to set up email checking from VPS in future.</div>
+  </div>
+</div>
+
+<!-- BLOCKED ON BRO -->
+<div class="section blocked">
+  <div class="section-header"><span class="dot dot-orange"></span> BLOCKED ON BRO <span class="count">1</span></div>
+  <div class="task">
+    <div class="task-title">Brave Search API Key</div>
+    <div class="task-desc">Web search tool needs a Brave API key. Go to brave.com/search/api → sign up (free) → generate key → send to Damon.</div>
+  </div>
+</div>
+
+<!-- COMPLETED -->
+<div class="section done">
+  <div class="section-header"><span class="dot dot-green"></span> COMPLETED <span class="count">8</span></div>
+  <div class="task">
+    <div class="task-title">Groq Audio Transcription</div>
+    <div class="task-desc">Whisper voice-to-text via Groq API. Working on WhatsApp voice notes.</div>
+    <div class="task-date">✅ 2026-01-28</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Google Calendar Integration</div>
+    <div class="task-desc">iCal feed connected, parser built, 3-day / 1-day / same-day reminders in heartbeat.</div>
+    <div class="task-date">✅ 2026-01-28</div>
+  </div>
+  <div class="task">
+    <div class="task-title">AQI Monitoring</div>
+    <div class="task-desc">3 regions (South/Central/East) checked every heartbeat, 7am–8pm SGT.</div>
+    <div class="task-date">✅ 2026-01-27</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Crypto Movers Monitoring</div>
+    <div class="task-desc">Top 20 coins checked every heartbeat, alerts on ±8% moves.</div>
+    <div class="task-date">✅ 2026-01-27</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Morning Briefing Cron</div>
+    <div class="task-desc">7am SGT daily: weather, AQI, workspace changes, node status.</div>
+    <div class="task-date">✅ 2026-01-27</div>
+  </div>
+  <div class="task">
+    <div class="task-title">TTS Setup</div>
+    <div class="task-desc">Edge TTS with en-SG-WayneNeural voice (Singapore male).</div>
+    <div class="task-date">✅ 2026-01-27</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Node Host Connection</div>
+    <div class="task-desc">Scarlet2023 paired and working.</div>
+    <div class="task-date">✅ 2026-01-27</div>
+  </div>
+  <div class="task">
+    <div class="task-title">Chat Logging</div>
+    <div class="task-desc">Self-logging to clawdbot-chatlogs.md on node.</div>
+    <div class="task-date">✅ 2026-01-27</div>
+  </div>
+</div>
+
+<!-- ARCHIVED -->
+<div class="section archived">
+  <div class="section-header"><span class="dot dot-grey"></span> ARCHIVED <span class="count">0</span></div>
+  <div class="empty">Completed items auto-archive after 14 days</div>
+</div>
+
+<div class="refresh-note">
+  This file is updated by Damon whenever tasks change.<br>
+  Refresh the page (F5) to see the latest version.
+</div>
+
+</body>
+</html>
