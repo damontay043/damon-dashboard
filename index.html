@@ -19,217 +19,176 @@
             --blue: #60a5fa;
             --purple: #a78bfa;
             --orange: #fb923c;
-            --brown: #a8a29e;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
             background: var(--bg); 
-            color: var(--text); 
-            line-height: 1.5; 
+            color: var(--text);
+            min-height: 100vh;
             padding: 20px;
-            font-size: 13px;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--accent);
-        }
-        .header h1 { color: var(--accent); font-size: 1.6em; margin-bottom: 4px; }
-        .header .updated { color: var(--muted); font-size: 0.8em; }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-        
-        .card {
-            background: var(--card);
-            border-radius: 8px;
-            padding: 12px;
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 5px; font-size: 1.8rem; }
+        .subtitle { text-align: center; color: var(--muted); margin-bottom: 25px; font-size: 0.85rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .card { 
+            background: var(--card); 
+            border-radius: 12px; 
+            padding: 18px;
             border-left: 4px solid var(--accent);
         }
+        .card h2 { font-size: 0.9rem; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
         .card.green { border-left-color: var(--success); }
-        .card.yellow { border-left-color: var(--warning); }
-        .card.blue { border-left-color: var(--blue); }
-        .card.purple { border-left-color: var(--purple); }
-        .card.orange { border-left-color: var(--orange); }
-        .card.brown { border-left-color: var(--brown); }
-        
-        .card h2 { 
-            color: var(--accent); 
-            font-size: 0.95em; 
-            margin-bottom: 10px;
-        }
         .card.green h2 { color: var(--success); }
-        .card.yellow h2 { color: var(--warning); }
+        .card.blue { border-left-color: var(--blue); }
         .card.blue h2 { color: var(--blue); }
+        .card.yellow { border-left-color: var(--warning); }
+        .card.yellow h2 { color: var(--warning); }
+        .card.purple { border-left-color: var(--purple); }
         .card.purple h2 { color: var(--purple); }
+        .card.orange { border-left-color: var(--orange); }
         .card.orange h2 { color: var(--orange); }
-        .card.brown h2 { color: var(--brown); }
-        
-        .card ul { margin: 0; padding-left: 16px; }
-        .card li { margin-bottom: 5px; color: var(--muted); font-size: 0.85em; }
-        .card li strong { color: var(--text); }
-        .card p.empty { color: var(--muted); font-size: 0.8em; font-style: italic; }
-        
-        table { width: 100%; border-collapse: collapse; font-size: 0.8em; }
-        th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--bg); }
-        th { background: var(--accent2); color: var(--text); font-weight: 600; }
-        td { color: var(--muted); }
-        td strong { color: var(--text); }
-        
-        .wide { grid-column: span 2; }
-        .full { grid-column: span 3; }
-        @media (max-width: 1000px) { .full { grid-column: span 2; } }
-        @media (max-width: 600px) { .wide, .full { grid-column: span 1; } }
-        
-        .tag { display: inline-block; background: var(--accent2); padding: 1px 6px; border-radius: 3px; font-size: 0.7em; margin-left: 4px; }
-        
-        .footer { text-align: center; color: var(--muted); font-size: 0.75em; margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--card); }
-        .footer a { color: var(--accent); }
+        .item { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+        .item:last-child { border-bottom: none; }
+        .item strong { color: var(--text); }
+        .item span { color: var(--muted); font-size: 0.8rem; }
+        .empty { color: var(--muted); font-style: italic; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        th { text-align: left; padding: 8px; background: rgba(255,255,255,0.05); color: var(--muted); }
+        td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .section { margin-bottom: 25px; }
+        .section h2 { font-size: 1rem; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid var(--accent2); }
+        .principles { background: var(--card); border-radius: 12px; padding: 18px; }
+        .principles li { padding: 5px 0; font-size: 0.8rem; }
+        ul { list-style: none; }
+        li::before { content: "•"; color: var(--accent); margin-right: 8px; }
     </style>
 </head>
 <body>
-    <div class="header">
+    <div class="container">
         <h1>📋 Damon Dashboard</h1>
-        <div class="updated">Last updated: 2026-01-29 08:26 SGT • Auto-refreshes every 5 min</div>
-    </div>
-
-    <div class="grid">
-        <!-- Row 1: Status Cards -->
-        <div class="card">
-            <h2>🔴 ACTIVE (doing now)</h2>
-            <p class="empty">Nothing currently in progress</p>
+        <p class="subtitle">Last updated: 2026-01-29 07:52 SGT • Auto-refreshes every 5 min</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h2>🔴 ACTIVE (doing now)</h2>
+                <p class="empty">Nothing currently in progress</p>
+            </div>
+            <div class="card yellow">
+                <h2>🟡 IN PROGRESS (halfway)</h2>
+                <p class="empty">Nothing in progress</p>
+            </div>
+            <div class="card blue">
+                <h2>👁️ OBSERVING</h2>
+                <div class="item"><strong>Afternoon Research Report</strong> — Daily 3pm SGT cron</div>
+                <div class="item"><strong>3x Daily Funding Briefings</strong> — Morning/Afternoon/Evening</div>
+                <div class="item"><strong>Discord Sentiment</strong> — Browser Relay pipeline</div>
+                <div class="item"><strong>Momo ↔ Damon Comms</strong> — WhatsApp MCP bridge</div>
+                <div class="item"><strong>Dashboard Auto-Sync</strong> — GitHub Pages push</div>
+            </div>
         </div>
         
-        <div class="card yellow">
-            <h2>🟡 IN PROGRESS (halfway)</h2>
-            <p class="empty">Nothing in progress</p>
-        </div>
-        
-        <div class="card yellow">
-            <h2>👁️ OBSERVING</h2>
-            <ul>
-                <li><strong>Discord Sentiment</strong> — Browser Relay pipeline <span class="tag">01-28</span></li>
-                <li><strong>Momo ↔ Damon</strong> — WhatsApp MCP bridge <span class="tag">01-28</span></li>
-                <li><strong>Dashboard Sync</strong> — GitHub Pages auto-push <span class="tag">01-28</span></li>
-            </ul>
-        </div>
-
-        <!-- Row 2 -->
-        <div class="card blue">
-            <h2>🔵 KIV (parked)</h2>
-            <ul>
-                <li><strong>Multi-DEX Discord</strong> — Scale to 3 DEXes when bro deploys capital</li>
-            </ul>
-        </div>
-        
-        <div class="card orange">
-            <h2>🟠 BLOCKED ON BRO</h2>
-            <p class="empty">Nothing blocked</p>
-        </div>
-        
-        <div class="card brown">
-            <h2>🟤 ABANDONED</h2>
-            <ul>
-                <li><strong>Perp DEX API</strong> — HL works, others TBD <span class="tag">01-28</span></li>
-                <li><strong>App Building</strong> — Ideas documented <span class="tag">01-28</span></li>
-            </ul>
+        <div class="grid">
+            <div class="card purple">
+                <h2>🔵 KIV (parked)</h2>
+                <div class="item"><strong>Multi-DEX Discord</strong> — When bro deploys capital elsewhere</div>
+            </div>
+            <div class="card orange">
+                <h2>🟠 BLOCKED ON BRO</h2>
+                <p class="empty">Nothing blocked</p>
+            </div>
+            <div class="card">
+                <h2>🟤 ABANDONED</h2>
+                <div class="item"><strong>Perp DEX API Monitor</strong> — HL works, others TBD</div>
+                <div class="item"><strong>App Building</strong> — Ideas documented</div>
+            </div>
         </div>
 
-        <!-- Row 3: Skills & Completed -->
-        <div class="card purple">
-            <h2>🧙 SKILLS</h2>
-            <table>
-                <tr><th>Skill</th><th>Function</th></tr>
-                <tr><td><strong>straits-times-headlines</strong></td><td>Top 10 ST headlines (mobile Playwright)</td></tr>
-            </table>
-            <p class="empty" style="margin-top:8px;">Future: hyperliquid-oi, paradex-sentiment, aqi-singapore, crypto-movers</p>
-        </div>
-        
-        <div class="card green wide">
-            <h2>✅ COMPLETED (13 items)</h2>
-            <ul>
-                <li><strong>ST Headlines Extraction</strong> — Playwright mobile view, scroll & Y-sort <span class="tag">01-29</span></li>
-                <li><strong>GitHub CLI Auth</strong> — damontay043 device flow <span class="tag">01-29</span></li>
-                <li><strong>Dashboard + GitHub Pages</strong> — Auto-refresh 5 min <span class="tag">01-28</span></li>
-                <li><strong>Calendar Integration</strong> — iCal + 3-tier reminders <span class="tag">01-28</span></li>
-                <li><strong>Groq Transcription</strong> — WhatsApp voice notes <span class="tag">01-28</span></li>
-                <li><strong>Brave Search</strong> — Web search enabled <span class="tag">01-28</span></li>
-                <li><strong>Chrome + Playwright</strong> — Web automation <span class="tag">01-28</span></li>
-                <li><strong>AQI Monitoring</strong> — 3 regions, heartbeat <span class="tag">01-27</span></li>
-                <li><strong>Crypto Movers</strong> — Top 20, ±8% alerts <span class="tag">01-27</span></li>
-                <li><strong>Morning Briefing</strong> — 7am SGT cron <span class="tag">01-27</span></li>
-                <li><strong>TTS</strong> — en-SG-WayneNeural <span class="tag">01-27</span></li>
-                <li><strong>Node Host</strong> — Scarlet2023 paired <span class="tag">01-27</span></li>
-                <li><strong>Chat Logging</strong> — Self-logging to node <span class="tag">01-27</span></li>
-            </ul>
+        <div class="grid">
+            <div class="card green">
+                <h2>🛠️ SKILLS</h2>
+                <table>
+                    <tr><th>Skill</th><th>Function</th></tr>
+                    <tr><td><strong>/last30days</strong></td><td>X/Twitter + web research (xAI Grok). --days=N or --hours=N</td></tr>
+                    <tr><td><strong>/weather</strong></td><td>Weather forecasts (no API key)</td></tr>
+                    <tr><td><strong>/straits-times-headlines</strong></td><td>Top 10 ST headlines (Playwright)</td></tr>
+                </table>
+                <p style="margin-top:10px;font-size:0.75rem;color:var(--muted);">APIs: xAI Grok, Brave, Google Calendar, Paradex, Groq, Hyperliquid, Loris Tools, CoinGecko, aqicn.org</p>
+            </div>
+            <div class="card green">
+                <h2>✅ COMPLETED (recent)</h2>
+                <div class="item"><strong>/last30days Skill</strong> — Custom timeframes: --days=N, --hours=N</div>
+                <div class="item"><strong>xAI API Key</strong> — Prepaid credits at console.x.ai</div>
+                <div class="item"><strong>BTC Basis Spread</strong> — Mark vs Index on HL + Paradex</div>
+                <div class="item"><strong>3x Daily Funding Briefings</strong> — 7am/3pm/9pm SGT</div>
+                <div class="item"><strong>Afternoon Research Report</strong> — Daily 3pm deep-dive</div>
+                <div class="item"><strong>Protocol X Sentiment</strong> — Paradex, WBTC, Aave FUD check</div>
+                <div class="item"><strong>ST Headlines Extraction</strong> — Mobile Playwright</div>
+                <div class="item"><strong>Paradex API</strong> — Read-only JWT configured</div>
+                <div class="item"><strong>Google Calendar</strong> — Write access to shared calendar</div>
+            </div>
         </div>
 
-        <!-- Row 4: Routines -->
-        <div class="card wide">
-            <h2>⏰ HEARTBEAT (every 30 min)</h2>
-            <table>
-                <tr><th>#</th><th>Check</th><th>When</th><th>Alert</th></tr>
-                <tr><td>1</td><td>AQI (3 regions)</td><td>6am-11pm</td><td>Always report</td></tr>
-                <tr><td>2</td><td>Crypto (top 20)</td><td>Always</td><td>If ±8%</td></tr>
-                <tr><td>3</td><td>Calendar</td><td>Always</td><td>3d/1d/same-day</td></tr>
-                <tr><td>4</td><td>Dashboard sync</td><td>Always</td><td>Silent push</td></tr>
-                <tr><td>5</td><td>Discord (Paradex)</td><td>6am-11pm</td><td>&lt;40 or FUD</td></tr>
-                <tr><td>6</td><td>Node health</td><td>Always</td><td>If offline</td></tr>
-                <tr><td>7</td><td>Memory maint.</td><td>Periodic</td><td>Silent</td></tr>
-            </table>
-        </div>
-        
-        <div class="card">
-            <h2>🌅 MORNING BRIEFING (7am)</h2>
-            <ul>
-                <li>🌤️ Weather</li>
-                <li>🫁 AQI (3 regions)</li>
-                <li>📅 Calendar (24-48h)</li>
-                <li>📰 News (Moltbot, crypto)</li>
-                <li>📈 Market Ratios (BTC/Gold)</li>
-                <li>💰 Crypto overnight</li>
-                <li>📡 Discord overnight</li>
-                <li>📂 Workspace changes</li>
-                <li>🎲 Vault nudge</li>
-                <li>🖥️ Node status</li>
-                <li>📊 Hyperliquid OI</li>
-                <li>📰 ST Headlines</li>
-                <li>💡 Joke</li>
-            </ul>
-        </div>
-
-        <!-- Row 5: Principles & Archive -->
-        <div class="card full">
-            <h2>🧭 CORE PRINCIPLES (8)</h2>
-            <ul>
-                <li><strong>1. Process > Memory</strong> — Context compacts. Processes survive. Write it down or it doesn't exist.</li>
-                <li><strong>2. Dashboard = Truth</strong> — Changes go here immediately. No "I'll add it later."</li>
-                <li><strong>3. Bro = Safety Check</strong> — Dashboard visible to bro. He catches drift.</li>
-                <li><strong>4. Defense in Depth</strong> — Dashboard + MEMORY.md + HEARTBEAT.md + daily notes.</li>
-                <li><strong>5. Text > Brain</strong> — Write to file. Mental notes die.</li>
-                <li><strong>6. Don't Lose Jingzhou</strong> — Check what exists before building. Coordinate with Momo.</li>
-                <li><strong>7. No Data Loss on Format Changes</strong> — Verify ALL sections preserved after redesigns.</li>
-                <li><strong>8. Backup Before Big Changes</strong> — Keep backups in memory/dashboard-backups/. Compare after.</li>
-            </ul>
+        <div class="grid">
+            <div class="card blue">
+                <h2>💓 HEARTBEAT (every 30 min)</h2>
+                <table>
+                    <tr><th>#</th><th>Check</th><th>When</th><th>Alert</th></tr>
+                    <tr><td>1</td><td>AQI (3 regions)</td><td>6am-11pm</td><td>Always report</td></tr>
+                    <tr><td>2</td><td>Crypto (top 20)</td><td>Always</td><td>If ±8%</td></tr>
+                    <tr><td>3</td><td>BTC Basis Spread</td><td>Always</td><td>Always show</td></tr>
+                    <tr><td>4</td><td>Calendar</td><td>Always</td><td>3d/1d/same-day</td></tr>
+                    <tr><td>5</td><td>Dashboard sync</td><td>Always</td><td>Silent push</td></tr>
+                    <tr><td>6</td><td>Discord (Paradex)</td><td>6am-11pm</td><td>&lt;40 or FUD</td></tr>
+                    <tr><td>7</td><td>Node health</td><td>Always</td><td>If offline</td></tr>
+                    <tr><td>8</td><td>Memory maint.</td><td>Periodic</td><td>Silent</td></tr>
+                </table>
+            </div>
+            <div class="card blue">
+                <h2>🌅 MORNING BRIEFING (7am)</h2>
+                <ul>
+                    <li>🌤️ Weather</li>
+                    <li>🫁 AQI (3 regions)</li>
+                    <li>📅 Calendar (24-48h)</li>
+                    <li>📈 Market Ratios (BTC/Gold)</li>
+                    <li>📊 BTC Basis Spread</li>
+                    <li>💰 Funding Rates</li>
+                    <li>🐦 Protocol X Sentiment</li>
+                    <li>📊 Hyperliquid OI</li>
+                    <li>💰 Crypto overnight</li>
+                    <li>📡 Discord overnight</li>
+                    <li>📰 Straits Times</li>
+                    <li>📰 Personalized Stories</li>
+                    <li>🎯 Daily Task Suggestions</li>
+                    <li>📂 Workspace changes</li>
+                    <li>🎲 Vault nudge</li>
+                    <li>🖥️ Node status</li>
+                    <li>💡 Joke</li>
+                </ul>
+            </div>
         </div>
 
-        <div class="card">
-            <h2>🗄️ ARCHIVED</h2>
-            <p class="empty">Completed >14 days and Abandoned >30 days moved here. Cleared monthly.</p>
+        <div class="section">
+            <div class="principles">
+                <h2>🧭 CORE PRINCIPLES (8)</h2>
+                <ul>
+                    <li><strong>1. Process > Memory</strong> — Context compacts. Processes survive. Write it down or it doesn't exist.</li>
+                    <li><strong>2. Dashboard = Truth</strong> — Changes go here immediately. No "I'll add it later."</li>
+                    <li><strong>3. Bro = Safety Check</strong> — Dashboard visible to bro. He catches drift.</li>
+                    <li><strong>4. Defense in Depth</strong> — Dashboard + MEMORY.md + HEARTBEAT.md + daily notes.</li>
+                    <li><strong>5. Text > Brain</strong> — Write to file. Mental notes die.</li>
+                    <li><strong>6. Don't Lose Jingzhou</strong> — Check what exists before building. Coordinate with Momo.</li>
+                    <li><strong>7. No Data Loss on Format Changes</strong> — Verify ALL sections preserved after redesigns.</li>
+                    <li><strong>8. Backup Before Big Changes</strong> — Keep backups in memory/dashboard-backups/. Compare after.</li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="footer">
-        Powered by Damon 🤖 • <a href="https://github.com/damontay043/damon-dashboard">GitHub</a> • DASHBOARD.md is source of truth
+        <div class="card" style="background: #1e1e2e; border-left-color: var(--muted);">
+            <h2 style="color: var(--muted);">📦 ARCHIVED</h2>
+            <p class="empty">Completed > 14 days and Abandoned > 30 days moved here. Cleared monthly.</p>
+        </div>
     </div>
 </body>
 </html>
