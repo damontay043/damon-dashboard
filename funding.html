@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300">
+    <title>Funding Rate Dashboard | Damon</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle { text-align: center; color: #888; margin-bottom: 30px; }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card h3 {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .card .sub { color: #888; font-size: 0.9rem; margin-top: 4px; }
+        .hyperliquid .value { color: #00d4ff; }
+        .paradex .value { color: #ff6b6b; }
+        .spread .value { color: #ffd93d; }
+        .positive { color: #4ade80 !important; }
+        .negative { color: #f87171 !important; }
+        .chart-container {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .chart-container h3 { margin-bottom: 20px; }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+        .timestamp { 
+            text-align: center; 
+            color: #666; 
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Funding Rate Dashboard</h1>
+        <p class="subtitle">BTC Perpetual Funding Rate Comparison</p>
+        <p class="timestamp">Last updated: 2026-01-29T04:05:50 UTC</p>
+        
+        <div class="cards">
+            <div class="card hyperliquid">
+                <h3>Hyperliquid</h3>
+                <div class="value">9.7%</div>
+                <div class="sub">24h Avg APR</div>
+                <div class="sub">Current: 0.0013%/hr</div>
+            </div>
+            
+            <div class="card paradex">
+                <h3>Paradex</h3>
+                <div class="value">87.6%</div>
+                <div class="sub">Current APR</div>
+                <div class="sub">Rate: 0.0100%/hr</div>
+            </div>
+            
+            <div class="card spread">
+                <h3>Spread (PDX - HL)</h3>
+                <div class="value positive">+77.9%</div>
+                <div class="sub">APR Difference</div>
+                <div class="sub">Paradex paying more</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h3>📈 Funding Rate History (APR %)</h3>
+            <canvas id="fundingChart"></canvas>
+        </div>
+        
+        <div class="footer">
+            <p>Data sources: Hyperliquid API (direct), Paradex via Loris Tools</p>
+            <p>Auto-refreshes every 5 minutes | Polls hourly</p>
+        </div>
+    </div>
+    
+    <script>
+        const ctx = document.getElementById('fundingChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["2026-01-29 04:05"],
+                datasets: [
+                    {
+                        label: 'Hyperliquid APR %',
+                        data: [10.95],
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Paradex APR %',
+                        data: [87.60],
+                        borderColor: '#ff6b6b',
+                        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#888' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { 
+                            color: '#888',
+                            maxTicksLimit: 8
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: '#eee' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
