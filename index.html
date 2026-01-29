@@ -15,6 +15,10 @@
             --muted: #a0a0a0;
             --success: #4ade80;
             --warning: #fbbf24;
+            --blue: #60a5fa;
+            --purple: #a78bfa;
+            --orange: #fb923c;
+            --brown: #a8a29e;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
@@ -23,153 +27,162 @@
             color: var(--text); 
             line-height: 1.5; 
             padding: 20px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .header {
             text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
             border-bottom: 2px solid var(--accent);
         }
-        .header h1 { color: var(--accent); font-size: 1.8em; margin-bottom: 5px; }
-        .header .updated { color: var(--muted); font-size: 0.85em; }
+        .header h1 { color: var(--accent); font-size: 1.6em; margin-bottom: 4px; }
+        .header .updated { color: var(--muted); font-size: 0.8em; }
         
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 15px;
             max-width: 1400px;
             margin: 0 auto;
         }
-        @media (max-width: 1000px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
         
         .card {
             background: var(--card);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 8px;
+            padding: 12px;
             border-left: 4px solid var(--accent);
         }
         .card.green { border-left-color: var(--success); }
         .card.yellow { border-left-color: var(--warning); }
-        .card.blue { border-left-color: #60a5fa; }
-        .card.purple { border-left-color: #a78bfa; }
+        .card.blue { border-left-color: var(--blue); }
+        .card.purple { border-left-color: var(--purple); }
+        .card.orange { border-left-color: var(--orange); }
+        .card.brown { border-left-color: var(--brown); }
         
         .card h2 { 
             color: var(--accent); 
-            font-size: 1em; 
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.95em; 
+            margin-bottom: 10px;
         }
         .card.green h2 { color: var(--success); }
         .card.yellow h2 { color: var(--warning); }
-        .card.blue h2 { color: #60a5fa; }
-        .card.purple h2 { color: #a78bfa; }
+        .card.blue h2 { color: var(--blue); }
+        .card.purple h2 { color: var(--purple); }
+        .card.orange h2 { color: var(--orange); }
+        .card.brown h2 { color: var(--brown); }
         
-        .card ul { margin: 0; padding-left: 18px; }
-        .card li { margin-bottom: 6px; color: var(--muted); font-size: 0.9em; }
+        .card ul { margin: 0; padding-left: 16px; }
+        .card li { margin-bottom: 5px; color: var(--muted); font-size: 0.85em; }
         .card li strong { color: var(--text); }
+        .card p.empty { color: var(--muted); font-size: 0.8em; font-style: italic; }
         
-        .card p { color: var(--muted); font-size: 0.85em; font-style: italic; }
-        
-        table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
-        th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--bg); }
-        th { background: var(--accent2); color: var(--text); font-weight: 600; font-size: 0.8em; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8em; }
+        th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--bg); }
+        th { background: var(--accent2); color: var(--text); font-weight: 600; }
         td { color: var(--muted); }
         td strong { color: var(--text); }
         
         .wide { grid-column: span 2; }
-        @media (max-width: 600px) {
-            .wide { grid-column: span 1; }
-        }
+        .full { grid-column: span 3; }
+        @media (max-width: 1000px) { .full { grid-column: span 2; } }
+        @media (max-width: 600px) { .wide, .full { grid-column: span 1; } }
         
-        .footer { 
-            text-align: center; 
-            color: var(--muted); 
-            font-size: 0.8em; 
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid var(--card);
-        }
+        .tag { display: inline-block; background: var(--accent2); padding: 1px 6px; border-radius: 3px; font-size: 0.7em; margin-left: 4px; }
         
-        .tag {
-            display: inline-block;
-            background: var(--accent2);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75em;
-            margin-left: 5px;
-        }
+        .footer { text-align: center; color: var(--muted); font-size: 0.75em; margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--card); }
+        .footer a { color: var(--accent); }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>📋 Damon Dashboard</h1>
-        <div class="updated">Last updated: 2026-01-29 08:00 SGT • Auto-refreshes every 5 min</div>
+        <div class="updated">Last updated: 2026-01-29 08:05 SGT • Auto-refreshes every 5 min</div>
     </div>
 
     <div class="grid">
         <!-- Row 1: Status Cards -->
         <div class="card">
-            <h2>🔴 ACTIVE</h2>
-            <p>Nothing currently in progress</p>
+            <h2>🔴 ACTIVE (doing now)</h2>
+            <p class="empty">Nothing currently in progress</p>
+        </div>
+        
+        <div class="card yellow">
+            <h2>🟡 IN PROGRESS (halfway)</h2>
+            <p class="empty">Nothing in progress</p>
         </div>
         
         <div class="card yellow">
             <h2>👁️ OBSERVING</h2>
             <ul>
-                <li><strong>Discord Sentiment</strong> — Browser Relay pipeline</li>
-                <li><strong>Momo ↔ Damon</strong> — WhatsApp MCP bridge</li>
-                <li><strong>Dashboard Sync</strong> — GitHub Pages auto-push</li>
-            </ul>
-        </div>
-        
-        <div class="card blue">
-            <h2>🔵 KIV</h2>
-            <ul>
-                <li><strong>Multi-DEX Discord</strong> — Scale to 3 DEXes when needed</li>
+                <li><strong>Discord Sentiment</strong> — Browser Relay pipeline <span class="tag">01-28</span></li>
+                <li><strong>Momo ↔ Damon</strong> — WhatsApp MCP bridge <span class="tag">01-28</span></li>
+                <li><strong>Dashboard Sync</strong> — GitHub Pages auto-push <span class="tag">01-28</span></li>
             </ul>
         </div>
 
-        <!-- Row 2: Skills & Completed -->
+        <!-- Row 2 -->
+        <div class="card blue">
+            <h2>🔵 KIV (parked)</h2>
+            <ul>
+                <li><strong>Multi-DEX Discord</strong> — Scale to 3 DEXes when bro deploys capital</li>
+            </ul>
+        </div>
+        
+        <div class="card orange">
+            <h2>🟠 BLOCKED ON BRO</h2>
+            <p class="empty">Nothing blocked</p>
+        </div>
+        
+        <div class="card brown">
+            <h2>🟤 ABANDONED</h2>
+            <ul>
+                <li><strong>Perp DEX API</strong> — HL works, others TBD <span class="tag">01-28</span></li>
+                <li><strong>App Building</strong> — Ideas documented <span class="tag">01-28</span></li>
+            </ul>
+        </div>
+
+        <!-- Row 3: Skills & Completed -->
         <div class="card purple">
             <h2>🧙 SKILLS</h2>
             <table>
                 <tr><th>Skill</th><th>Function</th></tr>
-                <tr><td><strong>straits-times-headlines</strong></td><td>Top 10 ST headlines</td></tr>
+                <tr><td><strong>straits-times-headlines</strong></td><td>Top 10 ST headlines (mobile Playwright)</td></tr>
             </table>
-            <p style="margin-top: 10px;">Future: hyperliquid-oi, paradex-sentiment, aqi-singapore</p>
+            <p class="empty" style="margin-top:8px;">Future: hyperliquid-oi, paradex-sentiment, aqi-singapore, crypto-movers</p>
         </div>
         
         <div class="card green wide">
             <h2>✅ COMPLETED</h2>
             <ul>
-                <li><strong>ST Headlines Extraction</strong> — Playwright mobile view <span class="tag">01-29</span></li>
+                <li><strong>ST Headlines Extraction</strong> — Playwright mobile view, scroll & Y-sort <span class="tag">01-29</span></li>
                 <li><strong>GitHub CLI Auth</strong> — damontay043 device flow <span class="tag">01-29</span></li>
-                <li><strong>Dashboard + GitHub Pages</strong> — Auto-refresh <span class="tag">01-28</span></li>
+                <li><strong>Dashboard + GitHub Pages</strong> — Auto-refresh 5 min <span class="tag">01-28</span></li>
                 <li><strong>Calendar Integration</strong> — iCal + 3-tier reminders <span class="tag">01-28</span></li>
                 <li><strong>Groq Transcription</strong> — WhatsApp voice notes <span class="tag">01-28</span></li>
-                <li><strong>AQI + Crypto Monitoring</strong> — Heartbeat checks <span class="tag">01-27</span></li>
-                <li><strong>Morning Briefing Cron</strong> — 7am SGT daily <span class="tag">01-27</span></li>
+                <li><strong>Brave Search</strong> — Web search enabled <span class="tag">01-28</span></li>
+                <li><strong>Chrome + Playwright</strong> — Web automation <span class="tag">01-28</span></li>
+                <li><strong>AQI Monitoring</strong> — 3 regions, heartbeat <span class="tag">01-27</span></li>
+                <li><strong>Crypto Movers</strong> — Top 20, ±8% alerts <span class="tag">01-27</span></li>
+                <li><strong>Morning Briefing</strong> — 7am SGT cron <span class="tag">01-27</span></li>
+                <li><strong>TTS</strong> — en-SG-WayneNeural <span class="tag">01-27</span></li>
+                <li><strong>Node Host</strong> — Scarlet2023 paired <span class="tag">01-27</span></li>
             </ul>
         </div>
 
-        <!-- Row 3: Routines -->
+        <!-- Row 4: Routines -->
         <div class="card wide">
-            <h2>⏰ HEARTBEAT ROUTINE (every 30 min)</h2>
+            <h2>⏰ HEARTBEAT (every 30 min)</h2>
             <table>
                 <tr><th>#</th><th>Check</th><th>When</th><th>Alert</th></tr>
-                <tr><td>1</td><td><strong>AQI</strong></td><td>6am-11pm</td><td>Always report</td></tr>
-                <tr><td>2</td><td><strong>Crypto</strong></td><td>Always</td><td>If ±8%</td></tr>
-                <tr><td>3</td><td><strong>Calendar</strong></td><td>Always</td><td>3d/1d/same-day</td></tr>
-                <tr><td>4</td><td><strong>Dashboard</strong></td><td>Always</td><td>Silent push</td></tr>
-                <tr><td>5</td><td><strong>Discord</strong></td><td>6am-11pm</td><td>Score &lt;40 or FUD</td></tr>
+                <tr><td>1</td><td>AQI (3 regions)</td><td>6am-11pm</td><td>Always report</td></tr>
+                <tr><td>2</td><td>Crypto (top 20)</td><td>Always</td><td>If ±8%</td></tr>
+                <tr><td>3</td><td>Calendar</td><td>Always</td><td>3d/1d/same-day</td></tr>
+                <tr><td>4</td><td>Dashboard sync</td><td>Always</td><td>Silent push</td></tr>
+                <tr><td>5</td><td>Discord (Paradex)</td><td>6am-11pm</td><td>&lt;40 or FUD</td></tr>
+                <tr><td>6</td><td>Node health</td><td>Always</td><td>If offline</td></tr>
+                <tr><td>7</td><td>Memory maint.</td><td>Periodic</td><td>Silent</td></tr>
             </table>
         </div>
         
@@ -179,35 +192,41 @@
                 <li>🌤️ Weather</li>
                 <li>🫁 AQI (3 regions)</li>
                 <li>📅 Calendar (24-48h)</li>
-                <li>📈 Market Ratios</li>
+                <li>📰 News (Moltbot, crypto)</li>
+                <li>📈 Market Ratios (BTC/Gold)</li>
+                <li>💰 Crypto overnight</li>
+                <li>📡 Discord overnight</li>
+                <li>📂 Workspace changes</li>
+                <li>🎲 Vault nudge</li>
+                <li>🖥️ Node status</li>
                 <li>📊 Hyperliquid OI</li>
                 <li>📰 ST Headlines</li>
-                <li>💡 Joke of the day</li>
+                <li>💡 Joke</li>
             </ul>
         </div>
 
-        <!-- Row 4: Principles -->
-        <div class="card wide">
+        <!-- Row 5: Principles & Archive -->
+        <div class="card full">
             <h2>🧭 CORE PRINCIPLES</h2>
             <ul>
-                <li><strong>Process > Memory</strong> — Context compacts. Files survive.</li>
-                <li><strong>Dashboard = Truth</strong> — Changes go here immediately.</li>
-                <li><strong>Text > Brain</strong> — Write it down. Mental notes die.</li>
-                <li><strong>Don't Lose Jingzhou</strong> — Check before building.</li>
+                <li><strong>1. Process > Memory</strong> — Context compacts. Processes survive. Write it down or it doesn't exist.</li>
+                <li><strong>2. Dashboard = Truth</strong> — Changes go here immediately. No "I'll add it later."</li>
+                <li><strong>3. Bro = Safety Check</strong> — Dashboard visible to bro. He catches drift.</li>
+                <li><strong>4. Defense in Depth</strong> — Dashboard + MEMORY.md + HEARTBEAT.md + daily notes.</li>
+                <li><strong>5. Text > Brain</strong> — Write to file. Mental notes die.</li>
+                <li><strong>6. Don't Lose Jingzhou</strong> — Check what exists before building. Coordinate with Momo.</li>
+                <li><strong>7. No Data Loss on Format Changes</strong> — When redesigning, verify ALL sections preserved. Never sacrifice content for aesthetics.</li>
             </ul>
         </div>
-        
+
         <div class="card">
-            <h2>🟤 PARKED</h2>
-            <ul>
-                <li><strong>Perp DEX API</strong> — HL works, others TBD</li>
-                <li><strong>App Building</strong> — Ideas documented</li>
-            </ul>
+            <h2>🗄️ ARCHIVED</h2>
+            <p class="empty">Completed >14 days and Abandoned >30 days moved here. Cleared monthly.</p>
         </div>
     </div>
 
     <div class="footer">
-        Powered by Damon 🤖 • <a href="https://github.com/damontay043/damon-dashboard" style="color: var(--accent);">GitHub</a>
+        Powered by Damon 🤖 • <a href="https://github.com/damontay043/damon-dashboard">GitHub</a> • DASHBOARD.md is source of truth
     </div>
 </body>
 </html>
