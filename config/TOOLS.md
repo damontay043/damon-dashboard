@@ -196,6 +196,21 @@ web_search("Singapore AQI today")
   4. `browser action=snapshot targetId=[id]` — use that specific tab
 - This ensures you're using bro's tab that already has relay enabled
 
+**Discord Sentiment Report Format (2026-01-30):**
+Must follow this format — no generic "Topics: X, Y" allowed:
+```
+💬 *Discord Update ([HH:MM]-[HH:MM] SGT)*
+
+*Score: XX/100 (Level)*
+
+*Key conversations:*
+• *[HH:MM]* — [Username]: "[actual quote]"
+• *[HH:MM]-[HH:MM]* — [User] asks "[quote]" → [Responder]: "[quote]"
+[5-10 conversations with timestamps, names, quotes]
+
+*Vibe:* [2-3 sentences on mood/energy]
+```
+
 ---
 
 ## 🗣️ TTS (Text-to-Speech)
