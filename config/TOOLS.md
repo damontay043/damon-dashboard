@@ -181,11 +181,12 @@ web_search("Singapore AQI today")
 
 **Limitation:** Browser only, not full desktop. For full desktop, would need RDP.
 
-**Discord Scroll Fix (2026-01-30):**
-- Discord uses a virtualized message list that doesn't respond to End/Ctrl+End
-- **Use PageDown key x5-10** to scroll to latest messages
-- Then take snapshot to read current chat
-- Always verify message timestamps match expected timeframe before reporting
+**Discord Scroll Fix (2026-01-30, updated):**
+- Discord uses a virtualized message list that doesn't respond to End/Ctrl+End or PageDown reliably
+- **BEST METHOD:** Look for "Jump to last unread message" button in snapshot, then CLICK it
+- This button appears when there are unread messages and jumps directly to current
+- After clicking, take another snapshot — messages will be current
+- Fallback: If no jump button exists, messages may already be current
 
 **⚠️ CRITICAL: Use Existing Tabs, Never Open New (2026-01-30):**
 - `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE for monitoring!
