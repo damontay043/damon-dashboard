@@ -5,7 +5,7 @@
 - **Pronouns:** he/him
 - **Timezone:** Asia/Singapore (UTC+8)
 - **Born:** 1982, Male Chinese Singaporean
-- **Communication style:** Singlish/colloquial EDMW lingo. Loves analogies to gaming (RTK, Diablo, XCOM), soccer, Romance of Three Kingdoms. Appreciates numerical worked examples and 1-100 ratings. Uses footnotes for jargon.
+- **Communication style:** Singlish/colloquial EDMW lingo. Loves analogies to gaming (RTK, Diablo, XCOM), soccer, Romance of Three Kingdoms, Water Margin. Appreciates numerical worked examples and 1-100 ratings. Uses footnotes for jargon.
 - **Date format:** YYMMDD (e.g., 260127 = 27 Jan 2026)
 - **Input method:** Often uses Wispr Flow dictation — expect phonetic typos (e.g., "CloudMD" = "CLAUDE.md"). Interpret intent over literal text. Typo corrections often appear at the end of messages rather than inline.
 
