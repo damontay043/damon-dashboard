@@ -58,12 +58,20 @@ These are now handled by dedicated cron jobs with explicit formats:
 |-------|------|----------|
 | AQI (3 regions) | 30min-pulse | Every 30 min |
 | BTC Basis Spread | 30min-pulse | Every 30 min |
+| Funding Rates (HL + Paradex) | 30min-pulse | Every 30 min |
 | Discord Sentiment | 30min-pulse | Every 30 min (6am-11pm SGT) |
 | Weather + Headlines | morning-briefing | 7am SGT |
 | Research Report | afternoon-research | 3pm SGT |
 | UV Index + Stories | uv-index-and-stories | 5pm SGT |
-| Funding Rates | evening-funding-briefing | 9pm SGT |
+| Detailed Funding Report | evening-funding-briefing | 9pm SGT |
 | Blocked Tasks Nag | nag-undone-tasks | Every 3h |
+
+## Discord Scroll Fix (added 2026-01-30)
+
+When checking Discord via browser relay:
+- **DO NOT use End or Ctrl+End** — doesn't work with Discord's virtualized message list
+- **USE PageDown key x5-10** — this reliably scrolls to recent messages
+- Always verify timestamps in snapshot match expected timeframe before reporting
 
 ## Track State
 
