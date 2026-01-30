@@ -57,6 +57,13 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+### 🔄 Config File Sync
+When you edit any core config file (AGENTS.md, SOUL.md, USER.md, IDENTITY.md, TOOLS.md, HEARTBEAT.md, NOW.md):
+1. Also copy to `/tmp/damon-dashboard/config/`
+2. Git commit + push to damontay043/damon-dashboard
+3. This keeps the online config viewer in sync: https://damontay043.github.io/damon-dashboard/config.html
+- Heartbeat also checks for drift and auto-syncs if needed
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.

@@ -17,8 +17,9 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
      • [COIN]: $[price] ([+/-X.X]% 24h)
      ```
 
-2. **Dashboard Sync** — Check if `DASHBOARD.md` has been modified since last GitHub push.
-   - If changed: regenerate HTML, git commit + push to damontay043/damon-dashboard
+2. **Dashboard + Config Sync** — Check if any core files changed since last GitHub push.
+   - Files to sync: `DASHBOARD.md`, `AGENTS.md`, `SOUL.md`, `USER.md`, `IDENTITY.md`, `TOOLS.md`, `HEARTBEAT.md`, `NOW.md`
+   - If changed: copy to `/tmp/damon-dashboard/config/`, regenerate HTML if needed, git commit + push
    - Track in `memory/dashboard-state.json`
    - Silent — don't message bro unless push fails
 
