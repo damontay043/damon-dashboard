@@ -23,9 +23,11 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - Track in `memory/dashboard-state.json`
    - Silent — don't message bro unless push fails
 
-3. **Node Health** — Quick check if Scarlet2023 node is connected.
+3. **Node Health + Memory Sync** — Check if Scarlet2023 node is connected.
    - Only mention if it JUST went offline
    - Don't spam about known offline status
+   - **If online:** Sync `MEMORY.md` to `/mnt/c/pj/clawdbot-shared/vps-config/MEMORY.md`
+   - This lets bro read my memory from his PC
 
 4. **Memory Maintenance** — Periodic (every few days)
    - Review daily notes in `memory/YYYY-MM-DD.md`

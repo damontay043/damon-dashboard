@@ -64,6 +64,12 @@ When you edit any core config file (AGENTS.md, SOUL.md, USER.md, IDENTITY.md, TO
 3. This keeps the online config viewer in sync: https://damontay043.github.io/damon-dashboard/config.html
 - Heartbeat also checks for drift and auto-syncs if needed
 
+### 🧠 MEMORY.md Sync to Node
+- MEMORY.md syncs to Scarlet2023 (bro's PC) when node is online
+- Path: `/mnt/c/pj/clawdbot-shared/vps-config/MEMORY.md`
+- This is PRIVATE (not on public GitHub) — only bro can read it
+- Heartbeat checks and syncs when node is connected
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
