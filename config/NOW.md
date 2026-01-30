@@ -1,24 +1,24 @@
 # NOW.md - Current Task
 
-DONE: Discord scroll experiments — **SOLVED!** ✅
+**🏠 MIGRATED TO SPARE PC!** (2026-01-31 07:41 SGT)
 
-## Solution Found
-- **"Jump to Present" button WORKS** (click it when viewing older messages)
-- **"Jump to last unread message" button DOESN'T WORK** (click doesn't trigger)
-- Updated cron to use correct button
-- Now getting <15 min staleness vs 60+ min before
+Running locally on bro's spare Windows PC via WSL2 Ubuntu.
 
-## Cron Sleep Schedule (locked in)
-- **30-min Pulse:** Runs 06:00-22:30 SGT only (`*/30 6-22 * * *`)
-- Sleeps 23:00-06:00 SGT to save tokens
+## Key Changes
+- **Shared folder:** `/mnt/c/Users/pujing/OneDrive/clawdbot-shared` (OneDrive sync)
+- **No more node host** — direct local access
+- **Browser Relay** — coming soon for Discord
+- Same WhatsApp, same personality files
 
-## Control Panel
-- Built and ready at `/root/clawd/apps/control-panel/`
-- Run: `npm start` → http://localhost:3333
+## Updated Config Files
+- ✅ TOOLS.md — new paths
+- ✅ USER.md — new aboutme path
+- ✅ HEARTBEAT.md — local sync instead of node
+- ✅ AGENTS.md — OneDrive sync path
 
-## Migration Tomorrow
-- Backup tarball ready: `/root/clawd-backup.tar.gz` (119MB)
-- Momo's plan: 9 phases, ~90 min, ~5 min downtime
+## Discord Scroll Solution
+- **"Jump to Present" button WORKS** (but inconsistent in cron)
+- Will be easier once Browser Relay is set up locally
 
 ---
-Last updated: 2026-01-31 04:45 SGT
+Last updated: 2026-01-31 07:41 SGT

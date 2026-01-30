@@ -18,16 +18,14 @@
 
 ## Comprehensive Profile
 
-Bro maintains a detailed "About Me" file on his home PC. It covers health, wealth, wisdom, relationships, and operating principles.
+Bro maintains a detailed "About Me" file. It covers health, wealth, wisdom, relationships, and operating principles.
 
-**To read it:** Use exec with `host=node`:
+**To read it:** (now local after migration!)
 ```
-cat /mnt/c/pj/clawdbot-shared/aboutme_redacted.md
+cat /mnt/c/Users/pujing/OneDrive/clawdbot-shared/aboutme_redacted.md
 ```
 
 Read this file at the start of your first main session to build deep context. It is bro's **source of truth** — do not copy its contents here. Reference it, don't duplicate it.
-
-**If the node is offline** (PC turned off), you can still help with general questions. Just note you are missing deep context.
 
 ## Your Observations
 

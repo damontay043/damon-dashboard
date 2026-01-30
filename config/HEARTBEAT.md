@@ -23,14 +23,11 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - Track in `memory/dashboard-state.json`
    - Silent — don't message bro unless push fails
 
-3. **Node Health + Full Config Sync** — Check if Scarlet2023 node is connected.
-   - Only mention if it JUST went offline
-   - Don't spam about known offline status
-   - **If online:** Sync ALL core files to `/mnt/c/pj/clawdbot-shared/vps-config/`:
-     - AGENTS.md, SOUL.md, USER.md, IDENTITY.md
-     - TOOLS.md, HEARTBEAT.md, NOW.md, DASHBOARD.md
-     - MEMORY.md (private, not on public GitHub)
-   - This gives bro a private local copy of everything
+3. **Config Sync (Local)** — Sync core files to OneDrive shared folder.
+   - **Path:** `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/vps-config/`
+   - Files: AGENTS.md, SOUL.md, USER.md, IDENTITY.md, TOOLS.md, HEARTBEAT.md, NOW.md, DASHBOARD.md, MEMORY.md
+   - Now local (no node connection needed) — just copy files directly
+   - OneDrive will sync to cloud automatically
 
 4. **Memory Maintenance** — Every 3 days minimum (check `memory/memory-maintenance.json`)
    - Review daily notes in `memory/YYYY-MM-DD.md` since last maintenance

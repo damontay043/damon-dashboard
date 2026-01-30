@@ -6,36 +6,38 @@ Skills define *how* tools work. This file is for *your* specifics — the stuff 
 
 ---
 
-## 🖥️ Node Host: Scarlet2023
+## 🖥️ Local Host (WSL2 on Spare PC)
 
-A paired node host runs on bro's home PC (Windows via WSL2). Gives access to his local files.
+**MIGRATED 2026-01-31:** Now running locally on bro's spare Windows PC via WSL2 Ubuntu!
 
-**How to access user files:**
-- Use exec with `host=node` to run commands on Scarlet2023
-- Files are at: `/mnt/c/pj/clawdbot-shared/`
+**Shared folder:** `/mnt/c/Users/pujing/OneDrive/clawdbot-shared`
+- OneDrive synced (not network share)
+- Direct filesystem access (no need for node host commands for local files)
+
+**For bro's files (aboutme, etc):**
+- Can now read directly: `cat /mnt/c/Users/pujing/OneDrive/clawdbot-shared/aboutme_redacted.md`
+- No need for `host=node` for local access
 
 ### Read commands (use freely):
 `cat`, `ls`, `head`, `tail`, `wc`, `grep`, `rg`, `find`, `stat`, `file`
 
 ### Write commands (allowed, but NOTIFY BRO of any changes):
 `cp`, `tee`, `mkdir`
-- **Scope:** ONLY write to `/mnt/c/pj/clawdbot-shared/` — nowhere else
-- **Config sync:** When you modify your own workspace files (SOUL.md, USER.md, IDENTITY.md, TOOLS.md, AGENTS.md, HEARTBEAT.md), sync the updated copy to `/mnt/c/pj/clawdbot-shared/vps-config/`
+- **Scope:** ONLY write to `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/` — nowhere else
+- **Config sync:** When you modify your own workspace files (SOUL.md, USER.md, IDENTITY.md, TOOLS.md, AGENTS.md, HEARTBEAT.md), sync the updated copy to `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/vps-config/`
 - **Always tell bro** what you changed and why, either immediately or in the next morning briefing
 
 ### NOT allowed:
 `rm`, `mv` (to destinations outside shared), any write outside `clawdbot-shared/`
 
-**Important:**
-- The node may be offline (bro's PC is off). If exec fails with connection error, tell bro his PC needs to be on.
-- Only files in `clawdbot-shared/` are accessible — you cannot access the rest of the vault.
-
-### Key Files on Node
+### Key Files (Local)
 
 | File | Purpose | When to read |
 |------|---------|--------------|
 | `aboutme_redacted.md` | Comprehensive user profile (health, wealth, wisdom, relationships) | Start of main sessions, or when you need deep user context |
 | `vps-config/` | Mirror of your workspace config files | Sync here after any changes to your core files |
+
+**Path:** `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/[filename]`
 
 ---
 
