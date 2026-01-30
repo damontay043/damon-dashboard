@@ -1,39 +1,24 @@
 # NOW.md - Current Task
 
-DONE: Built Damon Control Panel! 🎛️
+DONE: Discord scroll experiments — **SOLVED!** ✅
 
-## What It Does:
-- **📍 Current Status** — Shows this NOW.md in real-time
-- **📋 Task Board** — Tasks from DASHBOARD.md organized by status
-- **📁 Memory Browser** — Browse all memory files, click to view
-- **🔍 Search** — Full-text search across all memory files
-- **📰 Briefing Archive** — View past daily notes
-- **💰 Funding Charts** — Visual funding rate history
-- **📝 Quick Notes** — Add notes directly to today's log
-- **⚡ Live Updates** — WebSocket-powered real-time file watching
+## Solution Found
+- **"Jump to Present" button WORKS** (click it when viewing older messages)
+- **"Jump to last unread message" button DOESN'T WORK** (click doesn't trigger)
+- Updated cron to use correct button
+- Now getting <15 min staleness vs 60+ min before
 
-## How to Run:
-```bash
-cd /root/clawd/apps/control-panel
-npm start
-```
-Open http://localhost:3333
+## Cron Sleep Schedule (locked in)
+- **30-min Pulse:** Runs 06:00-22:30 SGT only (`*/30 6-22 * * *`)
+- Sleeps 23:00-06:00 SGT to save tokens
 
-## After Migration:
-On spare PC (WSL2):
-```bash
-cd ~/clawd/apps/control-panel
-npm install  # first time only
-npm start
-```
+## Control Panel
+- Built and ready at `/root/clawd/apps/control-panel/`
+- Run: `npm start` → http://localhost:3333
 
-## Tech Stack:
-- Node.js + Express (backend)
-- Vanilla JS + CSS (frontend - no heavy frameworks)
-- WebSocket for live updates
-- Chokidar for file watching
-- marked.js for markdown rendering
+## Migration Tomorrow
+- Backup tarball ready: `/root/clawd-backup.tar.gz` (119MB)
+- Momo's plan: 9 phases, ~90 min, ~5 min downtime
 
 ---
-Last updated: 2026-01-30 22:55 SGT
-App is RUNNING at http://localhost:3333
+Last updated: 2026-01-31 04:45 SGT
