@@ -43,8 +43,10 @@
 
 ## Lessons Learned (Recent: 2026-01-30)
 - **Discord scroll fix:** End/Ctrl+End doesn't work in Discord's virtualized message list. Use PageDown x5-10 to scroll to latest messages.
+- **Browser relay tab bug:** `browser action=open` creates NEW tab without relay attached. Always use `action=tabs` first to find existing attached tab, then use its `targetId` for snapshots. Never open new tabs for Discord monitoring!
 - **30-min pulse cron** now includes: AQI (3 regions), BTC Basis (HL + Paradex), Funding Rates (HL + Paradex), Discord Sentiment
 - **Funding rate spread** between HL and Paradex can be significant (saw ~20% APR delta) — useful arb signal for bro
+- **Memory maintenance cron** added: Mon/Thu 2pm SGT, auto-updates MEMORY.md + syncs config to GitHub + sends bro .txt file
 
 ## Lessons Learned (Older)
 - data.gov.sg PSI API works but bro doesn't trust NEA numbers

@@ -187,6 +187,15 @@ web_search("Singapore AQI today")
 - Then take snapshot to read current chat
 - Always verify message timestamps match expected timeframe before reporting
 
+**⚠️ CRITICAL: Use Existing Tabs, Never Open New (2026-01-30):**
+- `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE for monitoring!
+- **Correct approach:**
+  1. `browser action=tabs target=host profile=chrome` — list existing tabs
+  2. Find the tab you need (e.g., URL contains 'discord.com')
+  3. Note its `targetId`
+  4. `browser action=snapshot targetId=[id]` — use that specific tab
+- This ensures you're using bro's tab that already has relay enabled
+
 ---
 
 ## 🗣️ TTS (Text-to-Speech)
