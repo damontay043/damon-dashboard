@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damon's Config Files</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e4e4e4;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+        }
+        h1 { font-size: 2.5em; color: #4ecdc4; margin-bottom: 10px; }
+        .subtitle { color: #888; font-size: 1.1em; }
+        .back-link { 
+            display: inline-block; 
+            margin-top: 15px; 
+            color: #4ecdc4; 
+            text-decoration: none;
+        }
+        .back-link:hover { text-decoration: underline; }
+        
+        .file-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid #4ecdc4;
+            border-radius: 5px;
+            color: #4ecdc4;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+        .tab:hover, .tab.active {
+            background: #4ecdc4;
+            color: #1a1a2e;
+        }
+        
+        .content-area {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid #333;
+        }
+        .file-title {
+            font-size: 1.5em;
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        .markdown-content {
+            line-height: 1.7;
+        }
+        .markdown-content h1 { color: #4ecdc4; margin: 25px 0 15px; font-size: 1.8em; }
+        .markdown-content h2 { color: #45b7aa; margin: 20px 0 12px; font-size: 1.4em; }
+        .markdown-content h3 { color: #3da39a; margin: 15px 0 10px; font-size: 1.2em; }
+        .markdown-content p { margin: 10px 0; }
+        .markdown-content ul, .markdown-content ol { margin: 10px 0 10px 25px; }
+        .markdown-content li { margin: 5px 0; }
+        .markdown-content code {
+            background: rgba(78, 205, 196, 0.15);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-content pre {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .markdown-content th, .markdown-content td {
+            padding: 10px;
+            border: 1px solid #444;
+            text-align: left;
+        }
+        .markdown-content th {
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+        }
+        .markdown-content blockquote {
+            border-left: 3px solid #4ecdc4;
+            padding-left: 15px;
+            margin: 15px 0;
+            color: #aaa;
+        }
+        .markdown-content strong { color: #fff; }
+        .markdown-content a { color: #4ecdc4; }
+        
+        .raw-toggle {
+            float: right;
+            padding: 5px 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .raw-toggle:hover { background: rgba(255,255,255,0.15); color: #fff; }
+        .raw-content {
+            display: none;
+            white-space: pre-wrap;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.85em;
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 600px) {
+            .tab { padding: 8px 12px; font-size: 0.8em; }
+            .content-area { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📁 Damon's Config Files</h1>
+            <p class="subtitle">Core personality, tools, and workspace configuration</p>
+            <a href="index.html" class="back-link">← Back to Dashboard</a>
+        </header>
+        
+        <div class="file-tabs" id="tabs"></div>
+        
+        <div class="content-area">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 class="file-title" id="file-title">Select a file</h2>
+                <button class="raw-toggle" onclick="toggleRaw()">View Raw</button>
+            </div>
+            <div class="markdown-content" id="rendered"></div>
+            <pre class="raw-content" id="raw"></pre>
+        </div>
+        
+        <footer>
+            <p>Last updated: <span id="timestamp"></span></p>
+        </footer>
+    </div>
+    
+    <script>
+        const files = [
+            { name: 'AGENTS.md', desc: 'Workspace & behavioral guidelines' },
+            { name: 'SOUL.md', desc: 'Core personality & communication style' },
+            { name: 'USER.md', desc: 'About my human (bro)' },
+            { name: 'IDENTITY.md', desc: 'Who I am' },
+            { name: 'TOOLS.md', desc: 'Superpowers & API access' },
+            { name: 'HEARTBEAT.md', desc: 'Periodic check-in tasks' },
+            { name: 'NOW.md', desc: 'Current task sticky note' },
+            { name: 'DASHBOARD.md', desc: 'Dashboard source' }
+        ];
+        
+        let showRaw = false;
+        
+        function createTabs() {
+            const tabsContainer = document.getElementById('tabs');
+            files.forEach((file, i) => {
+                const tab = document.createElement('button');
+                tab.className = 'tab' + (i === 0 ? ' active' : '');
+                tab.textContent = file.name.replace('.md', '');
+                tab.title = file.desc;
+                tab.onclick = () => loadFile(file.name, tab);
+                tabsContainer.appendChild(tab);
+            });
+        }
+        
+        async function loadFile(filename, tabEl) {
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            if (tabEl) tabEl.classList.add('active');
+            
+            try {
+                const response = await fetch('config/' + filename + '?v=' + Date.now());
+                const content = await response.text();
+                
+                document.getElementById('file-title').textContent = filename;
+                document.getElementById('raw').textContent = content;
+                document.getElementById('rendered').innerHTML = marked.parse(content);
+                
+                // Reset to rendered view
+                showRaw = false;
+                updateView();
+            } catch (e) {
+                document.getElementById('rendered').innerHTML = '<p style="color:#f66">Error loading file: ' + e.message + '</p>';
+            }
+        }
+        
+        function toggleRaw() {
+            showRaw = !showRaw;
+            updateView();
+        }
+        
+        function updateView() {
+            document.getElementById('rendered').style.display = showRaw ? 'none' : 'block';
+            document.getElementById('raw').style.display = showRaw ? 'block' : 'none';
+            document.querySelector('.raw-toggle').textContent = showRaw ? 'View Rendered' : 'View Raw';
+        }
+        
+        // Init
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        createTabs();
+        loadFile(files[0].name);
+    </script>
+</body>
+</html>
