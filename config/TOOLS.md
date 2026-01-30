@@ -186,7 +186,7 @@ web_search("Singapore AQI today")
 - **BEST METHOD:** Look for "Jump to last unread message" button in snapshot, then CLICK it
 - This button appears when there are unread messages and jumps directly to current
 - After clicking, take another snapshot — messages will be current
-- Fallback: If no jump button exists, messages may already be current
+- Fallback: If no jump button exists, use PageDown x10 as backup, then verify timestamps
 
 **⚠️ CRITICAL: Use Existing Tabs, Never Open New (2026-01-30):**
 - `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE for monitoring!
