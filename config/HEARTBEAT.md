@@ -32,10 +32,12 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
      - MEMORY.md (private, not on public GitHub)
    - This gives bro a private local copy of everything
 
-4. **Memory Maintenance** — Periodic (every few days)
-   - Review daily notes in `memory/YYYY-MM-DD.md`
+4. **Memory Maintenance** — Every 3 days minimum (check `memory/memory-maintenance.json`)
+   - Review daily notes in `memory/YYYY-MM-DD.md` since last maintenance
    - Consolidate important items into MEMORY.md
-   - Silent
+   - Update the "Last updated" date in MEMORY.md header
+   - Track last maintenance date in `memory/memory-maintenance.json`
+   - Silent unless MEMORY.md was significantly updated
 
 ## When to message bro
 
