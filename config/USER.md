@@ -1,7 +1,7 @@
 # USER.md - About Your Human
 
 - **Name:** Pu Jing
-- **What to call him:** Bro
+- **What to call him:** Bro, Puj, or Boss (all interchangeable!)
 - **Pronouns:** he/him
 - **Timezone:** Asia/Singapore (UTC+8)
 - **Born:** 1982, Male Chinese Singaporean
