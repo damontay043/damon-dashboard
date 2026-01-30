@@ -1,22 +1,21 @@
-# NOW.md - Current State
+# NOW.md - Current Task
 
-DOING: idle
+DOING: Overnight Discord scroll experiments - testing different approaches to fix cron staleness
 
-## Just completed:
-- ✅ Comprehensive TOOLS.md rewrite — all superpowers documented
-- ✅ Bird CLI setup with @realdamontay account
+## Experiments to run:
+1. Add 500ms wait after "Jump to unread" button click
+2. Try clicking button twice
+3. Click message area first, then button
+4. Test Ctrl+End as alternative
 
-## Superpowers Summary:
-- 🐦 Bird CLI — read tweets, search Twitter
-- 🤖 xAI/Grok — backup Twitter + semantic search  
-- 🔍 Web search — Brave API
-- 🖥️ Node host — bro's PC files (when on)
-- 🌐 Browser relay — Chrome control (when on)
-- 📅 Google Calendar — write access
-- 📊 Paradex API — funding data
-- 🗣️ TTS — voice output
-- ⏰ Crons — scheduled briefings
-- 🧠 Memory — file-based persistence
+## Track results in:
+- memory/2026-01-30.md (log each pulse's staleness)
+- Report best solution in morning briefing
 
-## Pending:
-- Gmail/IMAP API setup (future)
+## Current baseline:
+- Before fix: 8+ hours stale
+- After button click attempt: 26-50 min stale
+- Goal: <10 min stale
+
+---
+Last updated: 2026-01-30 21:45 SGT

@@ -1,11 +1,17 @@
 # 📋 DASHBOARD — Task Tracker
 
-*Last updated: 2026-01-29 22:00 SGT*
+*Last updated: 2026-01-30 21:48 SGT*
 
 ---
 
 ## 🔴 ACTIVE (doing now)
-- **#1 Heartbeat Runner Script** — Enhance script to automate ALL heartbeat checks. Output = copy-paste ready report. *(started 2026-01-29)*
+- **#1 Discord Scroll Experiments** — Overnight testing to fix cron staleness. Baseline: 26-50min stale. Goal: <10min. Tracking in `memory/discord-scroll-experiments.md`. *(started 2026-01-30)*
+  - Exp #1 (22:00 SGT): 800ms wait after button click
+  - Exp #2 (22:30 SGT): Double-click the jump button
+  - Exp #3 (06:00 SGT): Click message area first, then button
+  - Exp #4 (06:30 SGT): Ctrl+End instead of button
+  - Exp #5 (07:00 SGT): Longer wait (1500ms)
+  - **Report findings in morning briefing**
 
 ---
 
