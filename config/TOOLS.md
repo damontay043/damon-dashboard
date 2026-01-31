@@ -183,29 +183,30 @@ web_search("Singapore AQI today")
 
 **Limitation:** Browser only, not full desktop. For full desktop, would need RDP.
 
-## 🖥️ Discord Monitoring (OpenClaw) — ACTIVE!
+## 🖥️ Discord Monitoring (Chrome Relay) — ACTIVE!
 
-**Setup:** OpenClaw browser automation (Playwright-based) on local WSL2
+**⚠️ USE CHROME RELAY, NOT OPENCLAW** (openclaw not in Damon's PATH)
+
+**Setup:** Chrome extension relay on bro's PC
 **Account:** peterpoon (Discord logged in)
 **Channel:** Paradex #general
 
-**Commands (run from WSL2):**
-```bash
-# Scroll to latest, take screenshot
-openclaw browser press End && sleep 1 && openclaw browser screenshot
-
-# For more context, scroll up first
-openclaw browser press PageUp && openclaw browser press PageUp && sleep 1 && openclaw browser screenshot
+**Method that works (used at 08:37 successfully):**
+```
+1. browser action=tabs target=host profile=chrome
+2. Find Discord tab (URL contains 'discord.com'), note targetId
+3. browser action=snapshot targetId=[id] target=host profile=chrome
+4. Look for "Jump to last unread message" button, click it
+5. Wait 1500ms
+6. Take another snapshot — messages will be current
 ```
 
-**Screenshots saved to:** `~/.openclaw/media/browser/`
+**If you get stale data:** Tell bro "Chrome tab detached, please reattach the Browser Relay extension"
 
-**For sentiment/FUD checks:**
-1. Take 2 screenshots (latest + scrolled up for context)
-2. Analyze images for sentiment/FUD keywords
-3. Report findings in pulse
-
-**Note:** This replaces the old Browser Relay approach. Much simpler and more reliable!
+**DO NOT:**
+- Try `openclaw` commands (not in your PATH)
+- Check kernel versions
+- Second-guess the setup
 
 **⚠️ CRITICAL: Use Existing Tabs, Never Open New (2026-01-30):**
 - `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE for monitoring!
