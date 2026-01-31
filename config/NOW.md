@@ -1,24 +1,29 @@
 # NOW.md - Current Task
 
-**🏠 MIGRATED TO SPARE PC!** (2026-01-31 07:41 SGT)
+**🏠 MIGRATED + DISCORD MONITORING ACTIVE!** (2026-01-31 08:26 SGT)
 
 Running locally on bro's spare Windows PC via WSL2 Ubuntu.
 
-## Key Changes
-- **Shared folder:** `/mnt/c/Users/pujing/OneDrive/clawdbot-shared` (OneDrive sync)
-- **No more node host** — direct local access
-- **Browser Relay** — coming soon for Discord
-- Same WhatsApp, same personality files
+## What's Working Now
+- ✅ **OpenClaw browser automation** — Discord monitoring via screenshots
+- ✅ **Paradex #general** — logged in, ready for sentiment checks
+- ✅ **OneDrive sync** — config files sync locally
 
-## Updated Config Files
-- ✅ TOOLS.md — new paths
-- ✅ USER.md — new aboutme path
-- ✅ HEARTBEAT.md — local sync instead of node
-- ✅ AGENTS.md — OneDrive sync path
+## Discord Commands
+```bash
+# Latest messages
+openclaw browser press End && sleep 1 && openclaw browser screenshot
 
-## Discord Scroll Solution
-- **"Jump to Present" button WORKS** (but inconsistent in cron)
-- Will be easier once Browser Relay is set up locally
+# Context (scroll up)  
+openclaw browser press PageUp && openclaw browser press PageUp && sleep 1 && openclaw browser screenshot
+```
+
+Screenshots at: `~/.openclaw/media/browser/`
+
+## Updated Config Files (just now)
+- ✅ TOOLS.md — Added Discord monitoring section
+- ✅ HEARTBEAT.md — Updated Discord check method
+- ✅ AGENTS.md — Browser automation now ACTIVE
 
 ---
-Last updated: 2026-01-31 07:41 SGT
+Last updated: 2026-01-31 08:26 SGT

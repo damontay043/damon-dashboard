@@ -65,12 +65,25 @@ These are now handled by dedicated cron jobs with explicit formats:
 | Detailed Funding Report | evening-funding-briefing | 9pm SGT |
 | Blocked Tasks Nag | nag-undone-tasks | Every 3h |
 
-## Discord Scroll Fix (added 2026-01-30)
+## Discord Monitoring (OpenClaw) — ACTIVE!
 
-When checking Discord via browser relay:
-- **DO NOT use End or Ctrl+End** — doesn't work with Discord's virtualized message list
-- **USE PageDown key x5-10** — this reliably scrolls to recent messages
-- Always verify timestamps in snapshot match expected timeframe before reporting
+**New method (2026-01-31):** Use OpenClaw browser automation instead of old relay.
+
+**Commands:**
+```bash
+# Scroll to latest + screenshot
+openclaw browser press End && sleep 1 && openclaw browser screenshot
+
+# Context (scroll up first)
+openclaw browser press PageUp && openclaw browser press PageUp && sleep 1 && openclaw browser screenshot
+```
+
+**Screenshots at:** `~/.openclaw/media/browser/`
+
+**For pulse Discord checks:**
+1. Run both commands (latest + scrolled up)
+2. Analyze screenshots for sentiment/FUD
+3. Report in pulse format
 
 ## Track State
 

@@ -183,13 +183,29 @@ web_search("Singapore AQI today")
 
 **Limitation:** Browser only, not full desktop. For full desktop, would need RDP.
 
-**Discord Scroll Fix (2026-01-31, SOLVED):**
-- Discord uses a virtualized message list that doesn't respond to keyboard shortcuts
-- **"Jump to last unread message" button DOESN'T WORK** — click doesn't trigger scroll
-- **"Jump to Present" button WORKS!** — appears when viewing older messages
-- **SOLUTION:** Look for `button "Jump to Present"` in snapshot, click it, wait 1000ms, re-snapshot
-- After clicking, messages will be current (<15 min stale)
-- This was solved through overnight experiments on 2026-01-30/31
+## 🖥️ Discord Monitoring (OpenClaw) — ACTIVE!
+
+**Setup:** OpenClaw browser automation (Playwright-based) on local WSL2
+**Account:** peterpoon (Discord logged in)
+**Channel:** Paradex #general
+
+**Commands (run from WSL2):**
+```bash
+# Scroll to latest, take screenshot
+openclaw browser press End && sleep 1 && openclaw browser screenshot
+
+# For more context, scroll up first
+openclaw browser press PageUp && openclaw browser press PageUp && sleep 1 && openclaw browser screenshot
+```
+
+**Screenshots saved to:** `~/.openclaw/media/browser/`
+
+**For sentiment/FUD checks:**
+1. Take 2 screenshots (latest + scrolled up for context)
+2. Analyze images for sentiment/FUD keywords
+3. Report findings in pulse
+
+**Note:** This replaces the old Browser Relay approach. Much simpler and more reliable!
 
 **⚠️ CRITICAL: Use Existing Tabs, Never Open New (2026-01-30):**
 - `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE for monitoring!

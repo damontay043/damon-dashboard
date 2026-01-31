@@ -72,6 +72,13 @@ When you edit any core config file (AGENTS.md, SOUL.md, USER.md, IDENTITY.md, TO
 - Heartbeat syncs directly (no node connection needed)
 - Includes MEMORY.md (which is NOT on public GitHub)
 
+### 🖥️ Browser Automation — ACTIVE!
+- **OpenClaw** (Playwright-based) running on local WSL2
+- Discord logged in (peterpoon), Paradex #general ready
+- Use for Discord monitoring in pulse checks
+- Commands: `openclaw browser press End`, `openclaw browser screenshot`
+- Screenshots saved to `~/.openclaw/media/browser/`
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
