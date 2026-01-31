@@ -26,6 +26,11 @@
 **Why it worked:** Used `cron runs` to see jobs were executing but not delivering. Led straight to the missing `deliver: true` fix.
 **Lesson:** When crons seem broken, check run history first before assuming schedule issues.
 
+### MISS | uncertainty
+**What happened:** Asked bro for GitHub PAT instead of checking my own files first
+**Root cause:** Assumed credentials were missing without doing `memory_search` or checking TOOLS.md, MEMORY.md, .credentials.json
+**Fix:** Before asking bro for any credential/config info: 1) memory_search first 2) grep relevant config files 3) check .credentials.json. Only ask if genuinely not found.
+
 ---
 
 ## Format Reference
