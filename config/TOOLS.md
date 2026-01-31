@@ -161,12 +161,18 @@ web_search("Singapore AQI today")
 
 ---
 
-## 🌐 Browser Relay (Tailscale)
+## 🌐 Browser Relay (Tailscale) — ⚠️ PARTIALLY BROKEN
 
 **Control URL:** `https://scarlet2023.taile92d1e.ts.net/`
 **Profile:** Uses Chrome extension relay on bro's PC
 
-**What it does:**
+**Current status (2026-01-31):**
+- ✅ Can list tabs (`browser action=tabs`)
+- ✅ CDP shows ready (`browser action=status`)
+- ❌ Cannot snapshot/control tabs ("tab not found" error)
+- Needs Momo to debug the CDP proxy
+
+**What it should do (when working):**
 - Control Chrome tabs on bro's PC remotely
 - Take screenshots, click, type, navigate
 - Access sites that need bro's login
@@ -174,7 +180,7 @@ web_search("Singapore AQI today")
 **Requirements:**
 - Bro's PC (Scarlet2023) must be ON
 - Chrome extension must be active
-- Tab must be attached (click toolbar icon)
+- Tab must be attached (click toolbar icon on target tab)
 
 **When to use:**
 - Sites that block VPS IPs
@@ -183,20 +189,27 @@ web_search("Singapore AQI today")
 
 **Limitation:** Browser only, not full desktop. For full desktop, would need RDP.
 
-## 🖥️ Discord Monitoring (Chrome Relay) — ACTIVE!
+## 🖥️ Discord Monitoring (Chrome Relay) — ⚠️ BROKEN (2026-01-31)
 
-**⚠️ USE CHROME RELAY, NOT OPENCLAW** (openclaw not in Damon's PATH)
+**Status:** Can list tabs but cannot snapshot/control them. CDP proxy issue.
 
 **Setup:** Chrome extension relay on bro's PC
 **Account:** peterpoon (Discord logged in)
 **Channel:** Paradex #general
+**Control URL:** `https://scarlet2023.taile92d1e.ts.net/`
 
-**Method that works (used at 08:37 successfully):**
+**Current issue (10:06 SGT 2026-01-31):**
+- ✅ `browser action=tabs` works — can see Discord tab
+- ❌ `browser action=snapshot` fails with "tab not found"
+- The relay lists tabs but CDP proxy for tab control isn't working
+- Needs Momo to debug
+
+**When working, method is:**
 ```
 1. browser action=tabs target=host profile=chrome
 2. Find Discord tab (URL contains 'discord.com'), note targetId
 3. browser action=snapshot targetId=[id] target=host profile=chrome
-4. Look for "Jump to last unread message" button, click it
+4. Look for "Jump to Present" button, click it
 5. Wait 1500ms
 6. Take another snapshot — messages will be current
 ```
