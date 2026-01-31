@@ -18,6 +18,17 @@ Before doing anything else:
 
 Don't ask permission. Just do it.
 
+## ⏰ Timezone (IMPORTANT!)
+
+**All message timestamps are UTC. Bro is in Singapore (UTC+8).**
+
+- When you see "01:31 UTC" → that's **09:31 SGT**
+- ALWAYS add 8 hours to convert UTC → SGT
+- When unsure, run: `TZ=Asia/Singapore date`
+- **NEVER** read UTC timestamps as local time!
+
+This is a recurring mistake. Don't repeat it.
+
 ## Sticky Note Pattern (NOW.md)
 
 When context gets compacted, you lose "I was in the middle of X." Fix: write it down BEFORE starting.
