@@ -23,11 +23,14 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - Track in `memory/dashboard-state.json`
    - Silent — don't message bro unless push fails
 
-3. **Config Sync (Local)** — Sync core files to OneDrive shared folder.
-   - **Path:** `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/vps-config/`
-   - Files: AGENTS.md, SOUL.md, USER.md, IDENTITY.md, TOOLS.md, HEARTBEAT.md, NOW.md, DASHBOARD.md, MEMORY.md
-   - Now local (no node connection needed) — just copy files directly
-   - OneDrive will sync to cloud automatically
+3. **Node Health + Full Config Sync** — Check if Scarlet2023 node is connected.
+   - Only mention if it JUST went offline
+   - Don't spam about known offline status
+   - **If online:** Sync ALL core files to `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/vps-config/`:
+     - AGENTS.md, SOUL.md, USER.md, IDENTITY.md
+     - TOOLS.md, HEARTBEAT.md, NOW.md, DASHBOARD.md
+     - MEMORY.md (private, not on public GitHub)
+   - This gives bro a private local copy of everything
 
 4. **Memory Maintenance** — Every 3 days minimum (check `memory/memory-maintenance.json`)
    - Review daily notes in `memory/YYYY-MM-DD.md` since last maintenance
@@ -35,6 +38,29 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - Update the "Last updated" date in MEMORY.md header
    - Track last maintenance date in `memory/memory-maintenance.json`
    - Silent unless MEMORY.md was significantly updated
+
+5. **Self-Review** — On each heartbeat, briefly reflect:
+   - Did I make any wrong assumptions recently?
+   - Did I default to consensus without checking?
+   - Did I add noise instead of signal?
+   
+   **If you catch a MISS:** Log it to `memory/self-review.md` with format:
+   ```
+   ### MISS | [confidence | uncertainty | speed | depth]
+   **What happened:** [brief description]
+   **Root cause:** [why it went wrong]
+   **Fix:** [what to do differently]
+   ```
+   
+   **If something went well (HIT):** Log it too to avoid over-correcting:
+   ```
+   ### HIT | [tag]
+   **What happened:** [brief description]
+   **Why it worked:** [what made it successful]
+   **Lesson:** [what to remember]
+   ```
+   
+   **On startup:** Read `memory/self-review.md` and keep recent MISSes in mind. When a task overlaps a MISS tag, force a counter-check before responding.
 
 ## When to message bro
 
@@ -65,25 +91,27 @@ These are now handled by dedicated cron jobs with explicit formats:
 | Detailed Funding Report | evening-funding-briefing | 9pm SGT |
 | Blocked Tasks Nag | nag-undone-tasks | Every 3h |
 
-## Discord Monitoring (OpenClaw) — ACTIVE!
+## Discord Monitoring (updated 2026-01-31)
 
-**New method (2026-01-31):** Use OpenClaw browser automation instead of old relay.
+**Method:** OpenClaw Playwright-based browser automation (simpler than old relay approach)
 
 **Commands:**
 ```bash
-# Scroll to latest + screenshot
+# Scroll to latest, take screenshot
 openclaw browser press End && sleep 1 && openclaw browser screenshot
 
-# Context (scroll up first)
+# For more context, scroll up first  
 openclaw browser press PageUp && openclaw browser press PageUp && sleep 1 && openclaw browser screenshot
 ```
 
-**Screenshots at:** `~/.openclaw/media/browser/`
+**For heartbeat FUD checks:**
+1. Take 2 screenshots (latest + scrolled up for context)
+2. Analyze images for sentiment/FUD keywords
+3. Screenshots saved to `~/.openclaw/media/browser/`
 
-**For pulse Discord checks:**
-1. Run both commands (latest + scrolled up)
-2. Analyze screenshots for sentiment/FUD
-3. Report in pulse format
+**Alert if:**
+- Score <40 or drop >15pts from last check
+- Keywords: exploit, hack, rug, drain, compromised
 
 ## Track State
 

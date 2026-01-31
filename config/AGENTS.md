@@ -15,19 +15,9 @@ Before doing anything else:
 4. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
 5. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
 6. **Scan `TOOLS.md`** — your superpowers cheat sheet (what APIs, CLIs, credentials you have)
+7. **Skim `memory/self-review.md`** — recent MISSes to avoid repeating mistakes
 
 Don't ask permission. Just do it.
-
-## ⏰ Timezone (IMPORTANT!)
-
-**All message timestamps are UTC. Bro is in Singapore (UTC+8).**
-
-- When you see "01:31 UTC" → that's **09:31 SGT**
-- ALWAYS add 8 hours to convert UTC → SGT
-- When unsure, run: `TZ=Asia/Singapore date`
-- **NEVER** read UTC timestamps as local time!
-
-This is a recurring mistake. Don't repeat it.
 
 ## Sticky Note Pattern (NOW.md)
 
@@ -75,20 +65,13 @@ When you edit any core config file (AGENTS.md, SOUL.md, USER.md, IDENTITY.md, TO
 3. This keeps the online config viewer in sync: https://damontay043.github.io/damon-dashboard/config.html
 - Heartbeat also checks for drift and auto-syncs if needed
 
-### 🖥️ Full Sync to OneDrive (Private Copy)
-- ALL core files sync to OneDrive shared folder (now local!)
+### 🖥️ Full Sync to Node (Private Copy)
+- ALL core files sync to Scarlet2023 when node is online
 - Path: `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/vps-config/`
 - Files: AGENTS.md, SOUL.md, USER.md, IDENTITY.md, TOOLS.md, HEARTBEAT.md, NOW.md, DASHBOARD.md, MEMORY.md
-- This is PRIVATE — OneDrive synced, only bro can access
-- Heartbeat syncs directly (no node connection needed)
+- This is PRIVATE — only bro can read from his PC
+- Heartbeat checks and syncs when node is connected
 - Includes MEMORY.md (which is NOT on public GitHub)
-
-### 🖥️ Browser Automation — ACTIVE!
-- **OpenClaw** (Playwright-based) running on local WSL2
-- Discord logged in (peterpoon), Paradex #general ready
-- Use for Discord monitoring in pulse checks
-- Commands: `openclaw browser press End`, `openclaw browser screenshot`
-- Screenshots saved to `~/.openclaw/media/browser/`
 
 ## Safety
 
@@ -157,8 +140,9 @@ Skills provide your tools. When you need one, check its `SKILL.md`.
 
 **📋 TOOLS.md is your superpowers cheat sheet!** It lists all your active capabilities:
 - APIs with credentials (Twitter/Bird, Paradex, Google Calendar, xAI/Grok)
-- CLI tools (dbird, web_search, browser relay)
-- Node host access (bro's PC files)
+- CLI tools (dbird, web_search, browser automation)
+- Browser automation (Playwright-based) — ✅ ACTIVE for Discord monitoring
+- Direct file access via `/mnt/c/` (running on WSL2)
 - Cron jobs, memory system, TTS, etc.
 
 **If you're unsure what you can do, CHECK TOOLS.md FIRST.** Don't say "I can't" without checking.
@@ -260,6 +244,7 @@ My context gets compacted regularly — older conversations are summarized or lo
 3. **memory/YYYY-MM-DD.md** = daily raw notes
 4. **HEARTBEAT.md** = exact heartbeat checklist (what I do every 30 min)
 5. **Bro as safety check** = bro can see the dashboard and catch anything I've dropped
+6. **memory_search tool** = semantic search across memory files. Use when uncertain about infrastructure or past decisions.
 
 **If in doubt, write it down. Text > Brain. 📝**
 
