@@ -216,6 +216,15 @@ openclaw browser press PageUp && openclaw browser press PageUp && sleep 1 && ope
   4. `browser action=snapshot targetId=[id]` — use that specific tab
 - This ensures you're using bro's tab that already has relay enabled
 
+**⚠️ CRITICAL: Use Existing Tabs, Never Open New (2026-01-30):**
+- `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE for monitoring!
+- **Correct approach:**
+  1. `browser action=tabs target=host profile=chrome` — list existing tabs
+  2. Find the tab you need (e.g., URL contains 'discord.com')
+  3. Note its `targetId`
+  4. `browser action=snapshot targetId=[id]` — use that specific tab
+- This ensures you're using bro's tab that already has relay enabled
+
 **Discord Sentiment Report Format (2026-01-30):**
 Must follow this format — no generic "Topics: X, Y" allowed:
 ```
@@ -230,6 +239,8 @@ Must follow this format — no generic "Topics: X, Y" allowed:
 
 *Vibe:* [2-3 sentences on mood/energy]
 ```
+
+**⚠️ EVERY conversation line MUST have a timestamp.** No generic descriptions like "User having issues" — always include the exact time from the Discord message.
 
 ---
 
