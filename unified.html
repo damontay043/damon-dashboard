@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300">
+    <title>Damon Command Center</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #21262d;
+            --border: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent-green: #3fb950;
+            --accent-red: #f85149;
+            --accent-yellow: #d29922;
+            --accent-blue: #58a6ff;
+            --accent-purple: #a371f7;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+        .container { max-width: 1600px; margin: 0 auto; padding: 1rem; }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+        header h1 { font-size: 1.5rem; font-weight: 600; }
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0;
+        }
+        .tab {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: all 0.2s;
+        }
+        .tab:hover { color: var(--text-primary); }
+        .tab.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 1000px) { .grid-3 { grid-template-columns: 1fr; } }
+        
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+        .card-badge {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            background: var(--bg-secondary);
+        }
+        
+        /* Metrics */
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .metric-row:last-child { border-bottom: none; }
+        .metric-label { color: var(--text-secondary); }
+        .metric-value { font-weight: 600; font-family: 'SF Mono', monospace; }
+        .metric-value.green { color: var(--accent-green); }
+        .metric-value.red { color: var(--accent-red); }
+        .metric-value.yellow { color: var(--accent-yellow); }
+        
+        /* Task Board */
+        .task-section { margin-bottom: 1.5rem; }
+        .task-section:last-child { margin-bottom: 0; }
+        .task-section-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .task-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+        .task-dot.red { background: var(--accent-red); }
+        .task-dot.yellow { background: var(--accent-yellow); }
+        .task-dot.green { background: var(--accent-green); }
+        .task-dot.blue { background: var(--accent-blue); }
+        .task-name { font-weight: 500; }
+        .task-desc { font-size: 0.8rem; color: var(--text-secondary); }
+        
+        /* Cron Schedule */
+        .cron-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .cron-time {
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            min-width: 80px;
+        }
+        .cron-name { font-weight: 500; }
+        .cron-desc { font-size: 0.75rem; color: var(--text-secondary); }
+        
+        /* Funding Rates */
+        .funding-block { margin-bottom: 1rem; }
+        .funding-block:last-child { margin-bottom: 0; }
+        .exchange-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .exchange-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+        .hl .exchange-dot { background: var(--accent-blue); }
+        .pdx .exchange-dot { background: var(--accent-red); }
+        .rate-display {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+        .rate-8h {
+            font-size: 1.25rem;
+            font-weight: 700;
+            font-family: 'SF Mono', monospace;
+        }
+        .rate-apr {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        /* Skills */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+        .skill-item {
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .skill-name { font-weight: 500; color: var(--accent-blue); }
+        .skill-desc { color: var(--text-secondary); }
+        
+        /* Files */
+        .file-list { max-height: 300px; overflow-y: auto; }
+        .file-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .file-item:hover { background: var(--bg-secondary); }
+        .file-item:last-child { border-bottom: none; }
+        
+        .refresh-note {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Damon Command Center</h1>
+            <div class="status-bar">
+                <div class="status-dot"></div>
+                <span>Online</span>
+                <span>•</span>
+                <span id="update-time">Updated just now</span>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('metrics')">📊 Metrics</button>
+            <button class="tab" onclick="showTab('tasks')">📋 Tasks</button>
+            <button class="tab" onclick="showTab('crons')">⏰ Crons</button>
+            <button class="tab" onclick="showTab('files')">📁 Files</button>
+        </div>
+
+        <!-- METRICS TAB -->
+        <div id="metrics" class="tab-content active">
+            <div class="grid">
+                <!-- Funding Rates -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">💰 BTC Funding Rates</span>
+                        <span class="card-badge">Live</span>
+                    </div>
+                    <div class="funding-block hl">
+                        <div class="exchange-label"><div class="exchange-dot"></div> Hyperliquid</div>
+                        <div class="rate-display">
+                            <span class="rate-8h">0.00072%</span>
+                            <span class="rate-apr green">0.79% APR</span>
+                        </div>
+                    </div>
+                    <div class="funding-block pdx">
+                        <div class="exchange-label"><div class="exchange-dot"></div> Paradex</div>
+                        <div class="rate-display">
+                            <span class="rate-8h">0.01%</span>
+                            <span class="rate-apr yellow">10.95% APR</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BTC Basis -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📐 BTC Basis Spread</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Spot (Binance)</span>
+                        <span class="metric-value">$83,700</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">HL Perp</span>
+                        <span class="metric-value red">−0.04%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Paradex Perp</span>
+                        <span class="metric-value red">−0.19%</span>
+                    </div>
+                </div>
+
+                <!-- AQI -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🌫️ Singapore AQI</span>
+                        <span class="card-badge">PM2.5</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Central</span>
+                        <span class="metric-value green">34 ✓</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">East</span>
+                        <span class="metric-value green">30 ✓</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">South</span>
+                        <span class="metric-value green">21 ✓</span>
+                    </div>
+                </div>
+
+                <!-- Discord Sentiment -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">💬 Discord Sentiment</span>
+                        <span class="card-badge">Paradex</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Score</span>
+                        <span class="metric-value green">62/100</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Vibe</span>
+                        <span class="metric-value">Neutral</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Last Check</span>
+                        <span class="metric-value">14:00 SGT</span>
+                    </div>
+                </div>
+
+                <!-- Crypto Movers -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📈 Crypto Movers</span>
+                        <span class="card-badge">24h</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">BTC</span>
+                        <span class="metric-value green">+1.2%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">ETH</span>
+                        <span class="metric-value red">−2.0%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">SOL</span>
+                        <span class="metric-value green">+2.3%</span>
+                    </div>
+                </div>
+
+                <!-- Briefings -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📅 Today's Briefings</span>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">7:00 AM</div>
+                        <div><div class="cron-name">🌅 Morning</div></div>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">3:00 PM</div>
+                        <div><div class="cron-name">📚 Research</div></div>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">5:00 PM</div>
+                        <div><div class="cron-name">☀️ UV+Stories</div></div>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">9:00 PM</div>
+                        <div><div class="cron-name">🌙 Funding</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TASKS TAB -->
+        <div id="tasks" class="tab-content">
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🔴 Active</span>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-dot red"></div>
+                        <div>
+                            <div class="task-name">Dashboard Unification</div>
+                            <div class="task-desc">Combine GitHub + Command Center</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🟡 In Progress</span>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-dot yellow"></div>
+                        <div>
+                            <div class="task-name">Hindsight Memory</div>
+                            <div class="task-desc">Waiting for API key</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">✅ Done</span>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-dot green"></div>
+                        <div>
+                            <div class="task-name">WSL2 Migration</div>
+                            <div class="task-desc">Running on home PC</div>
+                        </div>
+                    </div>
+                    <div class="task-item">
+                        <div class="task-dot green"></div>
+                        <div>
+                            <div class="task-name">Browser Relay</div>
+                            <div class="task-desc">Chrome integration working</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CRONS TAB -->
+        <div id="crons" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">⏰ Scheduled Jobs</span>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">:15, :45</div>
+                        <div>
+                            <div class="cron-name">📊 30-Min Pulse</div>
+                            <div class="cron-desc">AQI + Funding + Discord</div>
+                        </div>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">7:00 AM</div>
+                        <div>
+                            <div class="cron-name">🌅 Morning Briefing</div>
+                            <div class="cron-desc">Weather, Headlines, Markets</div>
+                        </div>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">3:00 PM</div>
+                        <div>
+                            <div class="cron-name">📚 Research Report</div>
+                            <div class="cron-desc">Deep-dive topic</div>
+                        </div>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">5:00 PM</div>
+                        <div>
+                            <div class="cron-name">☀️ UV + Stories</div>
+                            <div class="cron-desc">UV Index + Focus Points</div>
+                        </div>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">9:00 PM</div>
+                        <div>
+                            <div class="cron-name">🌙 Evening Funding</div>
+                            <div class="cron-desc">Detailed rates + spreads</div>
+                        </div>
+                    </div>
+                    <div class="cron-item">
+                        <div class="cron-time">Every 3h</div>
+                        <div>
+                            <div class="cron-name">⏰ Task Nag</div>
+                            <div class="cron-desc">Blocked task reminders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🛠️ Skills & APIs</span>
+                    </div>
+                    <div class="skill-grid">
+                        <div class="skill-item">
+                            <div class="skill-name">/weather</div>
+                            <div class="skill-desc">Forecasts</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">/straits-times</div>
+                            <div class="skill-desc">Headlines</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">/last30days</div>
+                            <div class="skill-desc">Twitter via xAI</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Brave</div>
+                            <div class="skill-desc">Web search</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">aqicn.org</div>
+                            <div class="skill-desc">Air quality</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Hyperliquid</div>
+                            <div class="skill-desc">Funding API</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILES TAB -->
+        <div id="files" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">⚙️ Config Files</span>
+                    </div>
+                    <div class="file-list">
+                        <div class="file-item">📄 AGENTS.md</div>
+                        <div class="file-item">📄 SOUL.md</div>
+                        <div class="file-item">📄 USER.md</div>
+                        <div class="file-item">📄 IDENTITY.md</div>
+                        <div class="file-item">📄 TOOLS.md</div>
+                        <div class="file-item">📄 HEARTBEAT.md</div>
+                        <div class="file-item">📄 NOW.md</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🧠 Memory Files</span>
+                    </div>
+                    <div class="file-list">
+                        <div class="file-item">📄 MEMORY.md</div>
+                        <div class="file-item">📄 2026-01-31.md</div>
+                        <div class="file-item">📄 2026-01-30.md</div>
+                        <div class="file-item">📄 2026-01-29.md</div>
+                        <div class="file-item">📄 2026-01-28.md</div>
+                        <div class="file-item">📄 2026-01-27.md</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="refresh-note">
+            Auto-refreshes every 5 minutes • <span id="last-update"></span>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        document.getElementById('last-update').textContent = new Date().toLocaleString('en-SG', {
+            timeZone: 'Asia/Singapore',
+            hour: '2-digit',
+            minute: '2-digit',
+            day: '2-digit',
+            month: 'short'
+        }) + ' SGT';
+    </script>
+</body>
+</html>
