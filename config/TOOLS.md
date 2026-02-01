@@ -6,17 +6,28 @@ Skills define *how* tools work. This file is for *your* specifics — the stuff 
 
 ---
 
-## 🖥️ Local Host (WSL2 on Spare PC)
+## ⚠️ DISCORD MONITORING — IMPORTANT!
 
-**MIGRATED 2026-01-31:** Now running locally on bro's spare Windows PC via WSL2 Ubuntu!
+**Use Chrome Relay via browser tool. DO NOT use `openclaw` CLI commands (PATH mismatch).**
 
-**Shared folder:** `/mnt/c/Users/pujing/OneDrive/clawdbot-shared`
-- OneDrive synced (not network share)
-- Direct filesystem access (no need for node host commands for local files)
+```
+browser action=tabs profile=chrome target=host     # Find Discord tab
+browser action=act ... request={"kind":"press","key":"End"}  # Scroll to bottom
+browser action=screenshot profile=chrome target=host targetId=...  # Capture
+```
 
-**For bro's files (aboutme, etc):**
-- Can now read directly: `cat /mnt/c/Users/pujing/OneDrive/clawdbot-shared/aboutme_redacted.md`
-- No need for `host=node` for local access
+If you get "no tab connected" → tell bro: "Chrome tab detached, please reattach the OpenClaw extension to Discord tab"
+
+---
+
+## 🖥️ Local Setup: WSL2 on Home PC (DESKTOP-HT67ISQ)
+
+**Migrated 2026-01-31** from Hetzner VPS to spare Windows PC at home, running WSL2 Ubuntu 24.04.
+
+**Direct file access:**
+- Shared folder: `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/` (OneDrive synced)
+- **No more `host=node` needed!** I can access files directly via `/mnt/c/`
+- systemd auto-starts OpenClaw on boot
 
 ### Read commands (use freely):
 `cat`, `ls`, `head`, `tail`, `wc`, `grep`, `rg`, `find`, `stat`, `file`
@@ -30,14 +41,42 @@ Skills define *how* tools work. This file is for *your* specifics — the stuff 
 ### NOT allowed:
 `rm`, `mv` (to destinations outside shared), any write outside `clawdbot-shared/`
 
-### Key Files (Local)
+### Key Files
 
 | File | Purpose | When to read |
 |------|---------|--------------|
-| `aboutme_redacted.md` | Comprehensive user profile (health, wealth, wisdom, relationships) | Start of main sessions, or when you need deep user context |
-| `vps-config/` | Mirror of your workspace config files | Sync here after any changes to your core files |
+| `/mnt/c/.../clawdbot-shared/aboutme_redacted.md` | Comprehensive user profile (health, wealth, wisdom, relationships) | Start of main sessions, or when you need deep user context |
+| `/mnt/c/.../clawdbot-shared/vps-config/` | Mirror of my workspace config files | Sync here after any changes to core files |
 
-**Path:** `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/[filename]`
+### 🖥️ PowerShell Integration (WSL2 → Windows)
+
+**Since I'm running on WSL2, I can execute PowerShell commands directly on Windows!**
+
+**Path:** `/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe`
+
+**Verified capabilities (2026-01-31):**
+
+| Capability | How | Use Case |
+|------------|-----|----------|
+| **Screenshot** | `System.Drawing` + `CopyFromScreen` | Capture desktop state |
+| **Clipboard** | `System.Windows.Forms.Clipboard` | Read/write clipboard |
+| **Launch apps** | `Start-Process` | Open Notepad, Chrome, etc. |
+| **Process list** | `Get-Process` | See what's running/hogging memory |
+| **System info** | `Get-CimInstance`, `$env:` | PC name, user, OS details |
+
+**Example - Take screenshot:**
+```powershell
+/mnt/c/Windows/.../powershell.exe -Command "
+Add-Type -AssemblyName System.Windows.Forms
+\$screen = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
+\$bitmap = New-Object System.Drawing.Bitmap(\$screen.Width, \$screen.Height)
+\$graphics = [System.Drawing.Graphics]::FromImage(\$bitmap)
+\$graphics.CopyFromScreen(\$screen.Location, [System.Drawing.Point]::Empty, \$screen.Size)
+\$bitmap.Save('C:\Users\pujing\OneDrive\clawdbot-shared\screenshot.png')
+"
+```
+
+**NOT useful:** Windows toast notifications (bro not watching spare PC screen — use WhatsApp instead)
 
 ---
 
@@ -161,88 +200,59 @@ web_search("Singapore AQI today")
 
 ---
 
-## 🌐 Browser Relay (Tailscale) — ⚠️ PARTIALLY BROKEN
+## 🌐 Browser Automation (Chrome Relay)
 
-**Control URL:** `https://scarlet2023.taile92d1e.ts.net/`
-**Profile:** Uses Chrome extension relay on bro's PC
+**Status:** ✅ ACTIVE & VERIFIED (2026-01-31)
 
-**Current status (2026-01-31):**
-- ✅ Can list tabs (`browser action=tabs`)
-- ✅ CDP shows ready (`browser action=status`)
-- ❌ Cannot snapshot/control tabs ("tab not found" error)
-- Needs Momo to debug the CDP proxy
+**What it does:**
+- Control Chrome tabs on Windows via relay extension
+- Take screenshots, press keys, navigate
+- Discord logged in with peterpoon account
 
-**What it should do (when working):**
-- Control Chrome tabs on bro's PC remotely
-- Take screenshots, click, type, navigate
-- Access sites that need bro's login
+**How to use (via browser tool, NOT openclaw CLI):**
+```
+# 1. Find Discord tab
+browser action=tabs profile=chrome target=host
+
+# 2. Scroll to latest (End key works!)
+browser action=act profile=chrome target=host targetId=[ID] request={"kind":"press","key":"End"}
+
+# 3. Take screenshot
+browser action=screenshot profile=chrome target=host targetId=[ID]
+
+# 4. Scroll up for more context
+browser action=act ... request={"kind":"press","key":"PageUp"}
+```
 
 **Requirements:**
-- Bro's PC (Scarlet2023) must be ON
-- Chrome extension must be active
-- Tab must be attached (click toolbar icon on target tab)
+- Chrome open on Windows with OpenClaw extension installed
+- Extension attached to Discord tab (click toolbar icon, badge shows ON)
+- If "no tab connected" error → ask bro to reattach extension to Discord tab
+
+**Discord Monitoring (verified working 2026-01-31):**
+- Paradex #general: `https://discord.com/channels/1107916848193863740/1107916848193863743`
+- Account: peterpoon
+- End key scrolls to latest messages ✅
+- PageUp scrolls back for more context ✅
+- Screenshots capture full chat area ✅
 
 **When to use:**
-- Sites that block VPS IPs
+- Discord sentiment checks (30-min pulse cron)
 - Need to see logged-in content
-- Complex web automation
+- Any browser-based monitoring
 
-**Limitation:** Browser only, not full desktop. For full desktop, would need RDP.
-
-## 🖥️ Discord Monitoring (Chrome Relay) — ⚠️ BROKEN (2026-01-31)
-
-**Status:** Can list tabs but cannot snapshot/control them. CDP proxy issue.
-
-**Setup:** Chrome extension relay on bro's PC
-**Account:** peterpoon (Discord logged in)
-**Channel:** Paradex #general
-**Control URL:** `https://scarlet2023.taile92d1e.ts.net/`
-
-**Current issue (10:06 SGT 2026-01-31):**
-- ✅ `browser action=tabs` works — can see Discord tab
-- ❌ `browser action=snapshot` fails with "tab not found"
-- The relay lists tabs but CDP proxy for tab control isn't working
-- Needs Momo to debug
-
-**When working, method is:**
-```
-1. browser action=tabs target=host profile=chrome
-2. Find Discord tab (URL contains 'discord.com'), note targetId
-3. browser action=snapshot targetId=[id] target=host profile=chrome
-4. Look for "Jump to Present" button, click it
-5. Wait 1500ms
-6. Take another snapshot — messages will be current
-```
-
-**If you get stale data:** Tell bro "Chrome tab detached, please reattach the Browser Relay extension"
-
-**DO NOT:**
-- Try `openclaw` commands (not in your PATH)
-- Check kernel versions
-- Second-guess the setup
-
-**⚠️ CRITICAL: Use Existing Tabs, Never Open New (2026-01-30):**
-- `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE for monitoring!
+**⚠️ CRITICAL: Use Existing Tabs, Never Open New:**
+- `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE!
 - **Correct approach:**
   1. `browser action=tabs target=host profile=chrome` — list existing tabs
-  2. Find the tab you need (e.g., URL contains 'discord.com')
+  2. Find the tab you need (URL contains 'discord.com')
   3. Note its `targetId`
-  4. `browser action=snapshot targetId=[id]` — use that specific tab
+  4. Use that `targetId` for all subsequent actions
 - This ensures you're using bro's tab that already has relay enabled
 
-**⚠️ CRITICAL: Use Existing Tabs, Never Open New (2026-01-30):**
-- `browser action=open` creates a NEW tab WITHOUT relay attached — DON'T USE for monitoring!
-- **Correct approach:**
-  1. `browser action=tabs target=host profile=chrome` — list existing tabs
-  2. Find the tab you need (e.g., URL contains 'discord.com')
-  3. Note its `targetId`
-  4. `browser action=snapshot targetId=[id]` — use that specific tab
-- This ensures you're using bro's tab that already has relay enabled
-
-**Discord Sentiment Report Format (2026-01-30):**
-Must follow this format — no generic "Topics: X, Y" allowed:
+**Discord Sentiment Report Format:**
 ```
-💬 *Discord Update ([HH:MM]-[HH:MM] SGT)*
+💬 *Discord Sentiment ([HH:MM]-[HH:MM] SGT)*
 
 *Score: XX/100 (Level)*
 
@@ -254,25 +264,34 @@ Must follow this format — no generic "Topics: X, Y" allowed:
 *Vibe:* [2-3 sentences on mood/energy]
 ```
 
-**⚠️ EVERY conversation line MUST have a timestamp.** No generic descriptions like "User having issues" — always include the exact time from the Discord message.
-
 ---
 
 ## 🗣️ TTS (Text-to-Speech)
 
 **Provider:** Edge TTS
-**Voice:** en-SG-WayneNeural (Singapore English)
+**Voice:** en-SG-WayneNeural (Singapore English male)
 
 **What it does:**
 - Convert text to speech audio
-- Returns audio file that can be sent via WhatsApp
+- Returns MEDIA: path
+
+**How to use (CORRECT METHOD):**
+1. Call `tts` tool with text → get file path
+2. Call `message` tool with:
+   - `filePath`: the audio path
+   - `message`: emoji only (e.g. "🎤") — **NOT text, or it gets TTS'd as female voice!**
+3. Reply with `NO_REPLY`
+
+**Why emoji-only message:**
+- Text captions get auto-TTS'd (female voice) = duplicate clips
+- Emoji can't be TTS'd = single clip, correct voice
 
 **When to use:**
 - Bro requests audio
 - Storytelling / summaries that work better as audio
 - Accessibility
 
-**Note:** Auto-TTS is OFF. Only triggers when explicitly requested or using `tts` tool.
+**Status (2026-01-31):** ✅ Verified working! Male voice (WayneNeural) confirmed correct. Use emoji-only captions to avoid duplicate clips.
 
 ---
 
@@ -342,13 +361,18 @@ Must follow this format — no generic "Topics: X, Y" allowed:
 
 | Power | Tool | Status |
 |-------|------|--------|
-| Read tweets | Bird CLI (`dbird`) | ✅ Active |
-| Search Twitter | Bird CLI / xAI | ✅ Active |
-| Web search | Brave API | ✅ Active |
-| Read bro's files | Node host | 🟡 When PC on |
-| Browser control | Tailscale relay | 🟡 When PC on |
-| Calendar write | Google Calendar | ✅ Active |
-| Paradex data | REST API | ✅ Active |
+| Read tweets | fxtwitter API | ✅ Active (use `api.fxtwitter.com`) |
+| Search Twitter | ❌ Need Brave API key | 🔧 Not configured yet |
+| Web search | Brave API | 🔧 Need API key configured |
+| Read bro's files | Direct `/mnt/c/` access | ✅ Always available |
+| Browser control | Chrome Relay | ✅ Active (verified 2026-01-31) |
+| Discord monitoring | Chrome Relay + peterpoon | ✅ Active |
+| **Windows screenshots** | PowerShell | ✅ NEW! (2026-01-31) |
+| **Windows clipboard** | PowerShell | ✅ NEW! (2026-01-31) |
+| **Launch Windows apps** | PowerShell | ✅ NEW! (2026-01-31) |
+| **Process monitoring** | PowerShell | ✅ NEW! (2026-01-31) |
+| Calendar write | Google Calendar | 🔧 Check if migrated |
+| Paradex data | REST API | 🔧 Check if migrated |
 | Voice output | Edge TTS | ✅ Active |
 | Scheduled tasks | Cron jobs | ✅ Active |
 | Memory | File-based | ✅ Active |
