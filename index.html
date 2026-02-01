@@ -20,6 +20,7 @@
             --purple: #a78bfa;
             --orange: #fb923c;
             --teal: #2dd4bf;
+            --night: #6366f1;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -52,6 +53,8 @@
         .card.orange h2 { color: var(--orange); }
         .card.teal { border-left-color: var(--teal); }
         .card.teal h2 { color: var(--teal); }
+        .card.night { border-left-color: var(--night); }
+        .card.night h2 { color: var(--night); }
         .item { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
         .item:last-child { border-bottom: none; }
         .item strong { color: var(--text); }
@@ -70,12 +73,21 @@
         .cron-item .time { font-size: 0.7rem; color: var(--teal); font-weight: 600; }
         .cron-item .name { font-size: 0.85rem; color: var(--text); margin: 4px 0; }
         .cron-item .desc { font-size: 0.7rem; color: var(--muted); }
+        .cron-item.night { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); }
+        .cron-item.night .time { color: var(--night); }
+        .work-log { background: var(--accent2); border-radius: 8px; padding: 12px; margin-top: 10px; font-size: 0.75rem; }
+        .work-log .entry { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .work-log .entry:last-child { border-bottom: none; }
+        .work-log .timestamp { color: var(--teal); font-weight: 600; }
+        .work-log .task { color: var(--text); }
+        .work-log .output { color: var(--muted); font-style: italic; }
+        .new-badge { background: var(--accent); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>📋 Damon Dashboard</h1>
-        <p class="subtitle">Last updated: 2026-01-30 11:16 SGT • <a href="config.html" style="color: var(--teal);">📁 View Config Files</a> • Auto-refreshes every 5 min</p>
+        <p class="subtitle">Last updated: 2026-02-01 13:55 SGT • <a href="config.html" style="color: var(--teal);">📁 View Config Files</a> • Auto-refreshes every 5 min</p>
         
         <!-- Task Status -->
         <div class="grid">
@@ -95,7 +107,8 @@
             <div class="card blue">
                 <h2>👁️ OBSERVING</h2>
                 <div class="item"><strong>30-Min Pulse Cron</strong><span>New! AQI + Basis + Discord every 30 min</span></div>
-                <div class="item"><strong>Afternoon Research Report</strong><span>Daily 3pm SGT deep-dive</span></div>
+                <div class="item"><strong>Overnight Research <span class="new-badge">NEW</span></strong><span>2am deep-dive on rotating topics</span></div>
+                <div class="item"><strong>Timestamped Work Log <span class="new-badge">NEW</span></strong><span>memory/YYYY-MM-DD.md format</span></div>
                 <div class="item"><strong>Discord Sentiment</strong><span>Browser Relay pipeline</span></div>
                 <div class="item"><strong>Dashboard Auto-Sync</strong><span>GitHub Pages push on change</span></div>
             </div>
@@ -118,10 +131,65 @@
             </div>
         </div>
 
+        <!-- Overnight Research Feature -->
+        <div class="section">
+            <div class="card night">
+                <h2>🌙 OVERNIGHT RESEARCH <span class="new-badge">NEW</span></h2>
+                <p style="font-size: 0.8rem; margin-bottom: 12px;">While you sleep, I pick a topic from recent conversations and do deep research.</p>
+                <div class="grid" style="margin-bottom: 0;">
+                    <div>
+                        <strong style="color: var(--night);">How it works:</strong>
+                        <ul style="margin-top: 8px;">
+                            <li>2:00 AM SGT — Scan yesterday's chat for interesting topics</li>
+                            <li>Pick one topic for deep-dive research</li>
+                            <li>Save findings to <code style="color: var(--teal);">memory/research/TOPIC.md</code></li>
+                            <li>Morning briefing includes: "While you slept, I researched..."</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong style="color: var(--night);">Recent overnight work:</strong>
+                        <div class="work-log">
+                            <div class="entry">
+                                <span class="timestamp">Pending...</span>
+                                <span class="task">Cron being set up</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timestamped Work Log -->
+        <div class="section">
+            <div class="card teal">
+                <h2>📝 TIMESTAMPED WORK LOG <span class="new-badge">NEW</span></h2>
+                <p style="font-size: 0.8rem; margin-bottom: 12px;">Daily notes now follow structured format for better traceability.</p>
+                <div style="background: var(--accent2); border-radius: 8px; padding: 12px; font-family: monospace; font-size: 0.75rem;">
+                    <div style="color: var(--muted);">## 2026-02-01 — Saturday</div>
+                    <br>
+                    <div><span style="color: var(--teal);">**02:00 AM — Overnight Research**</span></div>
+                    <div style="color: var(--text);">Topic: [picked from yesterday's chat]</div>
+                    <div style="color: var(--muted);">Output: memory/research/TOPIC.md</div>
+                    <div style="color: var(--muted);">Key findings: [bullets]</div>
+                    <br>
+                    <div><span style="color: var(--teal);">**07:00 AM — Morning Briefing**</span></div>
+                    <div style="color: var(--text);">Delivered: Weather, AQI, headlines, overnight work</div>
+                    <br>
+                    <div><span style="color: var(--teal);">**13:45 — 30-Min Pulse**</span></div>
+                    <div style="color: var(--text);">AQI: C46 E63 S53 | BTC: $78.9K | Funding: 11% APR</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Cron Schedule -->
         <div class="section">
-            <h2 style="color: var(--teal); margin-bottom: 15px;">⏰ CRON SCHEDULE (6 jobs)</h2>
+            <h2 style="color: var(--teal); margin-bottom: 15px;">⏰ CRON SCHEDULE (8 jobs)</h2>
             <div class="cron-grid">
+                <div class="cron-item night">
+                    <div class="time">2:00 AM SGT 🌙</div>
+                    <div class="name">🔬 Overnight Research</div>
+                    <div class="desc">Deep-dive on topic from yesterday</div>
+                </div>
                 <div class="cron-item">
                     <div class="time">Every 30 min</div>
                     <div class="name">📊 30-Min Pulse</div>
@@ -130,12 +198,22 @@
                 <div class="cron-item">
                     <div class="time">7:00 AM SGT</div>
                     <div class="name">🌅 Morning Briefing</div>
-                    <div class="desc">Weather, Headlines, Market Ratios</div>
+                    <div class="desc">Weather, Headlines, Market Ratios + Overnight Work</div>
+                </div>
+                <div class="cron-item">
+                    <div class="time">2:00 PM SGT</div>
+                    <div class="name">📈 HL Top 10 OI</div>
+                    <div class="desc">Hyperliquid open interest rankings</div>
                 </div>
                 <div class="cron-item">
                     <div class="time">3:00 PM SGT</div>
                     <div class="name">📚 Research Report</div>
                     <div class="desc">Deep-dive on rotating topic</div>
+                </div>
+                <div class="cron-item">
+                    <div class="time">4:00 PM SGT</div>
+                    <div class="name">👤 Aboutme Enrichment</div>
+                    <div class="desc">Learn more about bro</div>
                 </div>
                 <div class="cron-item">
                     <div class="time">5:00 PM SGT</div>
@@ -186,6 +264,8 @@
         <div class="card green">
             <h2>✅ COMPLETED (recent)</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 8px; font-size: 0.8rem;">
+                <div class="item"><strong>Overnight Research Cron</strong><span>2am deep-dive on rotating topics</span></div>
+                <div class="item"><strong>Timestamped Work Log</strong><span>Structured daily notes format</span></div>
                 <div class="item"><strong>Cron Architecture Refactor</strong><span>Moved always-report checks to dedicated crons</span></div>
                 <div class="item"><strong>30-Min Pulse Cron</strong><span>AQI + Basis + Discord with explicit format</span></div>
                 <div class="item"><strong>UV Index + Stories (5pm)</strong><span>UV + personalized web discoveries</span></div>
@@ -207,6 +287,7 @@
                     <li><strong>Crons for Consistency</strong> — Explicit payloads = reliable formats</li>
                     <li><strong>Heartbeat for Conditionals</strong> — Silent unless triggered</li>
                     <li><strong>Text > Brain</strong> — Files survive, mental notes don't</li>
+                    <li><strong>Overnight Work</strong> — Wake up to deliverables, not just reports</li>
                 </ul>
             </div>
         </div>
