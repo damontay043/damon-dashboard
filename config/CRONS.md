@@ -27,7 +27,8 @@
 ### hourly-pulse (formerly 30min-pulse)
 - **Schedule:** Every hour at :45, 6am-10pm SGT
 - **Content:** AQI, BTC basis spread (HL + Paradex), funding rates, Discord sentiment
-- **Timeout:** 120s
+- **Includes:** Discord screenshot attachment for verification
+- **Timeout:** 180s
 
 ### hl-oi-top10
 - **Schedule:** 2:00 PM daily
