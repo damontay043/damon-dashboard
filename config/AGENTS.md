@@ -253,5 +253,35 @@ My context gets compacted regularly — older conversations are summarized or lo
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
 
 
+## 🚨 Learned Rules (from MISSes)
+
+*Every mistake becomes a rule. These are non-negotiable.*
+
+### Confidence Rules
+- [ ] **Native index only:** Use each exchange's OWN index for basis calculation. Never cross-reference Binance spot for Paradex/HL basis.
+- [ ] **Funding intervals vary:** HL = 1hr, Paradex = 8hr. Never assume all venues use 8hr. Always verify.
+- [ ] **Check before claiming "can't":** Before saying "I can't access X" or "I don't know about Y", check TOOLS.md and memory_search first.
+
+### Speed Rules
+- [ ] **Cron delivery settings:** When updating cron payloads, ALWAYS verify `deliver: true, channel: "whatsapp"` are preserved.
+- [ ] **Plan before complex tasks:** For multi-step operations, write plan to NOW.md BEFORE executing.
+
+### Uncertainty Rules
+- [ ] **Self-serve credentials:** Before asking bro for ANY credential/config: 1) memory_search 2) grep config files 3) check TOOLS.md/MEMORY.md/.credentials.json. Only ask if genuinely not found.
+
+### Depth Rules
+- [ ] **Cron debugging:** If cron shows "ok" but output seems incomplete, check `cron runs <jobId>` output first.
+- [ ] **Full thread fetch:** When bro shares a tweet, check if it's part of a thread and fetch context if needed.
+
+---
+
+**⚡ MISS → Rule Protocol:**
+When logging a MISS to `memory/self-review.md`, you MUST also:
+1. Extract a concrete "do/don't" rule
+2. Add it to this section immediately (same commit)
+3. Rules must be actionable, not vague
+
+---
+
 ## Chat Logging — DISCONTINUED (2026-01-28)
 ~~Self-logging to clawdbot-chatlogs.md~~ — Momo now pulls conversations directly from WhatsApp MCP during /pitstop. No action needed from Damon. Keep MEMORY.md and daily memory files for own context.
