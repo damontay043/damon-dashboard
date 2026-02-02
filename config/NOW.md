@@ -1,9 +1,10 @@
 # NOW.md - Current Task
 
-DOING: patch daily-biz-idea cron (401 fallback) + rerun 4pm/5pm outputs
+DOING: idle
 
 ## Just completed:
-- Identified peppol 401 from daily-business-idea cron
+- Reverted defaults + heartbeat to Opus 4.5; set thinkingDefault to off
+- Updated deep-self-review cron to Opus
 
 ---
-Last updated: 2026-02-02 18:09 SGT
+Last updated: 2026-02-02 18:15 SGT
