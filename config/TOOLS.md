@@ -376,6 +376,62 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 | Voice output | Edge TTS | ✅ Active |
 | Scheduled tasks | Cron jobs | ✅ Active |
 | Memory | File-based | ✅ Active |
+| **Codex CLI** | coding tasks | ✅ Active (verified 2026-02-02) |
+
+---
+
+## 🧑‍💻 Codex CLI — Coding Tasks
+
+**Version:** codex-cli 0.93.0
+**Path:** `/home/pujing/.npm-global/bin/codex`
+**Model:** gpt-5.2-codex (default)
+
+**When to use Codex CLI (instead of Opus):**
+- Writing/editing scripts
+- Code refactors with `--full-auto`
+- One-shot code generation
+- Building tools/utilities
+- Isolated coding tasks that don't need my memory/context
+
+**When to keep using Opus:**
+- Tasks needing memory or conversation history
+- Complex multi-step reasoning
+- Anything requiring deep context
+
+**Cost comparison:** Codex ~$0.003/1K tokens vs Opus ~$0.015/1K → **~5x cheaper for coding**
+
+**Basic usage:**
+```bash
+# One-shot task (needs git repo!)
+cd /tmp && mkdir myproject && cd myproject && git init
+codex exec "Your coding prompt here" --full-auto
+
+# Or use PTY for interactive mode
+exec pty=true workdir=/path/to/project command="codex exec 'Build X feature' --full-auto"
+```
+
+**Background mode (for longer tasks):**
+```bash
+# Start in background
+exec pty=true workdir=/path/to/project background=true command="codex exec 'Build snake game' --full-auto"
+# Returns sessionId
+
+# Monitor progress
+process action=log sessionId=XXX
+
+# Check if done
+process action=poll sessionId=XXX
+
+# Kill if needed
+process action=kill sessionId=XXX
+```
+
+**Key flags:**
+- `--full-auto` — no confirmation prompts, just do it
+- `--dangerously-auto-approve-everything` — approve all file writes (use carefully)
+- `--model gpt-5.2-codex` — explicitly set model
+
+**Important:** Codex requires a git repo to run. For scratch work, create temp repo: `mkdir /tmp/scratch && cd /tmp/scratch && git init`
 
 ---
 
