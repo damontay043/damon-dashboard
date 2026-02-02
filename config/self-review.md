@@ -31,6 +31,25 @@
 **Root cause:** Assumed credentials were missing without doing `memory_search` or checking TOOLS.md, MEMORY.md, .credentials.json
 **Fix:** Before asking bro for any credential/config info: 1) memory_search first 2) grep relevant config files 3) check .credentials.json. Only ask if genuinely not found.
 
+### MISS | depth
+**What happened:** 18:45 pulse cron showed "ok" but only output partial summary, never delivered full report
+**Root cause:** Unknown — cron marked success but agent stopped mid-generation. Only got "Preparing pulse report..." then nothing.
+**Fix:** Need to investigate further. May need to check cron agent logs or add explicit "report complete" marker. For now, monitor next few runs to see if pattern repeats.
+
+---
+
+## 2026-02-02
+
+### MISS | speed
+**What happened:** Missed 4 tweet links sent earlier; replied without reviewing them.
+**Root cause:** Didn’t scan queued/backlog messages before responding; only saw latest message.
+**Fix:** Before replying, always scan queued/backlog for additional links/tasks and acknowledge all items in one batch. If unsure, ask “any other links?” before closing.
+
+### MISS | depth
+**What happened:** Sent an ad-hoc Discord sentiment check without using the standard report format.
+**Root cause:** Rushed the response and didn’t follow the format in TOOLS.md.
+**Fix:** Always use the standard Discord Sentiment Report Format for any sentiment check, including ad-hoc tests.
+
 ---
 
 ## Format Reference
