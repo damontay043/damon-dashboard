@@ -55,6 +55,11 @@
 **Root cause:** Didn’t verify available tooling + timeout headroom after patching; failed to monitor the next run.
 **Fix:** Avoid non-installed tools in cron instructions and increase timeouts when runs approach limits; always verify the next scheduled run after a fix.
 
+### MISS | depth
+**What happened:** 3pm research cron failed because dbird binary was missing.
+**Root cause:** Assumed dbird still installed after migration; no dependency check.
+**Fix:** Verify external CLI dependencies (dbird, python, rg) before relying on them; add fallback paths.
+
 ---
 
 ## Format Reference
