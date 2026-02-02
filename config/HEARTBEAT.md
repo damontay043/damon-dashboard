@@ -11,6 +11,7 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - ONLY alert if any coin moved **±8% in 24h**
    - Exclude stablecoins (USDT, USDC)
    - If none moved ±8%, stay silent on this check
+   - If API rate-limited or fails, skip quietly
    - Format (only if triggered):
      ```
      🚨 *Crypto Alert*
