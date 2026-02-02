@@ -1,10 +1,11 @@
 # NOW.md - Current Task
 
-DOING: audit core configs + patch cron deps + hourly snapshot test runs
+DOING: idle
 
 ## Just completed:
-- Installed @steipete/bird (dbird pending wrapper)
-- Hourly snapshot TEST #1 sent
+- Audited core configs + added fallbacks to cron jobs
+- Updated USER.md to reflect non-technical, step-by-step instructions
+- Verified dbird wrapper exists but needs real auth_token/ct0
 
 ---
-Last updated: 2026-02-02 15:38 SGT
+Last updated: 2026-02-02 15:48 SGT
