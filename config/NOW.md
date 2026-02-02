@@ -3,8 +3,7 @@
 DOING: idle
 
 ## Just completed:
-- Heartbeat checks; found 5pm UV/story cron failed (404) + hourly pulse run terminated
-- Synced NOW.md after update
+- Hourly pulse report sent (17:45 SGT)
 
 ---
-Last updated: 2026-02-02 17:17 SGT
+Last updated: 2026-02-02 17:46 SGT
