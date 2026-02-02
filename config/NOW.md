@@ -3,8 +3,8 @@
 DOING: idle
 
 ## Just completed:
-- Fixed deep-self-review cron to use Codex (Opus + xhigh was erroring)
-- Set 7pm/8pm reminders for Grok/dbird creds
+- Heartbeat checks; found 5pm UV/story cron failed (404) + hourly pulse run terminated
+- Synced NOW.md after update
 
 ---
-Last updated: 2026-02-02 16:16 SGT
+Last updated: 2026-02-02 17:17 SGT
