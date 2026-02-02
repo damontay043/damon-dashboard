@@ -1,11 +1,10 @@
 # NOW.md - Current Task
 
-DOING: set up /last30days (Grok) test; wait for XAI_API_KEY env; then manual-run 3pm cron after dbird fixed
+DOING: idle
 
 ## Just completed:
-- Audited core configs + added fallbacks to cron jobs
-- Updated USER.md for non-technical step-by-step instructions
-- Verified dbird wrapper exists but still needs real auth_token/ct0
+- Fixed deep-self-review cron to use Codex (Opus + xhigh was erroring)
+- Set 7pm/8pm reminders for Grok/dbird creds
 
 ---
-Last updated: 2026-02-02 15:55 SGT
+Last updated: 2026-02-02 16:16 SGT
