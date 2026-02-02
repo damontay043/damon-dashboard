@@ -3,9 +3,8 @@
 DOING: idle
 
 ## Just completed:
-- Switched heartbeat model to Codex in openclaw.json
-- Logged Discord format MISS + added rule in AGENTS.md
-- Synced config files + updated LAST_CHECKED timestamp
+- Patched hourly-pulse to avoid python/rg failures
+- Investigated 1:45pm cron miss (python not found)
 
 ---
-Last updated: 2026-02-02 13:27 SGT
+Last updated: 2026-02-02 14:03 SGT
