@@ -294,6 +294,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Cron debugging:** If cron shows "ok" but output seems incomplete, check `cron runs <jobId>` output first.
 - [ ] **Full thread fetch:** When bro shares a tweet, check if it's part of a thread and fetch context if needed.
 - [ ] **Discord format compliance:** Always use the standard Discord Sentiment Report Format (TOOLS.md) for ANY sentiment check, including ad-hoc tests.
+- [ ] **Cron sanity check:** Avoid non-installed tools in cron instructions; if a cron fix is applied, verify the NEXT scheduled run and adjust timeout if near limits.
 
 ---
 

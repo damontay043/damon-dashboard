@@ -1,10 +1,9 @@
 # NOW.md - Current Task
 
-DOING: afternoon research report (Twitter trends)
+DOING: investigate hourly-pulse miss + dbird missing (3pm cron)
 
 ## Just completed:
-- Heartbeat checks + memory maintenance (updated MEMORY.md + maintenance state)
-- Crypto movers check (ETH -9.94% 24h)
+- Patched hourly-pulse to avoid python/rg failures
 
 ---
-Last updated: 2026-02-02 15:00 SGT
+Last updated: 2026-02-02 15:15 SGT

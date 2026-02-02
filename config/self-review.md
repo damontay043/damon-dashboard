@@ -50,6 +50,11 @@
 **Root cause:** Rushed the response and didn’t follow the format in TOOLS.md.
 **Fix:** Always use the standard Discord Sentiment Report Format for any sentiment check, including ad-hoc tests.
 
+### MISS | depth
+**What happened:** Hourly pulse kept failing after 12:45 because the cron run hit missing dependencies (python) and timed out before delivery.
+**Root cause:** Didn’t verify available tooling + timeout headroom after patching; failed to monitor the next run.
+**Fix:** Avoid non-installed tools in cron instructions and increase timeouts when runs approach limits; always verify the next scheduled run after a fix.
+
 ---
 
 ## Format Reference
