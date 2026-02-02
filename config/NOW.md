@@ -1,9 +1,9 @@
 # NOW.md - Current Task
 
-DOING: idle
+DOING: rerun 4pm + 5pm crons and verify next-run health
 
 ## Just completed:
-- Hourly pulse report sent (17:45 SGT)
+- Patched 5pm wind-down cron to handle fetch failures
 
 ---
-Last updated: 2026-02-02 17:46 SGT
+Last updated: 2026-02-02 18:07 SGT
