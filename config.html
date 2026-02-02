@@ -174,7 +174,8 @@
         </div>
         
         <footer>
-            <p>Last updated: <span id="timestamp"></span></p>
+            <p>Config sync last checked (SGT): <span id="sync-check">loading...</span></p>
+            <p>Page loaded: <span id="timestamp"></span></p>
         </footer>
     </div>
     
@@ -238,8 +239,19 @@
             document.querySelector('.raw-toggle').textContent = showRaw ? 'View Rendered' : 'View Raw';
         }
         
+        async function loadLastChecked() {
+            try {
+                const resp = await fetch('config/LAST_CHECKED.txt?v=' + Date.now());
+                const text = (await resp.text()).trim();
+                document.getElementById('sync-check').textContent = text || 'unknown';
+            } catch (e) {
+                document.getElementById('sync-check').textContent = 'unknown';
+            }
+        }
+
         // Init
         document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        loadLastChecked();
         createTabs();
         loadFile(files[0].name);
     </script>

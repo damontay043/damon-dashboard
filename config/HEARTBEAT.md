@@ -19,6 +19,7 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
 
 2. **Dashboard + Config Sync** — Check if any core files changed since last GitHub push.
    - Files to sync: `DASHBOARD.md`, `AGENTS.md`, `SOUL.md`, `USER.md`, `IDENTITY.md`, `TOOLS.md`, `HEARTBEAT.md`, `NOW.md`
+   - Update `/tmp/damon-dashboard/config/LAST_CHECKED.txt` with current SGT timestamp (at least daily or when syncing changes) so config.html shows last check time
    - If changed: copy to `/tmp/damon-dashboard/config/`, regenerate HTML if needed, git commit + push
    - Track in `memory/dashboard-state.json`
    - Silent — don't message bro unless push fails
@@ -39,36 +40,7 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - Track last maintenance date in `memory/memory-maintenance.json`
    - Silent unless MEMORY.md was significantly updated
 
-5. **Self-Review + Rule Extraction** — On each heartbeat, briefly reflect:
-   - Did I make any wrong assumptions recently?
-   - Did I default to consensus without checking?
-   - Did I add noise instead of signal?
-   
-   **If you catch a MISS:** 
-   1. Log it to `memory/self-review.md` with format:
-      ```
-      ### MISS | [confidence | uncertainty | speed | depth]
-      **What happened:** [brief description]
-      **Root cause:** [why it went wrong]
-      **Fix:** [what to do differently]
-      ```
-   2. **IMMEDIATELY extract a rule** and add to AGENTS.md "Learned Rules" section
-   3. Rules must be concrete "do/don't" statements, not vague advice
-   
-   **If something went well (HIT):** Log it too to avoid over-correcting:
-   ```
-   ### HIT | [tag]
-   **What happened:** [brief description]
-   **Why it worked:** [what made it successful]
-   **Lesson:** [what to remember]
-   ```
-   
-   **On startup:** Read `memory/self-review.md` and keep recent MISSes in mind. When a task overlaps a MISS tag, force a counter-check before responding.
-
-6. **Rule Enforcement Audit** — Periodically verify:
-   - Check `memory/self-review.md` for any MISSes without corresponding rules in AGENTS.md
-   - If unprocessed MISSes found: extract rules and add to AGENTS.md immediately
-   - This ensures NO mistake goes uncodified
+5. ~~Self-Review~~ — **MOVED TO DEDICATED CRON** (Opus, every 3hrs)
 
 ## When to message bro
 
