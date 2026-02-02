@@ -1,11 +1,11 @@
 # NOW.md - Current Task
 
-DOING: fix heartbeat model to codex + log discord format miss + update AGENTS rule
+DOING: idle
 
 ## Just completed:
-- Verified rg install (ripgrep 14.1.0)
-- Ran ad-hoc Discord sentiment check + sent screenshot
-- Identified heartbeat model mismatch (Sonnet not configured)
+- Switched heartbeat model to Codex in openclaw.json
+- Logged Discord format MISS + added rule in AGENTS.md
+- Synced config files + updated LAST_CHECKED timestamp
 
 ---
-Last updated: 2026-02-02 13:24 SGT
+Last updated: 2026-02-02 13:27 SGT
