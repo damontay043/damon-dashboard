@@ -1,10 +1,10 @@
 # NOW.md - Current Task
 
-DOING: reinstall dbird (Twitter CLI wrapper) + fix hourly pulse misses
+DOING: practice hourly snapshot until 3:45pm; install dbird wrapper after cookies
 
 ## Just completed:
-- Investigated hourly-pulse miss + dbird missing
-- Patched hourly-pulse timeout + fallback; added cron sanity rule
+- Installed @steipete/bird; sent sudo wrapper instructions for dbird
+- Ran hourly snapshot TEST #1 (15:32 SGT) + sent screenshot
 
 ---
-Last updated: 2026-02-02 15:20 SGT
+Last updated: 2026-02-02 15:35 SGT
