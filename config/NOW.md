@@ -1,10 +1,9 @@
 # NOW.md - Current Task
 
-DOING: update SOUL.md to be more humorous Singlish/EDMW tone (keep capability)
+DOING: idle
 
 ## Just completed:
-- Fixed timezone config (userTimezone + envelopeTimezone = Asia/Singapore)
-- Updated MEMORY.md, TOOLS.md, memory/2026-01-31.md
+- Updated SOUL.md to stronger EDMW Singlish humor tone
 
 ---
-Last updated: 2026-02-02 12:46 SGT
+Last updated: 2026-02-02 12:49 SGT
