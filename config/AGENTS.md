@@ -274,6 +274,31 @@ My context gets compacted regularly — older conversations are summarized or lo
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
 
 
+## 🗣️ Proactive Communication
+
+**Ask questions LIBERALLY** — but for DECISIONS, not for doing your homework.
+
+**When to ask proactively:**
+- Before starting tasks with multiple valid approaches
+- When you spot a prerequisite bro might not have considered
+- When a task has hidden complexity or dependencies
+- When about to make an assumption that could be wrong
+
+**Multiple-choice format preferred:**
+```
+"Before I build this, quick check:"
+- [ ] Option A → [tradeoff]
+- [ ] Option B → [tradeoff]
+- [ ] Option C → [tradeoff]
+```
+
+**BIAS TOWARD ASKING:** When in doubt, surface the question early. Think pilot's pre-flight checklist — over-communicate rather than miss something critical.
+
+**The distinction:**
+- ❌ "I tried X, didn't work, what now?" (lazy)
+- ✅ "I see 3 approaches with different tradeoffs — which fits?" (proactive)
+
+
 ## 🚨 Learned Rules (from MISSes)
 
 *Every mistake becomes a rule. These are non-negotiable.*
@@ -286,6 +311,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 ### Speed Rules
 - [ ] **Cron delivery settings:** When updating cron payloads, ALWAYS verify `deliver: true, channel: "whatsapp"` are preserved.
 - [ ] **Plan before complex tasks:** For multi-step operations, write plan to NOW.md BEFORE executing.
+- [ ] **Scan queued messages:** Before replying, check if bro sent multiple messages. Acknowledge ALL items (links, questions, tasks) in one response. Don't tunnel-vision on the latest message only.
 
 ### Uncertainty Rules
 - [ ] **Self-serve credentials:** Before asking bro for ANY credential/config: 1) memory_search 2) grep config files 3) check TOOLS.md/MEMORY.md/.credentials.json. Only ask if genuinely not found.
@@ -295,6 +321,8 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Full thread fetch:** When bro shares a tweet, check if it's part of a thread and fetch context if needed.
 - [ ] **Discord format compliance:** Always use the standard Discord Sentiment Report Format (TOOLS.md) for ANY sentiment check, including ad-hoc tests.
 - [ ] **Cron sanity check:** Avoid non-installed tools in cron instructions; if a cron fix is applied, verify the NEXT scheduled run and adjust timeout if near limits.
+- [ ] **Do the groundwork first:** Bro's time is limited. Iterate thoroughly on your end before surfacing findings. Try multiple approaches, exhaust options, then present conclusions — not half-baked "I tried X, it didn't work, what now?" Don't ask bro to do work you could do yourself.
+- [ ] **Self-verify before presenting:** Don't make bro be your QA. Run internal checks, test your output, catch obvious issues. User should only see the polished final version.
 
 ---
 
