@@ -1,16 +1,19 @@
 # NOW.md — Current Task
 
-DOING: idle (Gemini CLI installed, awaiting bro's auth)
+DOING: idle (waiting on bro's pending items)
 
 ## Just Completed (last 1-3 items)
-- ✅ Installed Gemini CLI v0.26.0 — bro needs to run `gemini` once to OAuth with Google AI Ultra
-- ✅ Added SpO2/sleep apnea tracking to morning wellness cron (cols AW, AZ)
-- ✅ Fixed Variational basis to use cross-venue median (matching Momo's dashboard)
+- ✅ Coding agent guidelines v4 uploaded to OneDrive for Momo
+- ✅ "No Fabricated Data" rule added to AGENTS.md
+- ✅ 5pm UV cron updated to use real NEA data
 
-## Blocked On (if any)
-- [ ] Gemini CLI auth — bro runs `gemini` to authenticate with Google AI Ultra account
+## Blocked On (bro owes me)
+- [ ] **Momo's delegation guidelines** — to review and potentially incorporate
+- [ ] **Gemini Pro default decision** — shell alias approach? Or other method?
 
 ## Context
-- Pre-compaction memory flush at ~16:48 SGT
-- Gemini CLI ready to add to TOOLS.md decision tree once auth confirmed
-- Discord scroll fix deployed (click + Ctrl+End + wait 2s)
+- Gemini CLI installed + authenticated ✅
+- Guidelines at: `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/damon-coding-agent-guidelines-v4.md`
+- Nag cron active: `gemini-workstream-nag` (every 3h, 6am-11pm)
+- Cross-review pattern works well — used it for the guidelines themselves
+- Refer to wife as "the wife" (no specific name/initial known)

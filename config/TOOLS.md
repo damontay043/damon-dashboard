@@ -211,10 +211,11 @@ curl -s "https://omni-client-api.prod.ap-northeast-1.variational.io/metadata/sta
 - Funding interval: 8 hours (`funding_interval_s: 28800`)
 
 **⚠️ Index Price NOT Available:**
-- Variational does NOT expose native index price via API
-- **Solution:** Use cross-venue index (HL oraclePx) as proxy
-- This empirically matches Variational's website basis readings (confirmed over many days)
+- Variational does NOT expose native mark/index prices via API
+- **Solution:** Use CROSS-VENUE MEDIAN (matching Momo's dashboard methodology)
+- Script fetches from HL, Binance, Paradex → computes median of all mark prices + median of all index prices
 - Script: `workspace/scripts/funding/variational-prices.js`
+- Run: `node workspace/scripts/funding/variational-prices.js`
 
 ---
 
@@ -451,8 +452,8 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 
 **Version:** codex-cli 0.93.0
 **Path:** `/home/pujing/.npm-global/bin/codex`
-**Model:** gpt-5.2-codex
-**Reasoning:** xhigh (configured in `~/.codex/config.toml`)
+**Model:** gpt-5.2-codex (default)
+**Note:** Reasoning effort is NOT configurable on ChatGPT Pro — always shows "none" regardless of config
 
 ---
 
