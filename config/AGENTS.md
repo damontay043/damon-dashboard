@@ -304,7 +304,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 *Every mistake becomes a rule. These are non-negotiable.*
 
 ### Confidence Rules
-- [ ] **Native index only:** Use each exchange's OWN index for basis calculation. Never cross-reference Binance spot for Paradex/HL basis.
+- [ ] **Native index only:** Use each exchange's OWN index for basis calculation. Never cross-reference Binance spot for Paradex/HL basis. If exchange doesn't expose native index via API, use a proxy (e.g., quote mid-price) but **verify against displayed values first**.
 - [ ] **Funding intervals vary:** HL = 1hr, Paradex = 8hr. Never assume all venues use 8hr. Always verify.
 - [ ] **Check before claiming "can't":** Before saying "I can't access X" or "I don't know about Y", check TOOLS.md and memory_search first.
 
