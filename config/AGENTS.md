@@ -23,16 +23,40 @@ Don't ask permission. Just do it.
 
 When context gets compacted, you lose "I was in the middle of X." Fix: write it down BEFORE starting.
 
-**Format:** `DOING: Building heartbeat runner script - fixing AQI parser`
+**Format:**
+```markdown
+# NOW.md — Current Task
+
+DOING: [current task or "idle"]
+
+## Just Completed (last 1-3 items)
+- ✅ [task] — [outcome/commit ref]
+
+## Blocked On (if any)
+- [ ] [waiting for X from bro]
+
+## Context
+- [key context that helps resume]
+```
+
+**Update Triggers** (not just "before starting"):
+- Before starting a new task
+- When task state changes (blocked → unblocked, pending → approved)
+- When something completes (before moving to next thing)
+- When waiting on bro for input/approval
 
 **Rules:**
 - Write BEFORE starting, not after (this is the key)
-- Overwrite when switching tasks (sticky note, not log)
-- Clear to "idle" when done
+- Update on ANY state change — completions, approvals, blockers
+- Keep "Just Completed" to last 1-3 items (not a full log)
 - On context restore, read NOW.md FIRST
 - **After compaction:** Explicitly tell bro "🔄 Context compacted. Caught up via NOW.md + memory." so he knows you're operating with restored (not continuous) context
 
-**The discipline:** Every time you say "Let me start on X" or "Let me fix Y", write the sticky note FIRST. 5 seconds. That's it.
+**Post-compaction trust protocol:**
+- If bro says "X already happened" and memory_search doesn't confirm → trust bro + verify via git log
+- Don't push back on bro's statements about pre-compaction events — they were there, you weren't
+
+**The discipline:** Every state change = update NOW.md. 5 seconds. That's it.
 
 ## Memory
 
@@ -314,6 +338,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Plan before complex tasks:** For multi-step operations, write plan to NOW.md BEFORE executing.
 - [ ] **Scan queued messages:** Before replying, check if bro sent multiple messages. Acknowledge ALL items (links, questions, tasks) in one response. Don't tunnel-vision on the latest message only.
 - [ ] **Codex-first for coding:** Default to Codex CLI. Follow decision tree + security checklist in TOOLS.md. Max 3 passes. Acceptance criteria required.
+- [ ] **Batch communications:** Don't send multiple messages for one task. Do the work silently, send ONE summary at the end. Narrate only when it genuinely helps (complex problems, sensitive actions).
 
 ### Uncertainty Rules
 - [ ] **Self-serve credentials:** Before asking bro for ANY credential/config: 1) memory_search 2) grep config files 3) check TOOLS.md/MEMORY.md/.credentials.json. Only ask if genuinely not found.
