@@ -5,12 +5,13 @@
 ---
 
 ## 🔴 ACTIVE (doing now)
-- **#1 Discord Scroll Experiments** — Exp #1 & #2 FAILED (button clicks don't work). Exp #3 (keyboard focus + Ctrl+End) queued for 06:00 SGT. *(started 2026-01-30)*
-  - ❌ Exp #1 (800ms wait): Failed — 56 min stale
-  - ❌ Exp #2 (double click): Failed — 90 min stale
-  - ⏳ Exp #3 (06:00 SGT): Keyboard focus + Ctrl+End
-  - **Finding: Button clicks don't trigger scroll at all**
-  - **May become moot after migration (local browser)**
+- **#1 Discord Scroll Experiments** — Overnight testing to fix cron staleness. Baseline: 26-50min stale. Goal: <10min. Tracking in `memory/discord-scroll-experiments.md`. *(started 2026-01-30)*
+  - Exp #1 (22:00 SGT): 800ms wait after button click
+  - Exp #2 (22:30 SGT): Double-click the jump button
+  - Exp #3 (06:00 SGT): Click message area first, then button
+  - Exp #4 (06:30 SGT): Ctrl+End instead of button
+  - Exp #5 (07:00 SGT): Longer wait (1500ms)
+  - **Report findings in morning briefing**
 
 ---
 
@@ -48,7 +49,6 @@
 ---
 
 ## ✅ COMPLETED
-- **Damon Control Panel Built** — Local web dashboard at `apps/control-panel/`. Shows NOW.md, tasks, memory browser, funding charts, briefing archive. Run with `npm start`, open http://localhost:3333. Will migrate with the rest. *(2026-01-30)*
 - **/last30days Skill Installed** — Research any topic across X/Twitter + web. Powered by xAI Grok. **Custom timeframes:** `--days=N` (1-30 days) or `--hours=N` (e.g. 2h for real-time checks). Used for: morning FUD checks (Paradex/WBTC/Aave), research reports, ad-hoc queries. *(2026-01-29)*
 - **xAI API Key Configured** — X/Twitter search unlocked. Monitor credits at console.x.ai. *(2026-01-29)*
 - **Nag Cron (Every 3 Hours)** — Checks BLOCKED ON BRO section and reminds bro of pending tasks. *(2026-01-29)*
@@ -174,7 +174,7 @@ Custom skills we've built together. Invoke by name: "Damon, use [skill]"
 |------|---------|-------|
 | Browser Relay Extension | Control Chrome tabs on bro's PC | Clawdbot Chrome extension. Click toolbar icon to attach tab. profile=chrome in browser tool. |
 | GitHub CLI (`gh`) | Push dashboard to GitHub Pages | Authenticated as damontay043 via device flow |
-| Node Host (Scarlet2023) | Access bro's home PC files | Windows via WSL2. Files at `/mnt/c/pj/clawdbot-shared/` |
+| Node Host (Scarlet2023) | Access bro's home PC files | Windows via WSL2. Files at `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/` |
 | WhatsApp | Primary messaging channel | Via Clawdbot gateway |
 | System Cron | Hourly funding rate collection | Zero token cost — runs independently of agent |
 | Playwright | Browser automation on VPS | For web scraping (ST headlines, etc.) |

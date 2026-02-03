@@ -309,9 +309,11 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Check before claiming "can't":** Before saying "I can't access X" or "I don't know about Y", check TOOLS.md and memory_search first.
 
 ### Speed Rules
+- [ ] **Quality over speed:** Better to get the job done well once than fast with issues. Don't rush and create rework.
 - [ ] **Cron delivery settings:** When updating cron payloads, ALWAYS verify `deliver: true, channel: "whatsapp"` are preserved.
 - [ ] **Plan before complex tasks:** For multi-step operations, write plan to NOW.md BEFORE executing.
 - [ ] **Scan queued messages:** Before replying, check if bro sent multiple messages. Acknowledge ALL items (links, questions, tasks) in one response. Don't tunnel-vision on the latest message only.
+- [ ] **Codex-first for coding:** Default to Codex CLI. Follow decision tree + security checklist in TOOLS.md. Max 3 passes. Acceptance criteria required.
 
 ### Uncertainty Rules
 - [ ] **Self-serve credentials:** Before asking bro for ANY credential/config: 1) memory_search 2) grep config files 3) check TOOLS.md/MEMORY.md/.credentials.json. Only ask if genuinely not found.

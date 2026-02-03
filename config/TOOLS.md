@@ -84,21 +84,22 @@ Add-Type -AssemblyName System.Windows.Forms
 
 **Account:** @realdamontay (Damon Tay)
 **User ID:** 2017069604896722944
-**Wrapper:** `dbird` (auto-injects credentials)
+**Wrapper:** `/home/pujing/dbird` (auto-injects credentials)
 
-**Credentials stored in:** `/usr/local/bin/dbird` wrapper script
+**Credentials stored in:** `/home/pujing/dbird` wrapper script
 - Uses env vars AUTH_TOKEN + CT0
-- Cookies from bro's browser (may expire, re-grab if needed)
+- Cookies from bro's browser (updated 2026-02-03)
+- May expire in ~2-4 weeks, re-grab if auth fails
 
 **Common commands:**
 ```bash
-dbird whoami                    # Check auth status
-dbird read <tweet-url>          # Read a specific tweet
-dbird search "query" -n 10      # Search tweets
-dbird user-tweets @handle -n 20 # Get user's timeline
-dbird mentions                  # Check @realdamontay mentions
-dbird news --ai-only -n 10      # Trending/news
-dbird thread <url>              # Get full thread + replies
+/home/pujing/dbird whoami                    # Check auth status
+/home/pujing/dbird read <tweet-url>          # Read a specific tweet
+/home/pujing/dbird search "query" -n 10      # Search tweets
+/home/pujing/dbird user-tweets @handle -n 20 # Get user's timeline
+/home/pujing/dbird mentions                  # Check @realdamontay mentions
+/home/pujing/dbird news --ai-only -n 10      # Trending/news
+/home/pujing/dbird thread <url>              # Get full thread + replies
 ```
 
 **Use cases:**
@@ -160,20 +161,86 @@ dbird thread <url>              # Get full thread + replies
 
 ---
 
-## 📅 Google Calendar (Write Access)
+## 📊 Lighter API ✅ WORKING (2026-02-03)
 
-**Credentials:** `/root/clawd/.google-calendar-token.json`
-**Config:** `/root/clawd/.damon-calendar-config.json`
+**Base URL:** `https://mainnet.zklighter.elliot.ai`
+**Auth:** Not required for public endpoints
+**SDK:** `zklighter-sdk` on npm
 
-**Shared calendar:** "Damon" (357e0589...@group.calendar.google.com)
-- Bro created it, shared with damontay043@gmail.com
-- I have writer access — can create/edit/delete events
-- Events appear on bro's calendar instantly, no approval needed
+**Useful endpoints:**
+- `/api/v1/orderBooks` — List all markets
+- `/api/v1/orderBookDetails?market_id=1` — BTC market details (market_id=1)
+- `/api/v1/funding-rates` — Current funding rates for all markets
+- `/api/v1/exchangeStats` — Volume, OI, price stats
+
+**Funding Rate Calculation:**
+- API returns rate on **8-hour basis** (even though Lighter pays hourly!)
+- APR formula: `rate × 3 × 365 × 100`
+- Example: rate 0.000096 → 0.000096 × 3 × 365 × 100 = 10.51% APR
+
+**Get BTC funding:**
+```bash
+curl -s "https://mainnet.zklighter.elliot.ai/api/v1/funding-rates" | jq '.funding_rates[] | select(.symbol == "BTC" and .exchange == "lighter")'
+```
+
+**Mark/Index prices:** Only available via WebSocket (REST has no prices)
+- Endpoint: `wss://mainnet.zklighter.elliot.ai/stream`
+- Subscribe: `{"type": "subscribe", "channel": "market_stats/all"}`
+- BTC is market_id=1
+- Script: `workspace/scripts/funding/lighter-prices.js`
+
+---
+
+## 📊 Variational API ✅ WORKING (2026-02-03)
+
+**Base URL:** `https://omni-client-api.prod.ap-northeast-1.variational.io`
+**Auth:** Not required for public endpoints
+
+**Useful endpoints:**
+- `/metadata/stats` — All market listings with mark_price, funding_rate, volume
+
+**Get BTC data:**
+```bash
+curl -s "https://omni-client-api.prod.ap-northeast-1.variational.io/metadata/stats" | jq '.listings[] | select(.ticker == "BTC")'
+```
+
+**Funding Rate:**
+- API returns `funding_rate` already as APR in decimal form
+- APR formula: `funding_rate × 100`
+- Example: 0.0416 → 4.16% APR
+- Funding interval: 8 hours (`funding_interval_s: 28800`)
+
+**⚠️ Index Price NOT Available:**
+- Variational does NOT expose native index price via API
+- **Solution:** Use cross-venue index (HL oraclePx) as proxy
+- This empirically matches Variational's website basis readings (confirmed over many days)
+- Script: `workspace/scripts/funding/variational-prices.js`
+
+---
+
+## 📅 Google Calendar (Write Access) ✅ WORKING
+
+**Credentials:** `/home/pujing/.openclaw/credentials/google-calendar-client.json` (OAuth client)
+**Tokens:** `/home/pujing/.openclaw/credentials/google-calendar-token.json` (access + refresh tokens)
+**Calendar:** `damontay043@gmail.com` (primary calendar)
+
+**Setup (2026-02-02):**
+- Fresh OAuth setup via Google Cloud Console (project: damon-calendar)
+- damontay043@gmail.com account owns the calendar
+- Bro subscribed to damontay043@gmail.com calendar — events I create show up on his calendar
+
+**API Usage:**
+```bash
+ACCESS_TOKEN=$(cat /home/pujing/.openclaw/credentials/google-calendar-token.json | grep -o '"access_token": "[^"]*' | cut -d'"' -f4)
+curl -H "Authorization: Bearer $ACCESS_TOKEN" "https://www.googleapis.com/calendar/v3/calendars/primary/events"
+```
 
 **Use cases:**
 - Add reminders/events for bro
 - Block time for tasks
 - Track important dates (TGE, snapshots, etc.)
+
+**Note:** Access token expires in 1 hour. Use refresh_token to get new access_token when needed.
 
 ---
 
@@ -371,7 +438,7 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 | **Windows clipboard** | PowerShell | ✅ NEW! (2026-01-31) |
 | **Launch Windows apps** | PowerShell | ✅ NEW! (2026-01-31) |
 | **Process monitoring** | PowerShell | ✅ NEW! (2026-01-31) |
-| Calendar write | Google Calendar | 🔧 Check if migrated |
+| Calendar write | Google Calendar | ✅ Active (2026-02-02) |
 | Paradex data | REST API | 🔧 Check if migrated |
 | Voice output | Edge TTS | ✅ Active |
 | Scheduled tasks | Cron jobs | ✅ Active |
@@ -380,58 +447,202 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 
 ---
 
-## 🧑‍💻 Codex CLI — Coding Tasks
+## 🧑‍💻 Codex CLI — Delegation & Review Process
 
 **Version:** codex-cli 0.93.0
 **Path:** `/home/pujing/.npm-global/bin/codex`
-**Model:** gpt-5.2-codex (default)
+**Model:** gpt-5.2-codex
+**Reasoning:** xhigh (configured in `~/.codex/config.toml`)
 
-**When to use Codex CLI (instead of Opus):**
-- Writing/editing scripts
-- Code refactors with `--full-auto`
-- One-shot code generation
-- Building tools/utilities
-- Isolated coding tasks that don't need my memory/context
+---
 
-**When to keep using Opus:**
-- Tasks needing memory or conversation history
-- Complex multi-step reasoning
-- Anything requiring deep context
+### Core Policies
 
-**Cost comparison:** Codex ~$0.003/1K tokens vs Opus ~$0.015/1K → **~5x cheaper for coding**
+| Policy | Rule |
+|--------|------|
+| **Codex-first** | Default to Codex for coding tasks; reserve Opus for tasks needing memory/context |
+| **3-pass cap** | Max 3 Codex executions per task. Still broken after 3? Reassess spec/approach |
+| **No secrets** | Never include secrets in prompts. Limit Codex to minimal file set |
+| **Acceptance criteria** | Every delegation must include verifiable success criteria |
 
-**Basic usage:**
-```bash
-# One-shot task (needs git repo!)
-cd /tmp && mkdir myproject && cd myproject && git init
-codex exec "Your coding prompt here" --full-auto
+**Definition:** One **pass** = one Codex execution + local review/test cycle.
 
-# Or use PTY for interactive mode
-exec pty=true workdir=/path/to/project command="codex exec 'Build X feature' --full-auto"
+---
+
+### SECTION 1: Coding Tasks
+
+#### Decision Tree (follow in order)
+
+1. **Security-sensitive?** (auth, secrets, crypto, permissions) → Handle directly. See Security Checklist.
+2. **Needs OpenClaw tool execution?** (browser, message, cron, nodes must *run*) → Handle directly. (Codex CAN draft code that *references* these if execution isn't needed)
+3. **Ambiguous spec?** → Clarify with bro first, document clarification, then delegate.
+4. **Quick edit?** (<10 lines, exact location known) → Handle directly (overhead exceeds benefit).
+5. **Heavy context?** (>50 lines explanation needed) → Split task or summarize context. See Prompt Hygiene.
+6. **None of above?** → Delegate to Codex ✅
+
+#### Security Checklist (for security-sensitive tasks)
+- [ ] No hardcoded secrets in code
+- [ ] Credentials loaded from env/config, not inline
+- [ ] Auth flows use established patterns (no custom crypto)
+- [ ] Input validation present
+- [ ] Error messages don't leak sensitive info
+
+#### Prompt Hygiene (for heavy context)
+- **Summarize** background instead of pasting full history
+- **Excerpt** only relevant portions of large files
+- **Reference** file paths instead of inlining entire files
+- **Split** into smaller independent tasks if possible
+
+#### Delegation Workflow
+
+```
+1. PREFLIGHT
+   - Identify target files + files to protect
+   - Write acceptance criteria (REQUIRED — no delegation without this)
+   - Check for secrets in target files → exclude or redact
+   - Mode: --full-auto (default), or omit for interactive if complex/uncertain
+
+2. RUN CODEX
+   codex exec "<prompt>" --full-auto   # or without --full-auto for interactive
+   
+3. QA LOOP (max 3 passes)
+   a. Review: git diff, run tests (or lint if no tests), spot-check logic
+   b. Handle test issues:
+      - Test fails due to Codex change → fix required
+      - Test fails for unrelated reason → note it, proceed if Codex changes are correct
+   c. Decide:
+      - ALL GOOD → Exit to step 4
+      - MINOR (<3 issues, <10 lines fix) → Fix locally, verify, exit
+      - SUBSTANTIAL → Compose iteration prompt, run next pass
+   d. Pass 3 still broken → Stop. Reassess spec/approach.
+
+4. FINAL REVIEW
+   - [ ] No unrelated file changes?
+   - [ ] No new lint errors?
+   - [ ] Acceptance criteria met?
+   - [ ] Changes summarized for handoff?
+
+5. PRESENT to bro (polished output only)
 ```
 
-**Background mode (for longer tasks):**
-```bash
-# Start in background
-exec pty=true workdir=/path/to/project background=true command="codex exec 'Build snake game' --full-auto"
-# Returns sessionId
+**Rollback:** If changes are bad: `git checkout -- <files>` or `git stash`.
 
-# Monitor progress
-process action=log sessionId=XXX
+#### Prompt Templates
 
-# Check if done
-process action=poll sessionId=XXX
+**Initial:**
+```
+Create [thing] in [location].
 
-# Kill if needed
-process action=kill sessionId=XXX
+Context: [brief summary — avoid pasting >50 lines]
+
+Requirements:
+- [functional requirements]
+
+Constraints:
+- [what NOT to do]
+
+Acceptance criteria:
+- [how to verify success — REQUIRED]
+
+Output files:
+- path/to/file.ext — [purpose]
+
+Do NOT modify: [protected paths]
+
+Test plan: [which tests to run, or "lint only" if no tests exist]
 ```
 
-**Key flags:**
-- `--full-auto` — no confirmation prompts, just do it
-- `--dangerously-auto-approve-everything` — approve all file writes (use carefully)
-- `--model gpt-5.2-codex` — explicitly set model
+**Iteration (Pass 2+):**
+```
+Review your output. Issues found:
+1. [Issue 1]
+2. [Issue 2]
 
-**Important:** Codex requires a git repo to run. For scratch work, create temp repo: `mkdir /tmp/scratch && cd /tmp/scratch && git init`
+Original acceptance criteria: [copy from initial]
+
+Fix these issues. You may add new files if needed (list them).
+Only modify files related to this task.
+```
+
+#### QA Checklist
+- [ ] Missing imports
+- [ ] Incorrect path assumptions  
+- [ ] Hardcoded values → should be parameters
+- [ ] Silent failures (errors swallowed)
+- [ ] Incomplete error handling
+- [ ] Off-by-one errors
+- [ ] Unrelated file changes
+- [ ] Tests documented if skipped
+
+---
+
+### SECTION 2: Non-Coding Review Loop
+
+**When to use:** Documentation, policies, analysis reports, process designs, substantial structured writing.
+
+**Skip for:** Quick responses, real-time conversation, content requiring external/live data.
+
+#### Review Workflow
+
+```
+1. Draft deliverable
+
+2. Qualifies for review? (see "when to use")
+   NO → Present directly
+   YES → Continue
+
+3. REVIEW LOOP (max 3 passes)
+   a. Send FULL content to Codex (it can't access external files)
+   b. Evaluate each feedback point:
+      ✅ Accept: Factual errors, logical contradictions, missing edge cases
+      ❌ Reject: Over-engineering, style-only changes, changing user conventions
+   c. Revise + verify changes don't break anything
+   d. Major issues remain & <3 passes? → Loop
+   e. Pass 3 still problematic? → Rethink approach
+
+4. VERIFICATION (for factual/policy claims)
+   - Cross-check key claims against primary source
+   - Don't rely solely on Codex review for accuracy
+
+5. Present to bro
+```
+
+#### Review Prompt Template
+```
+Review the following [document type]:
+
+---
+[Full content - include everything, Codex can't access files]
+---
+
+Context: [Purpose, audience, constraints]
+
+Evaluate:
+1. COMPLETENESS — Any gaps?
+2. ACCURACY — Any wrong/overstated claims?
+3. CLARITY — Any ambiguous parts?
+4. STRUCTURE — Logical flow?
+5. ACTIONABILITY — Can reader act without confusion?
+
+Format: Issue [#]: [Section] — [Problem] — [Fix]
+```
+
+---
+
+### Quick Reference
+
+| Situation | Action |
+|-----------|--------|
+| New script/tool | Delegate |
+| Refactor existing code | Delegate |
+| Security/auth code | Handle directly (use checklist) |
+| Code that *references* OpenClaw tools | Delegate (if no execution needed) |
+| Code that *executes* OpenClaw tools | Handle directly |
+| Spec unclear | Clarify first, document, then delegate |
+| Edit <10 lines | Handle directly |
+| Heavy context (>50 lines) | Split/summarize, then delegate |
+| Document/policy review | Use review loop |
+| Quick chat response | Skip review |
 
 ---
 
