@@ -647,3 +647,38 @@ Format: Issue [#]: [Section] — [Problem] — [Fix]
 ---
 
 *Add whatever helps you do your job. This is your cheat sheet.*
+
+## 📋 Trello API
+
+**Credentials:** `/home/pujing/.openclaw/credentials/trello.json`
+**Account:** ngwuayteck (Ng Wuay Teck)
+
+**Boards:**
+- TDL (Eisenhower Matrix task board)
+- Kanban Template
+
+**API Base:** `https://api.trello.com/1/`
+
+**Common operations:**
+```bash
+# Get boards
+curl "https://api.trello.com/1/members/me/boards?key=${API_KEY}&token=${TOKEN}"
+
+# Get lists on a board
+curl "https://api.trello.com/1/boards/{boardId}/lists?key=${API_KEY}&token=${TOKEN}"
+
+# Get cards on a list
+curl "https://api.trello.com/1/lists/{listId}/cards?key=${API_KEY}&token=${TOKEN}"
+
+# Create a card
+curl -X POST "https://api.trello.com/1/cards?key=${API_KEY}&token=${TOKEN}&idList={listId}&name=Task Name&desc=Description"
+
+# Move a card to another list
+curl -X PUT "https://api.trello.com/1/cards/{cardId}?key=${API_KEY}&token=${TOKEN}&idList={newListId}"
+```
+
+**Use cases:**
+- Add tasks to TDL board
+- Move cards between Q1-Q4 based on priority
+- Track completed tasks
+- Create reminders
