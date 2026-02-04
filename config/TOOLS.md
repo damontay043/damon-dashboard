@@ -220,6 +220,56 @@ curl -s "https://omni-client-api.prod.ap-northeast-1.variational.io/metadata/sta
 
 ---
 
+## 🏃 TrainingPeaks API ✅ WORKING (2026-02-04)
+
+**Account:** wuayteck@gmail.com (bro's TrainingPeaks account)
+**Athlete ID:** 5177589
+**Credentials:** `/home/pujing/.openclaw/credentials/trainingpeaks.json`
+**Script:** `/home/pujing/.openclaw/workspace/scripts/trainingpeaks/fetch-pmc.sh`
+**Docs:** `/home/pujing/.openclaw/workspace/scripts/trainingpeaks/README.md`
+
+**API Base:** `https://tpapi.trainingpeaks.com`
+**OAuth Base:** `https://oauth.trainingpeaks.com`
+
+**What it provides:**
+- PMC (Performance Management Chart) data: CTL, ATL, TSB, TSS, IF
+- Daily training load history going back 2+ years
+
+**Quick fetch (last 180 days):**
+```bash
+/home/pujing/.openclaw/workspace/scripts/trainingpeaks/fetch-pmc.sh 180 /tmp/tp-pmc.json
+```
+
+**PMC Endpoint:**
+```
+POST https://tpapi.trainingpeaks.com/fitness/v1/athletes/5177589/reporting/performancedata/{startDate}/{endDate}
+Authorization: Bearer <access_token>
+Content-Type: application/json
+Body: {"workoutTypes":[],"ctlConstant":42,"ctlStart":0,"atlConstant":7,"atlStart":0}
+```
+
+**Token Lifecycle:**
+- Access token: expires in 1 hour (3600s)
+- **Production_tpAuth cookie:** long-lived session cookie (weeks/months) — this is the key!
+- Script uses cookie to fetch fresh access_token via `GET /users/v3/token`
+- Fully automated: fetch-pmc.sh auto-refreshes token on 401
+
+**Token refresh (automated):**
+```bash
+node /home/pujing/.openclaw/workspace/scripts/trainingpeaks/tp-login.js
+# Uses Production_tpAuth cookie → fetches fresh access_token → saves to creds file
+```
+
+**If cookie expires (every few weeks/months):**
+1. Bro goes to https://app.trainingpeaks.com, logs in
+2. Opens DevTools (F12) → Application tab → Cookies → https://app.trainingpeaks.com
+3. Finds `Production_tpAuth` cookie → double-clicks Value → copies
+4. Sends to Damon → update credentials file
+
+**Used in:** morning-wellness-deep-analysis cron (7:30 AM SGT)
+
+---
+
 ## 📅 Google Calendar (Write Access) ✅ WORKING
 
 **Credentials:** `/home/pujing/.openclaw/credentials/google-calendar-client.json` (OAuth client)
