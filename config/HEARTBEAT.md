@@ -41,7 +41,14 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - Track last maintenance date in `memory/memory-maintenance.json`
    - Silent unless MEMORY.md was significantly updated
 
-5. ~~Self-Review~~ — **MOVED TO DEDICATED CRON** (Opus, every 3hrs)
+5. **Background Task Verification** — Check `memory/background-tasks.json` for any tasks with `status: "in_progress"`.
+   - Verify each task using its `verifyCommand`
+   - If task exceeded `expectedDurationMin` without completing → retry (up to `maxRetries`)
+   - If completed → update status, run `onComplete` action, remove from list
+   - If failed and max retries hit → alert bro
+   - Silent unless action needed
+
+6. ~~Self-Review~~ — **MOVED TO DEDICATED CRON** (Opus, every 3hrs)
 
 ## When to message bro
 

@@ -361,6 +361,11 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Codex-first for coding:** Default to Codex CLI. Follow decision tree + security checklist in TOOLS.md. Max 3 passes. Acceptance criteria required.
 - [ ] **Batch communications:** Don't send multiple messages for one task. Do the work silently, send ONE summary at the end. Narrate only when it genuinely helps (complex problems, sensitive actions).
 
+### Follow-Through Rules
+- [ ] **Verify background tasks:** When starting a long-running process (download, build, migration), log it to `memory/background-tasks.json` with verify command + success criteria. "Noted it" ≠ "handled it". Every heartbeat checks pending tasks.
+- [ ] **Retry on failure, don't just note:** When something fails (SIGKILL, timeout, etc.), retry immediately or at next opportunity. Never write "may need retry" and move on.
+- [ ] **Fallback ≠ done:** If a fallback is working (e.g. OpenAI embeddings), the primary task is still incomplete. Don't let "it works for now" become "forever".
+
 ### Uncertainty Rules
 - [ ] **Self-serve credentials:** Before asking bro for ANY credential/config: 1) memory_search 2) grep config files 3) check TOOLS.md/MEMORY.md/.credentials.json. Only ask if genuinely not found.
 - [ ] **WSL2 = direct file access:** I run ON WSL2. `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/` is ALWAYS accessible — no node needed. Never say "can't access because node is offline" for files on the local Windows filesystem.
