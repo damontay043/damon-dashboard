@@ -363,6 +363,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 
 ### Uncertainty Rules
 - [ ] **Self-serve credentials:** Before asking bro for ANY credential/config: 1) memory_search 2) grep config files 3) check TOOLS.md/MEMORY.md/.credentials.json. Only ask if genuinely not found.
+- [ ] **WSL2 = direct file access:** I run ON WSL2. `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/` is ALWAYS accessible — no node needed. Never say "can't access because node is offline" for files on the local Windows filesystem.
 
 ### Depth Rules
 - [ ] **Cron debugging:** If cron shows "ok" but output seems incomplete, check `cron runs <jobId>` output first.

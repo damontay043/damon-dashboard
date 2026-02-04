@@ -65,7 +65,7 @@ These are now handled by dedicated cron jobs with explicit formats:
 | AQI (3 regions) | 30min-pulse | Every 30 min |
 | BTC Basis Spread | 30min-pulse | Every 30 min |
 | Funding Rates (HL + Paradex) | 30min-pulse | Every 30 min |
-| Discord Sentiment | 30min-pulse | Every 30 min (6am-11pm SGT) |
+| Discord Sentiment (Lighter) | 30min-pulse | Every 30 min (6am-11pm SGT) |
 | Weather + Headlines | morning-briefing | 7am SGT |
 | Research Report | afternoon-research | 3pm SGT |
 | UV Index + Stories | uv-index-and-stories | 5pm SGT |
