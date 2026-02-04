@@ -210,12 +210,13 @@ curl -s "https://omni-client-api.prod.ap-northeast-1.variational.io/metadata/sta
 - Example: 0.0416 → 4.16% APR
 - Funding interval: 8 hours (`funding_interval_s: 28800`)
 
-**⚠️ Index Price NOT Available:**
-- Variational does NOT expose native mark/index prices via API
-- **Solution:** Use CROSS-VENUE MEDIAN (matching Momo's dashboard methodology)
-- Script fetches from HL, Binance, Paradex → computes median of all mark prices + median of all index prices
+**Mark Price:** Available via API (`mark_price` field in /metadata/stats)
+**Index Price:** NOT available via API
+- **Solution:** Use Variational's OWN mark_price + CROSS-VENUE MEDIAN of other exchanges' INDEX prices
+- Script fetches Variational mark from their API, then gets index from HL, Binance, Paradex → median of indexes
 - Script: `workspace/scripts/funding/variational-prices.js`
 - Run: `node workspace/scripts/funding/variational-prices.js`
+- Note: Variational's mark often deviates from other exchanges (can be $200+ below) — this is REAL, not a bug
 
 ---
 
