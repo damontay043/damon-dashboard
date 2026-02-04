@@ -274,6 +274,7 @@ node /home/pujing/.openclaw/workspace/scripts/trainingpeaks/tp-login.js
 
 **Credentials:** `/home/pujing/.openclaw/credentials/google-calendar-client.json` (OAuth client)
 **Tokens:** `/home/pujing/.openclaw/credentials/google-calendar-token.json` (access + refresh tokens)
+**Auto-refresh script:** `/home/pujing/.openclaw/scripts/gcal-token.sh`
 **Calendar:** `damontay043@gmail.com` (primary calendar)
 
 **Setup (2026-02-02):**
@@ -283,7 +284,8 @@ node /home/pujing/.openclaw/workspace/scripts/trainingpeaks/tp-login.js
 
 **API Usage:**
 ```bash
-ACCESS_TOKEN=$(cat /home/pujing/.openclaw/credentials/google-calendar-token.json | grep -o '"access_token": "[^"]*' | cut -d'"' -f4)
+# Get fresh token (auto-refreshes if expired)
+ACCESS_TOKEN=$(/home/pujing/.openclaw/scripts/gcal-token.sh)
 curl -H "Authorization: Bearer $ACCESS_TOKEN" "https://www.googleapis.com/calendar/v3/calendars/primary/events"
 ```
 
@@ -292,7 +294,100 @@ curl -H "Authorization: Bearer $ACCESS_TOKEN" "https://www.googleapis.com/calend
 - Block time for tasks
 - Track important dates (TGE, snapshots, etc.)
 
-**Note:** Access token expires in 1 hour. Use refresh_token to get new access_token when needed.
+**Note:** Access token expires in 1 hour. The gcal-token.sh script auto-refreshes using the refresh_token.
+
+---
+
+## 📊 Google Sheets (Read Access) ✅ WORKING (2026-02-04)
+
+**Credentials:** Same OAuth client as Calendar (`google-calendar-client.json`)
+**Tokens:** `/home/pujing/.openclaw/credentials/google-token.json` (has both `spreadsheets.readonly` + `calendar` scopes)
+**Auto-refresh script:** `/home/pujing/.openclaw/scripts/gsheets-token.sh`
+
+**Key difference from Calendar tokens:**
+- `google-calendar-token.json` = calendar scope only
+- `google-token.json` = calendar + spreadsheets.readonly scopes ← **use this for Sheets**
+
+**Spreadsheet:** TDL (ID: `1Asq3P2Nb54FR_0odDavw9kPIO0s8_ITX27dZzFmGyic`)
+**Sheets available:** Workouts, Wellness, Journal, TDL, Sleep, Omron, Master, Books, Supplements, KIV, Archive, Night Schedule, Trips, AI Prompts, Links for Kindle, Cardio Time
+
+**API Usage:**
+```bash
+# Get fresh token (auto-refreshes if expired)
+SHEETS_TOKEN=$(/home/pujing/.openclaw/scripts/gsheets-token.sh)
+
+# Read a range from Wellness tab
+SHEET_ID="1Asq3P2Nb54FR_0odDavw9kPIO0s8_ITX27dZzFmGyic"
+curl -s -H "Authorization: Bearer $SHEETS_TOKEN" \
+  "https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Wellness!A1:BZ5"
+```
+
+**Use cases:**
+- Morning wellness analysis: Kubios HRV, sleep scores, BP, SpO2 data
+- Workout tracking: EF (Efficiency Factor) trends
+- Any TDL spreadsheet data
+
+**Used in:** morning-wellness-deep-analysis cron (7:30 AM SGT)
+
+**If refresh_token expires (rare, ~6 months):**
+1. Need to re-authorize via OAuth flow
+2. Run: `python3 scripts/google_oauth.py` (or re-authorize via browser)
+3. Grant both `calendar` + `spreadsheets.readonly` scopes
+
+---
+
+## 🏃 Garmin Connect API ✅ WORKING (2026-02-04)
+
+**Account:** wuayteck@gmail.com (bro's Garmin account)
+**Library:** `garminconnect` Python package (pip installed)
+**Tokens:** `~/.garminconnect/oauth1_token.json` + `~/.garminconnect/oauth2_token.json`
+**Token auto-refresh:** garminconnect library handles OAuth2 refresh automatically on login
+
+**Python Usage:**
+```python
+from garminconnect import Garmin
+from datetime import date, timedelta
+import os
+
+client = Garmin()
+client.login(tokenstore=os.path.expanduser("~/.garminconnect/"))
+
+yesterday = (date.today() - timedelta(days=1)).isoformat()
+
+# Sleep data
+sleep = client.get_sleep_data(yesterday)
+
+# HRV data
+hrv = client.get_hrv_data(yesterday)
+
+# Resting heart rate
+rhr = client.get_rhr_day(yesterday)
+
+# Stress
+stress = client.get_stress_data(yesterday)
+
+# Respiratory rate
+resp = client.get_respiration_data(yesterday)
+```
+
+**Available data:**
+- Sleep duration, WASO, sleep score
+- HRV (weekly avg, last night avg)
+- Resting heart rate
+- Stress scores
+- Respiratory rate
+- Activities/workouts
+
+**Token lifecycle:**
+- OAuth2 tokens stored in `~/.garminconnect/`
+- garminconnect lib auto-refreshes on `client.login(tokenstore=...)`
+- Tokens updated today (07:32 SGT) — confirmed working
+
+**If tokens expire completely:**
+- Need Garmin username + password to re-authenticate
+- Ask bro for credentials, run: `Garmin(email, password).login()` then `client.garth.dump(tokenstore_path)`
+
+**Used in:** morning-wellness-deep-analysis cron (7:30 AM SGT)
 
 ---
 
@@ -432,21 +527,34 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 
 ---
 
-## ⏰ Cron Jobs
+## ⏰ Cron Jobs (updated 2026-02-04)
 
 **Active crons (use `cron list` to check):**
-- `morning-briefing` — 7am SGT: Weather, headlines, calendar
-- `30min-pulse` — Every 30 min: AQI, BTC basis, Discord sentiment
-- `uv-index-and-stories` — 5pm SGT: UV + curated stories
-- `evening-funding-briefing` — 9pm SGT: Funding rates
-- `afternoon-research` — 3pm SGT: Research report
-- `nag-undone-tasks` — Every 3h: Blocked tasks reminder
+
+| Name | Schedule | Model | What it does |
+|------|----------|-------|-------------|
+| `morning-briefing` | 7:00 AM SGT | Opus | Weather, AQI, ST headlines, calendar, market ratios, crypto, Discord, joke |
+| `morning-wellness-deep-analysis` | 7:30 AM SGT | Opus | Garmin + TrainingPeaks PMC + Google Sheets wellness data → deep health report |
+| `hourly-pulse` | :45 past hour (6am-10pm) | Opus | AQI, BTC basis (4 exchanges), funding rates, price arb, Discord sentiment + screenshot |
+| `trello-q1-helper` | 1:00 PM SGT | Sonnet | Fetch Trello Q1 tasks, suggest how I can help |
+| `hl-oi-top10` | 2:00 PM SGT | Sonnet | Hyperliquid top 10 open interest |
+| `afternoon-research` | 3:00 PM SGT | Opus | Alternating: Twitter trends (even dates) / deep-dive (odd dates) |
+| `aboutme-enrichment` | 4:00 PM SGT | Opus | Learn something new about bro, suggest additions to aboutme |
+| `uv-index-and-stories` | 5:00 PM SGT | Opus | UV index, curated story, 3 evening focus points |
+| `token-usage-reminder` | 6:00 PM SGT | Sonnet | Daily token cost tracking (7-day cycle) |
+| `daily-business-idea` | 6:00 PM SGT | Opus | Solopreneur business idea with analysis |
+| `daily-calibration-interview` | 7:00 PM SGT | Opus | Personality/capability calibration question |
+| `evening-funding-briefing` | 9:00 PM SGT | Sonnet | Detailed funding rates across venues |
+| `deep-self-review` | Every 3h | Opus | Self-assessment, MISS/HIT logging |
+| `nag-undone-tasks` | Every 3h | Sonnet | Check for blocked/forgotten tasks |
+| `workstream-gemini-cli` (×2) | Every 3h | Sonnet | Track Gemini CLI setup progress |
 
 **Manage via:**
 - `cron list` — See all jobs
 - `cron add` — Add new job
 - `cron update` — Modify job
 - `cron remove` — Delete job
+- `cron runs <jobId>` — Check recent run history
 
 ---
 
@@ -476,26 +584,31 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 
 ---
 
-## Summary: My Superpowers
+## Summary: My Superpowers (updated 2026-02-04)
 
 | Power | Tool | Status |
 |-------|------|--------|
-| Read tweets | fxtwitter API | ✅ Active (use `api.fxtwitter.com`) |
-| Search Twitter | ❌ Need Brave API key | 🔧 Not configured yet |
-| Web search | Brave API | 🔧 Need API key configured |
+| Read tweets | Bird CLI (`/home/pujing/dbird`) | ✅ Active (cookies updated 2026-02-03) |
+| Search Twitter | Bird CLI + xAI/Grok backup | ✅ Active |
+| Web search | Brave API (`web_search` tool) | ✅ Active |
 | Read bro's files | Direct `/mnt/c/` access | ✅ Always available |
 | Browser control | Chrome Relay | ✅ Active (verified 2026-01-31) |
 | Discord monitoring | Chrome Relay + peterpoon | ✅ Active |
-| **Windows screenshots** | PowerShell | ✅ NEW! (2026-01-31) |
-| **Windows clipboard** | PowerShell | ✅ NEW! (2026-01-31) |
-| **Launch Windows apps** | PowerShell | ✅ NEW! (2026-01-31) |
-| **Process monitoring** | PowerShell | ✅ NEW! (2026-01-31) |
-| Calendar write | Google Calendar | ✅ Active (2026-02-02) |
-| Paradex data | REST API | 🔧 Check if migrated |
+| Windows screenshots | PowerShell | ✅ Active (2026-01-31) |
+| Windows clipboard | PowerShell | ✅ Active (2026-01-31) |
+| Launch Windows apps | PowerShell | ✅ Active (2026-01-31) |
+| Calendar write | Google Calendar API | ✅ Active (auto-refresh via gcal-token.sh) |
+| **Google Sheets read** | Sheets API | ✅ Active (auto-refresh via gsheets-token.sh) |
+| **Garmin health data** | garminconnect Python | ✅ Active (sleep, HRV, HR, stress) |
+| **TrainingPeaks PMC** | REST API + cookie auth | ✅ Active (CTL/ATL/TSB/TSS) |
+| Paradex data | REST API | ✅ Active |
+| Lighter data | REST + WebSocket | ✅ Active (2026-02-03) |
+| Variational data | REST API | ✅ Active (2026-02-03) |
+| Trello tasks | REST API | ✅ Active |
 | Voice output | Edge TTS | ✅ Active |
-| Scheduled tasks | Cron jobs | ✅ Active |
-| Memory | File-based | ✅ Active |
-| **Codex CLI** | coding tasks | ✅ Active (verified 2026-02-02) |
+| Scheduled tasks | 15+ cron jobs | ✅ Active |
+| Memory | File-based + memory_search | ✅ Active |
+| Codex CLI | Coding delegation | ✅ Active (2026-02-02) |
 
 ---
 

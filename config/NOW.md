@@ -3,11 +3,14 @@
 DOING: idle
 
 ## Just Completed (last 1-3 items)
-- ✅ TrainingPeaks FULLY AUTOMATED — cookie-based token refresh working end-to-end
-- ✅ 7:30 AM wellness cron updated with PMC data analysis
-- ✅ All docs updated (TOOLS.md, README, memory, credentials)
+- ✅ Pre-flight check for tomorrow's 7:30 AM wellness briefing — ALL 4 data sources verified working
+- ✅ Fixed Google Sheets 401 — created gsheets-token.sh auto-refresh script
+- ✅ Updated wellness cron to auto-refresh Sheets token before API calls
+- ✅ TrainingPeaks PMC already wired in (dry run confirmed yesterday)
 
 ## Context
-- TP auth uses Production_tpAuth session cookie (lasts weeks/months)
-- Cookie stored in credentials file, used by tp-login.js to fetch fresh access_tokens
-- Full pipeline: cookie → /users/v3/token → access_token → PMC API → CTL/ATL/TSB data
+- Tomorrow 7:00 AM: Morning briefing cron (running consistently)
+- Tomorrow 7:30 AM: Wellness deep analysis cron (now with TP + auto-refresh Sheets)
+- Data sources verified: Garmin ✅, TrainingPeaks ✅, Google Sheets ✅, Google Calendar ✅
+- Garmin resting HR 39 bpm, HRV weekly avg 67, last night 79
+- TP: CTL 68.8, ATL 24.8, TSB 41.5 (detraining territory but race-ready form)
