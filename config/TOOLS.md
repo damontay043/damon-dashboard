@@ -539,14 +539,17 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 2. **If 0 results:** Retry with 2-3 keyword variations (synonyms, abbreviations, related terms)
    - e.g., "funding rate" → try "APR", "funding", "annualized"
    - e.g., "TrainingPeaks" → try "TP", "PMC", "CTL"
-3. **If still 0 after keyword retries:** Use `exec` to run semantic vector search:
+3. **If still 0 after keyword retries:** Use `exec` to run local semantic vector search:
    ```bash
    /home/pujing/.bun/bin/qmd vsearch "semantic query here" --json -n 5
    ```
    This is slow (~12s, loads 300M embedding model) but does TRUE semantic matching.
-4. **If vsearch also fails:** Accept "not found in memory" — don't fabricate
+4. **If vsearch also fails or is too slow:** Fall back to OpenAI embeddings — we have paid credits, USE THEM.
+   OpenClaw's built-in OpenAI fallback can be triggered by running memory_search after temporarily erroring QMD,
+   or just accept that the info isn't in memory and move on.
+5. **Only after exhausting all above:** Accept "not found in memory" — don't fabricate
 
-**IMPORTANT:** Steps 2-3 are MANUAL — I decide when to escalate based on how critical the search is. Don't auto-escalate for every search, only when I genuinely need the info.
+**IMPORTANT:** Steps 2-4 are MANUAL — I decide when to escalate based on how critical the search is. Don't auto-escalate for every search, only when I genuinely need the info. But DO use OpenAI when QMD can't deliver — we paid for those credits.
 
 **Limitations of BM25 (step 1):**
 - "funding rate" won't find "APR" (different words, same concept)
