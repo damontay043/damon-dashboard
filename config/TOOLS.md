@@ -527,13 +527,40 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 
 ---
 
-## ⏰ Cron Jobs (updated 2026-02-04)
+## 🧠 QMD Memory Search (updated 2026-02-05)
+
+**Backend:** QMD (local BM25 text search via wrapper script)
+**Wrapper:** `/home/pujing/qmd-wrapper.sh` — redirects `qmd query` → `qmd search` (BM25 only)
+**Why:** Full `qmd query` uses 3 GGUF models (5.7GB RAM) — too heavy for this PC. BM25 is 0.25s.
+**Index:** 212 files, 682 vectors, 4 collections (memory-root, memory-dir, sessions)
+
+**Search strategy:**
+1. `memory_search` now hits QMD BM25 (keyword matching) as primary — fast, local, free
+2. BM25 is keyword-based: searches for exact tokens, not semantic meaning
+3. **If QMD returns 0 results or low-quality matches:**
+   - Try 2-3 keyword variations (synonyms, abbreviations, related terms)
+   - If still nothing, try `exec` with `qmd search` directly for more control
+   - As last resort: temporarily switch query to different keywords that might be in the actual text
+
+**Limitations vs semantic search:**
+- "funding rate" won't find "APR" (different words, same concept)
+- Works great for: names, dates, specific terms, file paths, tool names
+- Weak for: conceptual/abstract queries ("how did bro feel about X")
+
+**Direct CLI access (for debugging or advanced queries):**
+```bash
+/home/pujing/.bun/bin/qmd search "exact keywords" --json -n 8  # BM25 (fast)
+/home/pujing/.bun/bin/qmd vsearch "semantic query" --json -n 5  # Vector (slow, 12s)
+/home/pujing/.bun/bin/qmd status  # Check index health
+```
+
+## ⏰ Cron Jobs (updated 2026-02-05)
 
 **Active crons (use `cron list` to check):**
 
 | Name | Schedule | Model | What it does |
 |------|----------|-------|-------------|
-| `morning-briefing` | 7:00 AM SGT | Opus | Weather, AQI, ST headlines, calendar, market ratios, crypto, Discord, joke |
+| `morning-briefing` | 7:00 AM SGT | Opus | Weather, AQI, ST headlines, calendar, market ratios (BTC/Gold/S&P500), crypto, DeFi pulse, Discord, joke |
 | `morning-wellness-deep-analysis` | 7:30 AM SGT | Opus | Garmin + TrainingPeaks PMC + Google Sheets wellness data → deep health report |
 | `hourly-pulse` | :45 past hour (6am-10pm) | Opus | AQI, BTC basis (4 exchanges), funding rates, price arb, Discord sentiment + screenshot |
 | `trello-q1-helper` | 1:00 PM SGT | Sonnet | Fetch Trello Q1 tasks, suggest how I can help |

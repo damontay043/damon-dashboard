@@ -2,7 +2,25 @@
 
 *Last updated: 2026-02-04*
 
-## Recent Updates (2026-02-04)
+## Recent Updates (2026-02-05, morning)
+- **QMD memory search FIXED and working as primary** — wrapper script at `/home/pujing/qmd-wrapper.sh` redirects heavy `qmd query` → fast `qmd search` (BM25). 0.25s, fully local, zero API cost. Tradeoff: keyword-only, no semantic matching. If BM25 returns nothing, retry with different keywords before giving up.
+- **BTC/S&P 500 ratio added to morning briefing** — Yahoo Finance API for S&P 500 prev close. Ratio = BTC ÷ SPX.
+- **Discord monitoring back to Paradex (again)** — hourly-pulse cron updated.
+- **Self-review cron gated to active hours** — runs 12am, 9am, 12pm, 3pm, 6pm, 9pm SGT (was every 3hrs 24/7).
+- **3 crons upgraded to Opus + thinking high:** trello-q1-helper, evening-funding-briefing, deep-self-review.
+- **New rule: "Signal before going dark"** — always tell bro before tasks >30s or restarts. Don't go silent.
+
+## Previous Updates (2026-02-04, evening)
+- **Discord monitoring back to Paradex (2026-02-05)** — bro flip-flopped from Lighter back to Paradex. Hourly pulse cron updated. Paradex #general is the monitored channel again.
+- **DeFi Pulse script built** — `scripts/defi-pulse/defi-pulse.js`, 5 metrics from DefiLlama (free), added to morning briefing cron as item #7 (7d/30d/90d trends)
+- **QMD memory backend enabled** — `memory.backend = "qmd"` in openclaw.json. QMD binary at `/home/pujing/.bun/bin/qmd`. 4 collections created. Needs 1.28GB GGUF model download to complete. OpenAI embedding fallback working in the meantime.
+- **Bro's daily routine captured** — added "Typical Day" section to aboutme_redacted.md. Wake 6-7am, HRV→weigh-in→markets→training, focus work after lunch, recovery (meditation, body scan, walks with wife) before dinner ~7pm.
+- **Learned rule added:** WSL2 = direct file access. `/mnt/c/` is ALWAYS accessible, never say "can't access because node offline" for local Windows filesystem files.
+- **Daily biz ideas:** Bro says keep ideas unrestricted, no shoehorning toward low-friction only
+- **HYPE dropped 10% in 24h** (flagged to bro), CC -8.5%
+- **Lighter Discord context:** S3 teaser confirmed by Watermelon (Lighter Daily). LIT token bleeding from $3, community frustrated but no panic. LLP as collateral coming "in 1 week more or less" per Robin4r.
+
+## Previous Updates (2026-02-04, morning)
 - **Morning Wellness Pipeline fully operational** — 3 data sources verified + documented
   - Garmin ✅ (garminconnect Python lib, auto-refresh)
   - TrainingPeaks PMC ✅ (cookie-based auth, fetch-pmc.sh auto-retries on 401)
@@ -106,7 +124,9 @@
 - Requires: Chrome open with extension ON + browser serve running (auto-starts via VBS) + Tailscale serve (backgrounded) + WSL2 node
 - After PC reboot: only manual step is open Chrome Relay profile → go to Discord → click extension icon. Everything else auto-starts.
 - Sentiment scoring: mood 30%, team responsiveness 25%, FUD intensity 20%, activity 15%, topic quality 10%. Alert if <40 or drop >15pts or exploit/hack/rug keywords
-- Paradex Discord channels available: #general, #announcements, #network-upgrades, #trading-guild, #wen-tge, #developers, #feedback
+- **Discord monitoring shifted Paradex → Lighter (2026-02-04) → back to Paradex (2026-02-05)** — bro flip-flopped, now back on Paradex
+- Lighter Discord channels: #general, #feedback, #ticker-requests, #community-content, #general-info, #system-upgrades
+- Old: Paradex Discord channels: #general, #announcements, #network-upgrades, #trading-guild, #wen-tge, #developers, #feedback
 - Node exec via `nodes run` needs approval — can't freely write files to Scarlet2023 yet
 - GitHub Pages legacy build = simpler than workflow build for static HTML (no Actions workflow needed)
 
