@@ -1,25 +1,22 @@
 # NOW.md — Current Task
 
-DOING: idle (post-compaction)
+DOING: idle — chatting with bro about compaction strategies
 
 ## Just Completed (last 1-3 items)
-- ✅ Discord monitoring shifted Paradex → Lighter (cron updated, test screenshot confirmed)
-- ✅ DeFi Pulse script built + added to morning briefing cron
-- ✅ QMD memory backend enabled (model download pending, OpenAI fallback working)
-- ✅ Bro's daily routine captured → added to aboutme_redacted.md
-- ✅ Learned rule: WSL2 = direct `/mnt/c/` access, no node needed
-- ✅ AGENTS.md updated with WSL2 rule
+- ✅ Compaction warning strategy logged to daily notes + AGENTS.md rule confirmed
+- ✅ Context % display enabled (Option A — every message, trial period)
+- ✅ Token reminder cron updated with A/B/C context % review prompt
+- ✅ QMD memory search fixed (wrapper script, BM25)
+- ✅ BTC/S&P 500 ratio added to morning briefing
+- ✅ Discord monitoring switched back to Paradex
 
 ## Blocked On
-- [ ] QMD embedding model download (~1.28GB) — needs to complete for full QMD functionality
 - [ ] Gemini CLI setup — waiting on Momo delegation guidelines from bro
+- [ ] Chrome tab detached — need bro to reattach OpenClaw extension to Paradex Discord tab
 
 ## Context
-- Bro shifted positions from Paradex → Lighter PerpDex
-- Lighter Discord #general now monitored (was Paradex)
-- DeFi Pulse: TVL $104.8B (📉 -20.3% 90d), stablecoin supply $306B
-- HYPE -10% in 24h (flagged to bro)
-- Bro says keep daily biz ideas unrestricted, no shoehorning
-- Daily routine added to aboutme: wake 6-7am, training, focus work after lunch, recovery+meditation before dinner ~7pm
+- Context % display: Option A (every msg), will review at 6pm daily via token-reminder cron
+- Compaction warning threshold: 75%
+- Morning session topics covered: QMD fix, BTC/SPX ratio, Discord→Paradex, compaction strategy
+- Self-review cron gated to 12am, 9am, 12pm, 3pm, 6pm, 9pm SGT
 - All 14 crons running smoothly
-- OpenClaw version: 2026.2.2-3

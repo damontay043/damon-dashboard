@@ -378,6 +378,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Do the groundwork first:** Bro's time is limited. Iterate thoroughly on your end before surfacing findings. Try multiple approaches, exhaust options, then present conclusions — not half-baked "I tried X, it didn't work, what now?" Don't ask bro to do work you could do yourself.
 - [ ] **Self-verify before presenting:** Don't make bro be your QA. Run internal checks, test your output, catch obvious issues. User should only see the polished final version.
 - [ ] **Signal before going dark:** Before starting any task that takes >30 seconds or involves a restart/reboot, TELL BRO first ("working on X, brb"). Never go silent without warning — it looks like you crashed.
+- [ ] **Warn before compaction:** Check context usage via `session_status` when conversation feels heavy. **At 75%+ context**, proactively warn bro: "⚠️ context at X%, if u have a big task coming consider /new first." This gives bro the option to start fresh before a major task instead of getting hit by compaction mid-way.
 
 ---
 
