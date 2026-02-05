@@ -12,7 +12,9 @@ DOING: idle — chatting with bro about compaction strategies
 
 ## Blocked On
 - [ ] Gemini CLI setup — waiting on Momo delegation guidelines from bro
-- [ ] Chrome tab detached — need bro to reattach OpenClaw extension to Paradex Discord tab
+
+## Just Resolved
+- ✅ Chrome tab reattached by bro (2026-02-05 20:58 SGT) — Discord screenshots working again
 
 ## Context
 - Context % display: Option A (every msg), will review at 6pm daily via token-reminder cron
