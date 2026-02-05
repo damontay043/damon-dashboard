@@ -9,7 +9,7 @@
 - **Date format:** YYMMDD (e.g., 260127 = 27 Jan 2026)
 - **Input method:** Often uses Wispr Flow dictation — expect phonetic typos (e.g., "CloudMD" = "CLAUDE.md"). Interpret intent over literal text. Typo corrections often appear at the end of messages rather than inline.
 - **Non-technical UX:** Prefer clear, step-by-step instructions with copy‑pasteable commands and confirmation checks. Avoid overly clever one‑liners; explain what to expect after each command.
-- **Report style:** Prefers lengthier reports with color, context, and nuance over brevity. Don't sacrifice nuance for terseness.
+- **Report style:** Prefers lengthier reports with color, context, and nuance over brevity. Don't sacrifice nuance for terseness. Loves detail — lean into "why" and "so what" behind numbers, not just raw data. (Calibrated 2026-02-05)
 
 ## What He Does
 
