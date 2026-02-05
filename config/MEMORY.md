@@ -3,7 +3,7 @@
 *Last updated: 2026-02-04*
 
 ## Recent Updates (2026-02-05, morning)
-- **QMD memory search FIXED and working as primary** — wrapper script at `/home/pujing/qmd-wrapper.sh` redirects heavy `qmd query` → fast `qmd search` (BM25). 0.25s, fully local, zero API cost. Tradeoff: keyword-only, no semantic matching. If BM25 returns nothing, retry with different keywords before giving up.
+- **QMD memory search FIXED and working as primary** — wrapper script at `/home/pujing/qmd-wrapper.sh` redirects heavy `qmd query` → fast `qmd search` (BM25). 0.25s, fully local, zero API cost. Tradeoff: keyword-only, no semantic matching. If BM25 returns nothing, retry with different keywords before giving up. Last resort: `qmd vsearch` (local vectors, 12s) for semantic matching.
 - **BTC/S&P 500 ratio added to morning briefing** — Yahoo Finance API for S&P 500 prev close. Ratio = BTC ÷ SPX.
 - **Discord monitoring back to Paradex (again)** — hourly-pulse cron updated.
 - **Self-review cron gated to active hours** — runs 12am, 9am, 12pm, 3pm, 6pm, 9pm SGT (was every 3hrs 24/7).

@@ -534,18 +534,25 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 **Why:** Full `qmd query` uses 3 GGUF models (5.7GB RAM) — too heavy for this PC. BM25 is 0.25s.
 **Index:** 212 files, 682 vectors, 4 collections (memory-root, memory-dir, sessions)
 
-**Search strategy:**
-1. `memory_search` now hits QMD BM25 (keyword matching) as primary — fast, local, free
-2. BM25 is keyword-based: searches for exact tokens, not semantic meaning
-3. **If QMD returns 0 results or low-quality matches:**
-   - Try 2-3 keyword variations (synonyms, abbreviations, related terms)
-   - If still nothing, try `exec` with `qmd search` directly for more control
-   - As last resort: temporarily switch query to different keywords that might be in the actual text
+**Search strategy (escalation ladder):**
+1. **`memory_search`** → QMD BM25 (keyword matching), 0.25s, local, free
+2. **If 0 results:** Retry with 2-3 keyword variations (synonyms, abbreviations, related terms)
+   - e.g., "funding rate" → try "APR", "funding", "annualized"
+   - e.g., "TrainingPeaks" → try "TP", "PMC", "CTL"
+3. **If still 0 after keyword retries:** Use `exec` to run semantic vector search:
+   ```bash
+   /home/pujing/.bun/bin/qmd vsearch "semantic query here" --json -n 5
+   ```
+   This is slow (~12s, loads 300M embedding model) but does TRUE semantic matching.
+4. **If vsearch also fails:** Accept "not found in memory" — don't fabricate
 
-**Limitations vs semantic search:**
+**IMPORTANT:** Steps 2-3 are MANUAL — I decide when to escalate based on how critical the search is. Don't auto-escalate for every search, only when I genuinely need the info.
+
+**Limitations of BM25 (step 1):**
 - "funding rate" won't find "APR" (different words, same concept)
 - Works great for: names, dates, specific terms, file paths, tool names
 - Weak for: conceptual/abstract queries ("how did bro feel about X")
+- When in doubt about keywords, try the EXACT words bro would have used
 
 **Direct CLI access (for debugging or advanced queries):**
 ```bash
