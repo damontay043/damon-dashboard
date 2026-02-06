@@ -1,24 +1,17 @@
 # NOW.md — Current Task
 
-DOING: idle — chatting with bro about compaction strategies
+DOING: idle
 
 ## Just Completed (last 1-3 items)
-- ✅ Compaction warning strategy logged to daily notes + AGENTS.md rule confirmed
-- ✅ Context % display enabled (Option A — every message, trial period)
-- ✅ Token reminder cron updated with A/B/C context % review prompt
-- ✅ QMD memory search fixed (wrapper script, BM25)
-- ✅ BTC/S&P 500 ratio added to morning briefing
-- ✅ Discord monitoring switched back to Paradex
+- ✅ OpenClaw updated: 2026.2.2-3 → 2026.2.3-1
+- ✅ All 4 stuck Paradex withdrawals resolved (~183k USDC)
+- ✅ WBTC/cbBTC peg monitor + Aave health monitor added to hourly pulse
 
-## Blocked On
-- [ ] Gemini CLI setup — waiting on Momo delegation guidelines from bro
+## Blocked On (if any)
+- [ ] Opus 4.6 upgrade — need to verify if new OpenClaw version supports it before trying
 
-## Just Resolved
-- ✅ Chrome tab reattached by bro (2026-02-05 20:58 SGT) — Discord screenshots working again
-
-## Context
-- Context % display: Option A (every msg), will review at 6pm daily via token-reminder cron
-- Compaction warning threshold: 75%
-- Morning session topics covered: QMD fix, BTC/SPX ratio, Discord→Paradex, compaction strategy
-- Self-review cron gated to 12am, 9am, 12pm, 3pm, 6pm, 9pm SGT
-- All 14 crons running smoothly
+## Context (for post-restart resumption)
+- **OpenClaw 2026.2.3-1** — just updated, haven't tested Opus 4.6 yet
+- **Bro's Aave positions** — HF ~1.5 after topping up
+- **Market bloodbath** — BTC down ~12% in 24h
+- **Hourly pulse** includes: AQI, BTC basis, funding, price arb, Aave health, WBTC peg, FUD check, Discord sentiment

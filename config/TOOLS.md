@@ -142,6 +142,21 @@ Add-Type -AssemblyName System.Windows.Forms
 
 ---
 
+## ⚠️ Price Data Reliability
+
+**Lesson learned (2026-02-06):** Not all price APIs are created equal.
+
+| Source | Reliability | Best For |
+|--------|-------------|----------|
+| **Binance API** | ✅ High | Direct pairs (WBTC/BTC, BTC/USDT) — liquid, real-time |
+| **Paraswap/1inch** | ✅ High | On-chain swap quotes — reflects actual DEX liquidity |
+| **DeFiLlama** | 🟡 Medium | Aggregated prices — generally good but can lag |
+| **CoinGecko** | 🔴 Low | Can be stale/wrong, especially for wrapped tokens — avoid for accuracy-critical checks |
+
+**Rule:** For wrapped token pegs (WBTC, cbBTC), use on-chain swap quotes (Paraswap) or CEX direct pairs (Binance), NOT aggregator prices like CoinGecko.
+
+---
+
 ## 📊 Paradex API
 
 **Credentials:** `/root/clawd/.paradex-credentials.json`
@@ -845,6 +860,135 @@ Format: Issue [#]: [Section] — [Problem] — [Fix]
 | Heavy context (>50 lines) | Split/summarize, then delegate |
 | Document/policy review | Use review loop |
 | Quick chat response | Skip review |
+
+---
+
+## 🤖 Gemini CLI — Google's Coding Agent
+
+**Version:** gemini-cli v0.26.0
+**Path:** `/home/pujing/.npm-global/bin/gemini`
+**Models:** Gemini 2.5 Flash (default), Gemini 2.5 Pro (preview)
+**Auth:** Google OAuth (Ultra subscription)
+**Cost:** No marginal cost with Google One AI Ultra
+
+**Common commands:**
+```bash
+gemini                           # Interactive mode
+gemini -p "prompt"               # One-shot prompt
+gemini -p "prompt" -m pro        # Use Pro model
+gemini /settings                 # Configure (enable preview features for Pro)
+```
+
+**Strengths:**
+- 1M+ token context window (largest of the three agents)
+- Strong at large codebase comprehension and cross-file analysis
+- Good at multi-file refactoring where seeing whole changeset matters
+- No marginal cost if you already have Google One AI Ultra
+
+**Limitations:**
+- Newer CLI, less battle-tested than Codex
+- Preview features required for Pro model
+- Current CLI lacks iterative test-validate loop (manual approval for writes)
+
+---
+
+## 🧭 Multi-Agent Routing — Codex / Gemini / Claude Code
+
+**Finalized 2026-02-06** with inputs from Momo (Claude Code on bro's PC)
+
+### Agent Reliability Ratings
+
+| Agent | Reliability | Notes |
+|-------|-------------|-------|
+| **Codex CLI** | 85/100 | Battle-tested, iterate-test loop |
+| **Gemini CLI** | 70/100 | Large context, newer CLI |
+| **Claude Code** | N/A | That's me — routing to myself isn't delegation |
+
+### Quota Hierarchy
+**Preserve Claude quota > Use Codex freely > Use Gemini for specific advantages**
+
+### Decision Tree (follow in order)
+
+```
+START — Can I delegate this?
+│
+├─ 1. SECURITY-SENSITIVE? (auth, crypto, secrets)
+│      YES → Handle directly (no agent)
+│
+├─ 2. Needs OPENCLAW TOOL EXECUTION? (browser, message, cron)
+│      YES → Handle directly (agents can't run OpenClaw tools)
+│
+├─ 3. Quick edit? (<10 lines, exact location known)
+│      YES → Handle directly (overhead exceeds benefit)
+│
+├─ 4. Spec AMBIGUOUS?
+│      YES → Clarify with bro first, then delegate
+│
+└─ 5. DELEGATE — Two-filter approach:
+
+       FILTER 1: Does task require large context? (>100K tokens, many files)
+       │
+       ├─ YES → Gemini (can see entire changeset)
+       │        BUT if iterative testing crucial → Codex may still win
+       │
+       └─ NO → Continue to Filter 2
+
+       FILTER 2: What's the primary need?
+
+       a. CORRECTNESS-CRITICAL + needs iteration/testing?
+          → Codex (disciplined loop, local tool execution)
+          
+       b. BROAD UNDERSTANDING needed? (architecture, cross-file analysis)
+          → Gemini (context window advantage)
+
+       c. STRAIGHTFORWARD + low risk? (CRUD, boilerplate)
+          → Gemini Flash (fast, no marginal cost)
+
+       d. UNCERTAIN?
+          → Codex (most battle-tested, safe default)
+```
+
+### Quick Reference Task Table
+
+| Task Type | Agent | Reason |
+|-----------|-------|--------|
+| Large codebase exploration | Gemini | 1M context |
+| Complex refactor (few files) | Codex | Precision + iteration |
+| Complex refactor (many files) | Gemini | Cross-file visibility |
+| Bug fix (localized) | Codex | Iteration + edge cases |
+| Bug fix (non-local cause) | Gemini | Trace across codebase |
+| Writing tests | Codex | Good at edge cases |
+| Boilerplate generation | Gemini Flash | Fast, low risk |
+| API integration | Codex | Error handling, retries |
+| Documentation (code-tied) | Codex | Accuracy to behavior |
+| Quick factual research | Gemini | Preserves Claude quota |
+
+### Failure Escalation Path
+
+```
+AGENT FAILED 3 PASSES →
+│
+├─ 1. Re-evaluate the spec — well-defined? Break it down?
+│
+├─ 2. Analyze the failure mode:
+│      ├─ Illogical output?      → Try Codex (stronger reasoning)
+│      ├─ Missing context?       → Try Gemini (larger context)
+│      └─ Misunderstood intent?  → Handle directly
+│
+├─ 3. Still failing? → Escalate to bro
+│
+└─ 4. Document the failure in memory/agent-failures.md
+```
+
+### Cross-Review Pattern (for high-stakes tasks)
+
+```
+1. Agent A produces initial output
+2. Agent B reviews/critiques A's output
+3. Revise based on B's feedback
+4. Damon synthesizes and resolves conflicts
+5. Present final version to bro
+```
 
 ---
 
