@@ -1,17 +1,18 @@
 # NOW.md — Current Task
 
-DOING: idle
+DOING: idle — system cron workaround in place
 
 ## Just Completed (last 1-3 items)
-- ✅ OpenClaw updated: 2026.2.2-3 → 2026.2.3-1
-- ✅ All 4 stuck Paradex withdrawals resolved (~183k USDC)
-- ✅ WBTC/cbBTC peg monitor + Aave health monitor added to hourly pulse
+- ✅ Found OpenClaw cron bug root cause (ensureLoaded calls recomputeNextRuns before runDueJobs)
+- ✅ Confirmed bug affects other users (Orinks on Discord reported same issue)
+- ✅ Set up system cron workaround for critical monitoring
 
 ## Blocked On (if any)
-- [ ] Opus 4.6 upgrade — need to verify if new OpenClaw version supports it before trying
+- [ ] OpenClaw cron fix (bug introduced 02/04, awaiting patch)
 
-## Context (for post-restart resumption)
-- **OpenClaw 2026.2.3-1** — just updated, haven't tested Opus 4.6 yet
-- **Bro's Aave positions** — HF ~1.5 after topping up
-- **Market bloodbath** — BTC down ~12% in 24h
-- **Hourly pulse** includes: AQI, BTC basis, funding, price arb, Aave health, WBTC peg, FUD check, Discord sentiment
+## Context
+- OpenClaw 2026.2.3-1 has cron scheduler bug — jobs never execute
+- Root cause: `ensureLoaded(forceReload: true)` calls `recomputeNextRuns()` which advances all schedules BEFORE `runDueJobs()` checks them
+- **Workaround active:** Linux system cron runs aave-alert (*/2 min) + paradex-liquidity (*/30 min)
+- Complex jobs (hourly-pulse, morning-briefing) still broken until OpenClaw fix
+- Remove workaround with `crontab -r` when fixed
