@@ -374,6 +374,9 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 ### Display Rules
 - [ ] **Context % at END of every message:** Append `[XX%]` showing current context usage at the END of every reply to bro (not the beginning). This helps bro track when to start fresh.
 
+### Restart Rules
+- [ ] **Post-restart cron verification:** When notified of gateway restart, IMMEDIATELY run the Gateway Restart Protocol checklist. Don't assume crons are fine — verify within 2 minutes.
+
 ### Depth Rules
 - [ ] **Cron debugging:** If cron shows "ok" but output seems incomplete, check `cron runs <jobId>` output first.
 - [ ] **Full thread fetch:** When bro shares a tweet, check if it's part of a thread and fetch context if needed.
@@ -391,6 +394,50 @@ When logging a MISS to `memory/self-review.md`, you MUST also:
 1. Extract a concrete "do/don't" rule
 2. Add it to this section immediately (same commit)
 3. Rules must be actionable, not vague
+
+---
+
+## 🔄 Gateway Restart Protocol
+
+**Context:** Bro and Momo may restart my gateway to deploy config changes or updates. They will notify me when this happens. On my end, I need to verify everything is running correctly.
+
+**When notified of a gateway restart, IMMEDIATELY run this checklist:**
+
+### 1. Verify Cron Health (within 2 minutes of restart)
+```
+cron action=list
+```
+Check ALL jobs for:
+- [ ] `nextRunAtMs` is sane (not too far in future for `everyMs` jobs)
+- [ ] `lastStatus` = "ok" for all jobs
+- [ ] No jobs accidentally disabled
+
+### 2. Identify Missed Jobs
+Compare current time against each job's schedule:
+- [ ] Any cron-expression job that should have fired during restart window?
+- [ ] Any `everyMs` job with nextRun > lastRun + (2 × interval)?
+
+### 3. Manually Trigger Critical Missed Jobs
+Priority order:
+1. **paradex-liquidity-monitor** — run script directly
+2. **aave-health-alert** — run script directly  
+3. **hourly-pulse** — if within window, run key checks manually
+4. Other jobs — assess based on time sensitivity
+
+### 4. Confirm Key Monitoring Active
+- [ ] Discord Chrome tab attached? (`browser action=tabs profile=chrome`)
+- [ ] WhatsApp connected? (check for gateway status in recent messages)
+
+### 5. Report Back
+Send bro a quick confirmation:
+```
+✅ Gateway restart verified:
+- X crons checked, all scheduled correctly
+- [Any missed jobs and actions taken]
+- Monitoring active
+```
+
+**Why this matters:** OpenClaw has a bug where `everyMs` jobs miscalculate next run time after restart. Cron-expression jobs can miss if restart lands in their scheduled window. Manual verification catches these issues before bro notices missing reports.
 
 ---
 
