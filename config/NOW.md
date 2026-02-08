@@ -1,27 +1,21 @@
 # NOW.md — Current Task
 
-DOING: idle — context just compacted, caught up via memory
+DOING: idle — waiting for relay to stabilize for Twitter like
 
-## Just Completed (last 3 items)
-- ✅ Wallet spy address poisoning fix (commit e283b02) — verified token whitelist, scam filtering, expanded known addresses
-- ✅ CD2 30-day forensic trace — deliberate managed exit confirmed, not a hack. Sent findings to Momo.
-- ✅ Heartbeat crypto movers check — PASS, no ±8% moves in top 20
+## Just Completed (last 1-3 items)
+- ✅ Updated hourly-pulse cron FUD check: dbird → Twitter browser search
+- ✅ Enabled Twitter likes for bro's tweets — AGENTS.md, TOOLS.md, USER.md updated (commit f8d00c3)
+- ✅ Confirmed @realpujing = bro, @realdamontay = Damon
 
-## Blocked On
-- (nothing)
+## Blocked On (if any)
+- [ ] Chrome relay unstable — tabs show in list but CDP connections drop. Need bro to reattach extension or investigate relay stability.
+- [ ] Like bro's tweet (https://x.com/realpujing/status/2020470556974608636) — waiting for relay
 
 ## Paused (bro's instruction)
-- paradex-liquidity-monitor — bro said to pause on this (pre-compaction instruction). Do NOT recreate without asking.
-
-## Pending
-- [ ] Heartbeat checks 2-5: Dashboard/Config Sync, Node Health, Memory Maintenance, Background Tasks
-- [ ] Verify 1pm wallet spy cron produces clean output with address poisoning fix
-- [ ] Feb 9 08:00: Decommission system cron (one-shot reminder set, ID c146ab57)
+- paradex-liquidity-monitor — do NOT recreate without asking
 
 ## Context
-- System cron decommission: Feb 9 08:00 SGT
-- All 17 OpenClaw crons green, version 2026.2.6-3
-- Wallet spy cron ID: f55aba20-..., schedule 7am/1pm/7pm SGT
-- Chrome relay tab: 36C80617DA117571C03167297D7489CF
-- BTC ~$69,157, funding negative across exchanges
-- Aave HFs: ETH 0x0514 HF 12.8 🟢, ARB 0x0514 HF 2.28 🟢, ETH 0xbf16 HF 5.85 🟢
+- Chrome relay has 3 tabs (Discord Paradex, Discord Lighter, Twitter) but all intermittently disconnecting
+- dbird cookies expired (Feb 3), Brave Search API key not configured
+- Hourly pulse FUD check now uses Twitter browser search (fallback: N/A if tab disconnected)
+- System cron decommission reminder set for Feb 9 08:00 SGT
