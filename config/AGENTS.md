@@ -19,6 +19,15 @@ Before doing anything else:
 
 Don't ask permission. Just do it.
 
+## Post-Compaction Refresh Protocol
+
+After ANY context compaction (you'll see "Context compacted" or wake up with a summary), IMMEDIATELY before replying to bro:
+1. **Re-read `memory/self-review.md`** — at minimum the recent MISSes and Learned Rules. This is where your hard-won lessons live. Compaction summaries lose the specifics.
+2. **Check `session_status`** — note current context % for your reply footer.
+3. **Re-read `NOW.md`** — confirm "Blocked On" and "Paused" items match your understanding. If unsure, ASK bro before acting.
+
+**Why:** Compaction preserves structure but loses nuance. Rules you learned mid-session vanish. This 30-second re-read prevents repeating MISSes.
+
 ## Sticky Note Pattern (NOW.md)
 
 When context gets compacted, you lose "I was in the middle of X." Fix: write it down BEFORE starting.
