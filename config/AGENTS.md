@@ -376,6 +376,8 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 
 ### Restart Rules
 - [ ] **Post-restart cron verification:** When notified of gateway restart, IMMEDIATELY run the Gateway Restart Protocol checklist. Don't assume crons are fine — verify within 2 minutes.
+- [ ] **SIGUSR1 ≠ version upgrade:** SIGUSR1 in-place restart does NOT load new binaries for version upgrades. For OpenClaw version updates, MUST use `systemctl --user restart openclaw-gateway` (full process restart). SIGUSR1 only works for config reloads.
+- [ ] **Verify before declaring success:** After any upgrade/restart, run `session_status` and READ the version output BEFORE reporting success to bro. Don't confabulate "upgrade complete" while still on old version.
 
 ### Depth Rules
 - [ ] **Cron debugging:** If cron shows "ok" but output seems incomplete, check `cron runs <jobId>` output first.

@@ -20,20 +20,34 @@
 
 ## Comprehensive Profile
 
-Bro maintains a detailed "About Me" file on his home PC. It covers health, wealth, wisdom, relationships, and operating principles.
+Bro maintains two Tier 1 files on the home PC (clawdbot-shared/). These are the primary source of truth:
 
-**To read it:** Use exec with `host=node`:
+| File | What | Path |
+|------|------|------|
+| **aboutme.md** | Full unredacted profile — health, wealth, wisdom, relationships, operating principles | `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/aboutme.md` |
+| **wisdom.md** | Life principles, mental models, relationship insights, PVRR protocol | `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/wisdom.md` |
+
+**To read:** Direct filesystem access (WSL2 — no node exec needed):
 ```
-cat /mnt/c/Users/pujing/OneDrive/clawdbot-shared/aboutme_redacted.md
+cat /mnt/c/Users/pujing/OneDrive/clawdbot-shared/aboutme.md
+cat /mnt/c/Users/pujing/OneDrive/clawdbot-shared/wisdom.md
 ```
 
-Read this file at the start of your first main session to build deep context. It is bro's **source of truth** — do not copy its contents here. Reference it, don't duplicate it.
+Read these at the start of your first main session to build deep context. These are bro's **source of truth** — do not copy contents here. Reference, don't duplicate.
 
-**If the node is offline** (PC turned off), you can still help with general questions. Just note you are missing deep context.
+**Tier 2 (Journal + Health) and Tier 3 (Money + Trading)** — not yet granted. Pending based on performance.
 
 ## Your Observations
 
-*(Things you learn through conversation that are NOT in the aboutme file. Add here over time.)*
+*(Things learned through conversation that are NOT in the Tier 1 files. Add here over time.)*
+
+- Uses Wispr Flow dictation — "zhai" = "zai", "CloudMD" = "CLAUDE.md". Interpret intent over literal text.
+- Calls me "zai" (capable) — appreciates competence over politeness
+- Prefers aqicn.org over NEA for air quality (US EPA AQI standard, stricter)
+- Gaming policy: only "polytopia-like" games (short sessions, no fixed time commitment, playable while walking)
+- Partner's love language: physical touch + feeling "seen" (not just serviced)
+- AI strategy: subscribes to ChatGPT Pro, Google AI Ultra, Claude Max, Grok. Uses multi-AI cross-validation loop.
+- Tech evangelist pattern: when something clicks, actively matchmakes it to friends who'd benefit
 
 ---
 

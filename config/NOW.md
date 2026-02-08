@@ -1,18 +1,20 @@
 # NOW.md — Current Task
 
-DOING: idle — system cron workaround in place
+DOING: Clearing Momo audit backlog (4 items)
 
 ## Just Completed (last 1-3 items)
-- ✅ Found OpenClaw cron bug root cause (ensureLoaded calls recomputeNextRuns before runDueJobs)
-- ✅ Confirmed bug affects other users (Orinks on Discord reported same issue)
-- ✅ Set up system cron workaround for critical monitoring
+- ✅ OpenClaw upgraded to 2026.2.6-3 — cron bug FIXED, all 17 crons green
+- ✅ System cron workaround still running (24h parallel run, remove ~08:00 Feb 9)
 
 ## Blocked On (if any)
-- [ ] OpenClaw cron fix (bug introduced 02/04, awaiting patch)
+- Nothing
 
 ## Context
-- OpenClaw 2026.2.3-1 has cron scheduler bug — jobs never execute
-- Root cause: `ensureLoaded(forceReload: true)` calls `recomputeNextRuns()` which advances all schedules BEFORE `runDueJobs()` checks them
-- **Workaround active:** Linux system cron runs aave-alert (*/2 min) + paradex-liquidity (*/30 min)
-- Complex jobs (hourly-pulse, morning-briefing) still broken until OpenClaw fix
-- Remove workaround with `crontab -r` when fixed
+- Cron bug fixed in 2026.2.6-3. System cron workaround stays until Feb 9 08:00 as safety net
+- Remove workaround: `crontab -r` on Feb 9 morning after verifying 24h of clean cron runs
+- Momo audit (Feb 7): score 72/100. Clearing 4 action items now:
+  1. Update USER.md → reference aboutme.md (not redacted)
+  2. Read Tier 1 files (aboutme.md + wisdom.md)
+  3. Refresh MEMORY.md
+  4. Refresh DASHBOARD.md
+- Tier 1 access granted: aboutme.md + wisdom.md in clawdbot-shared/
