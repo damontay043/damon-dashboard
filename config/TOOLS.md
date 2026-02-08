@@ -8,12 +8,38 @@ Skills define *how* tools work. This file is for *your* specifics — the stuff 
 
 ## ⚠️ DISCORD MONITORING — IMPORTANT!
 
-**Use Chrome Relay via browser tool. DO NOT use `openclaw` CLI commands (PATH mismatch).**
+**PRIMARY METHOD: JavaScript DOM extraction (discovered 2026-02-08)**
 
+Extract messages directly as structured JSON — no screenshots needed for data:
 ```
-browser action=tabs profile=chrome target=host     # Find Discord tab
-browser action=act ... request={"kind":"press","key":"End"}  # Scroll to bottom
-browser action=screenshot profile=chrome target=host targetId=...  # Capture
+# 1. Find Discord tab
+browser action=tabs profile=chrome target=host
+
+# 2. Scroll to bottom
+browser action=act ... request={"kind":"press","key":"End"}
+
+# 3. Wait 3 seconds, then extract messages via JS
+browser action=act ... request={"kind":"evaluate","fn":"() => { const msgs = document.querySelectorAll('[id^=\"chat-messages-\"]'); const results = []; for (const msg of msgs) { const header = msg.querySelector('[class*=\"headerText\"]'); const content = msg.querySelector('[id^=\"message-content-\"]'); const timestamp = msg.querySelector('time'); if (content || header) { results.push({ user: header ? header.textContent.trim().split('\\n')[0] : '(continued)', text: content ? content.textContent.trim() : '', time: timestamp ? timestamp.getAttribute('datetime') : '' }); } } return JSON.stringify(results.slice(-30)); }"}
+
+# Returns: JSON array of {user, text, time(ISO UTC)} — add 8h for SGT
+# ~2KB vs ~100KB screenshot. Exact timestamps, zero fabrication risk.
+```
+
+**SUPPLEMENTARY:** Still take screenshots for visual context, but text data comes from JS extraction.
+
+**FALLBACK:** If JS extraction fails, use screenshot method: PageUp 3x → screenshot → analyze visually.
+
+**MULTI-CHANNEL MONITORING (discovered 2026-02-08):**
+Navigate between Discord servers/channels in same tab, extract, navigate back:
+```
+# Channel URLs (Discord SPA, instant navigation):
+Paradex #general:  https://discord.com/channels/1107916848193863740/1107916848193863743
+Lighter #general:  https://discord.com/channels/987399783985590322/1263245127674105877
+Lighter #trading:  https://discord.com/channels/987399783985590322/1343587329666711573
+
+# Navigate: browser action=act ... request={"kind":"evaluate","fn":"() => { window.location.href = '<URL>'; return 'navigating'; }"}
+# Wait 4s for load, then run JS extraction
+# Navigate back to default channel after extraction
 ```
 
 If you get "no tab connected" → tell bro: "Chrome tab detached, please reattach the OpenClaw extension to Discord tab"
@@ -83,8 +109,10 @@ Add-Type -AssemblyName System.Windows.Forms
 
 ## 🐦 Bird CLI (Twitter/X) — PRIMARY TWITTER ACCESS
 
-**Account:** @realdamontay (Damon Tay)
+**Account:** @realdamontay (Damon Tay — MY account)
 **User ID:** 2017069604896722944
+**Bro's account:** @realpujing (Pu Jing)
+**Auto-like:** ✅ Enabled — like bro's tweets via Chrome relay browser (logged into @realdamontay)
 **Wrapper:** `/home/pujing/dbird` (auto-injects credentials)
 
 **Credentials stored in:** `/home/pujing/dbird` wrapper script

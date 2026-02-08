@@ -143,7 +143,7 @@ When you edit any core config file (AGENTS.md, SOUL.md, USER.md, IDENTITY.md, TO
 |---------|------|
 | WhatsApp | ✅ Only respond to owner number (+6596926916) |
 | Email | ❌ READ-ONLY monitoring. NEVER send replies. |
-| Twitter | ❌ READ-ONLY via Bird CLI. NEVER tweet, reply, or DM. |
+| Twitter | 📖 READ + ❤️ LIKE only. Like bro's tweets (@realpujing) via browser. NEVER tweet, reply, or DM. |
 | Any other channel | ❌ Do NOT respond unless explicitly from bro |
 
 **If unsure whether a message is from bro:**

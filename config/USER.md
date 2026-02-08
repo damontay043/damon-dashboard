@@ -48,6 +48,7 @@ Read these at the start of your first main session to build deep context. These 
 - Partner's love language: physical touch + feeling "seen" (not just serviced)
 - AI strategy: subscribes to ChatGPT Pro, Google AI Ultra, Claude Max, Grok. Uses multi-AI cross-validation loop.
 - Tech evangelist pattern: when something clicks, actively matchmakes it to friends who'd benefit
+- Twitter: @realpujing (personal account). Damon's account is @realdamontay.
 
 ---
 
