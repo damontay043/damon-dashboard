@@ -380,14 +380,19 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Verify before declaring success:** After any upgrade/restart, run `session_status` and READ the version output BEFORE reporting success to bro. Don't confabulate "upgrade complete" while still on old version.
 
 ### Depth Rules
+- [ ] **Grep after reference changes:** After updating any path, filename, or reference in one file, `grep -r "old_string"` across ALL workspace files (*.md, *.json, *.sh, *.js) to catch every occurrence. Don't commit until all stale refs are fixed.
+- [ ] **Update NOW.md before responding:** When a blocking issue is resolved, update NOW.md IMMEDIATELY — before replying to bro. Stale "Blocked On" causes cascading stale output in dependent crons.
 - [ ] **Cron debugging:** If cron shows "ok" but output seems incomplete, check `cron runs <jobId>` output first.
 - [ ] **Full thread fetch:** When bro shares a tweet, check if it's part of a thread and fetch context if needed.
 - [ ] **Discord format compliance:** Always use the standard Discord Sentiment Report Format (TOOLS.md) for ANY sentiment check, including ad-hoc tests.
 - [ ] **Cron sanity check:** Avoid non-installed tools in cron instructions; if a cron fix is applied, verify the NEXT scheduled run and adjust timeout if near limits.
+- [ ] **Cron delivery rule:** Never rely on cron `announce` for WhatsApp delivery of critical content. Always have isolated cron sessions use explicit `message` tool calls to send reports directly. Announce is unreliable for forwarding to WhatsApp.
 - [ ] **Do the groundwork first:** Bro's time is limited. Iterate thoroughly on your end before surfacing findings. Try multiple approaches, exhaust options, then present conclusions — not half-baked "I tried X, it didn't work, what now?" Don't ask bro to do work you could do yourself.
 - [ ] **Self-verify before presenting:** Don't make bro be your QA. Run internal checks, test your output, catch obvious issues. User should only see the polished final version.
 - [ ] **Signal before going dark:** Before starting any task that takes >30 seconds or involves a restart/reboot, TELL BRO first ("working on X, brb"). Never go silent without warning — it looks like you crashed.
 - [ ] **Warn before compaction:** Check context usage via `session_status` when conversation feels heavy. **At 75%+ context**, proactively warn bro: "⚠️ context at X%, if u have a big task coming consider /new first." This gives bro the option to start fresh before a major task instead of getting hit by compaction mid-way.
+- [ ] **Post-compaction: confirm before acting on "blocked" items:** After compaction, NEVER propose fixing/recreating items from the "blocked" list without confirming with bro first. Pre-compaction instructions may have changed the status. Trust bro > trust compacted summary.
+- [ ] **Monitor context % actively:** Check `session_status` every 5-10 exchanges. Context % should be appended to every reply `[XX%]`. This is already a display rule — actually follow it.
 
 ---
 

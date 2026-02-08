@@ -45,7 +45,8 @@ If you get "no tab connected" → tell bro: "Chrome tab detached, please reattac
 
 | File | Purpose | When to read |
 |------|---------|--------------|
-| `/mnt/c/.../clawdbot-shared/aboutme_redacted.md` | Comprehensive user profile (health, wealth, wisdom, relationships) | Start of main sessions, or when you need deep user context |
+| `/mnt/c/.../clawdbot-shared/aboutme.md` | Full unredacted profile (health, wealth, wisdom, relationships) | Start of main sessions, or when you need deep user context |
+| `/mnt/c/.../clawdbot-shared/wisdom.md` | Life principles, mental models, PVRR protocol | When you need deep context on bro's philosophy |
 | `/mnt/c/.../clawdbot-shared/vps-config/` | Mirror of my workspace config files | Sync here after any changes to core files |
 
 ### 🖥️ PowerShell Integration (WSL2 → Windows)
