@@ -107,39 +107,31 @@ Add-Type -AssemblyName System.Windows.Forms
 
 ---
 
-## 🐦 Bird CLI (Twitter/X) — PRIMARY TWITTER ACCESS
+## 🐦 Twitter/X Access — MANAGED BROWSER + xAI
 
 **Account:** @realdamontay (Damon Tay — MY account)
 **User ID:** 2017069604896722944
 **Bro's account:** @realpujing (Pu Jing)
-**Auto-like:** ✅ Enabled — like bro's tweets via Chrome relay browser (logged into @realdamontay)
-**Wrapper:** `/home/pujing/dbird` (auto-injects credentials)
+**Auto-like:** ✅ Enabled — like bro's tweets via managed browser (logged into @realdamontay)
 
-**Credentials stored in:** `/home/pujing/dbird` wrapper script
-- Uses env vars AUTH_TOKEN + CT0
-- Cookies from bro's browser (updated 2026-02-03)
-- May expire in ~2-4 weeks, re-grab if auth fails
+### ❌ Bird CLI — DEAD (2026-02-08)
+steipete took down Bird CLI — X killed the Web API it relied on (pay-per-use enforcement).
+Tweet: https://x.com/steipete/status/2020295295406358798
+**Do NOT attempt to use `dbird` — it will always return 401.**
 
-**Common commands:**
-```bash
-/home/pujing/dbird whoami                    # Check auth status
-/home/pujing/dbird read <tweet-url>          # Read a specific tweet
-/home/pujing/dbird search "query" -n 10      # Search tweets
-/home/pujing/dbird user-tweets @handle -n 20 # Get user's timeline
-/home/pujing/dbird mentions                  # Check @realdamontay mentions
-/home/pujing/dbird news --ai-only -n 10      # Trending/news
-/home/pujing/dbird thread <url>              # Get full thread + replies
+### ✅ PRIMARY: Managed Browser (profile=openclaw)
+Already logged into x.com as @realdamontay via cookie injection.
 ```
+# Read a tweet
+browser action=navigate profile=openclaw targetUrl="https://x.com/steipete/status/XXX"
+# Wait 5s, then extract text
+browser action=act profile=openclaw request={"kind":"evaluate","fn":"() => { ... }"}
+```
+**Use for:** Reading tweets, auto-liking bro's tweets, FUD searches, profile checks.
 
-**Use cases:**
-- Bro shares a tweet link → `dbird read <url>` to get full content
-- Monitor Claude Code community → `dbird search "moltbot OR claude code" -n 20`
-- Track specific people → `dbird user-tweets @steipete -n 10`
-- Get AI/tech news → `dbird news --ai-only -n 10`
-
-**⚠️ Do NOT tweet** — Bird CLI warns X blocks bot accounts quickly. Use for **reading only**.
-
-**If cookies expire:** Ask bro to re-grab `auth_token` + `ct0` from x.com DevTools → Application → Cookies.
+### ✅ BACKUP: xAI/Grok API
+Semantic Twitter search when browser is unavailable.
+See xAI section below for details.
 
 ---
 
