@@ -42,7 +42,14 @@ Lighter #trading:  https://discord.com/channels/987399783985590322/1343587329666
 # Navigate back to default channel after extraction
 ```
 
-If you get "no tab connected" → tell bro: "Chrome tab detached, please reattach the OpenClaw extension to Discord tab"
+**Chrome Relay Retry Protocol (learned 2026-02-12):**
+If `browser action=tabs profile=chrome` returns empty:
+1. **Wait 5s, retry up to 3 times** — WebSocket handshake can take time after extension click
+2. **CLI diagnostic:** `openclaw browser --browser-profile chrome tabs` via exec — CLI may see tabs before tool does
+3. **Only THEN ask bro** to re-click extension (only if both tool AND CLI return empty)
+4. Don't pass `target=host` — omit it, the built-in chrome profile routes correctly without it
+
+If genuinely disconnected → tell bro: "Chrome tab detached, please reattach the OpenClaw extension to Discord tab"
 
 ---
 

@@ -402,6 +402,7 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Warn before compaction:** Check context usage via `session_status` when conversation feels heavy. **At 75%+ context**, proactively warn bro: "⚠️ context at X%, if u have a big task coming consider /new first." This gives bro the option to start fresh before a major task instead of getting hit by compaction mid-way.
 - [ ] **Post-compaction: confirm before acting on "blocked" items:** After compaction, NEVER propose fixing/recreating items from the "blocked" list without confirming with bro first. Pre-compaction instructions may have changed the status. Trust bro > trust compacted summary.
 - [ ] **Monitor context % actively:** Check `session_status` every 5-10 exchanges. Context % should be appended to every reply `[XX%]`. This is already a display rule — actually follow it.
+- [ ] **Retry before escalating:** When a tool returns unexpected empty/error results, retry 2-3 times with delays before telling bro it's broken. Especially for Chrome relay (`browser action=tabs profile=chrome`) — WebSocket handshake can take 5-10s. Use CLI diagnostic (`openclaw browser --browser-profile chrome tabs` via exec) as second check. Only escalate to bro after BOTH tool and CLI fail. Don't waste bro's time on timing issues.
 
 ---
 
