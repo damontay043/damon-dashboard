@@ -403,6 +403,8 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Post-compaction: confirm before acting on "blocked" items:** After compaction, NEVER propose fixing/recreating items from the "blocked" list without confirming with bro first. Pre-compaction instructions may have changed the status. Trust bro > trust compacted summary.
 - [ ] **Monitor context % actively:** Check `session_status` every 5-10 exchanges. Context % should be appended to every reply `[XX%]`. This is already a display rule — actually follow it.
 - [ ] **Retry before escalating:** When a tool returns unexpected empty/error results, retry 2-3 times with delays before telling bro it's broken. Especially for Chrome relay (`browser action=tabs profile=chrome`) — WebSocket handshake can take 5-10s. Use CLI diagnostic (`openclaw browser --browser-profile chrome tabs` via exec) as second check. Only escalate to bro after BOTH tool and CLI fail. Don't waste bro's time on timing issues.
+- [ ] **Fix-one-audit-all:** After fixing ANY cron issue (delivery, formula, format), immediately audit ALL other cron payloads for the same pattern. Don't fix one and leave the rest broken. The Feb 8 announce→message fix was only applied to hourly-pulse; 6 other crons had the same vulnerability and morning-wellness failed on Feb 13 because of it.
+- [ ] **Domain metrics: verify interpretation direction:** For domain-specific metrics (EF, funding rates, ratios), always verify whether higher or lower is better BEFORE shipping. Ask bro or check documentation. Don't assume — wrong direction flips the entire analysis.
 
 ---
 
