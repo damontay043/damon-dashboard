@@ -1,27 +1,32 @@
 # NOW.md — Current Task
 
-DOING: idle — approaching second compaction (~89%)
+DOING: Google auth re-auth — waiting for bro to paste OAuth code
 
 ## Just Completed (last 1-3 items)
-- ✅ HL OI Top 10 UPGRADED — added 24h avg funding (fundingHistory endpoint) + fixed ×8760 formula. Key: HIP-3 coins need `xyz:` prefix for fundingHistory.
-- ✅ HL OI APR bug fixed — was 8x off (hourly vs 8-hour). MU was 8.7% → actual 69.6%.
-- ✅ nag-twitter-cookies timeout bumped 30s → 60s
+- ✅ Liquidation price calculator built + added to hourly pulse (working in production)
+- ✅ HL OI Top 10 upgraded with 24h avg funding + ×8760 fix
+- ✅ 5pm wind-down cron updated — focus points now contextual, not generic
 
 ## Blocked On (if any)
+- [ ] **Google auth re-auth — IN PROGRESS** — OAuth URL sent to bro, waiting for auth code paste
 - [ ] Headlines source config — bro hasn't replied (nagged 5x/day since ~Feb 9)
 - [ ] Twitter cookie refresh — bro hasn't replied
-- [ ] Google auth expired (Sheets + Calendar) — bro hasn't replied
-- [ ] Aboutme.md front-load-verdict addition — offered, awaiting bro's ok
-- [ ] Hourly-pulse screenshot reliability — need to fix cron prompt to prevent reuse of stale screenshot paths (cron ID: 91f41b4b)
-- [ ] Damon audit with Momo — was scheduled today (Feb 12), bro didn't initiate
+- [ ] Hourly-pulse screenshot reliability — need to fix cron prompt (cron ID: 91f41b4b)
 
 ## Paused (by bro's instruction)
 - paradex-liquidity-monitor — paused per bro
 
+## Google Auth Re-auth Steps (resume after compaction)
+1. ✅ Generated OAuth URL, sent to bro
+2. ⏳ Bro opens URL, signs in as damontay043@gmail.com, pastes auth code
+3. Exchange code: `curl -X POST https://oauth2.googleapis.com/token` with client_id, client_secret, code, redirect_uri=http://localhost, grant_type=authorization_code
+4. Save tokens to `/home/pujing/.openclaw/credentials/google-token.json`
+5. Verify: run `gcal-token.sh` and `gsheets-token.sh`
+6. If working: disable nag-google-reauth cron (ID: 78f36a81-632e-4f4b-9b61-90b23d71da83)
+
 ## Context
-- Second compaction imminent (89%)
-- 19 crons all healthy (nag-twitter-cookies timeout fixed by self-review cron)
-- Paradex Discord sentiment spiked to 78/100 — SPOT TESTNET ANNOUNCED 🔥
-- BTC ~$67.3k, HL funding negative all day (-2% to -17% APR), Paradex positive (~10%)
-- CD2 longs still underwater (-$77.8k), fab3 PAXG short offsetting (+$87.5k)
-- WhatsApp gateway had several brief disconnects today (all auto-reconnected)
+- Feb 13 morning, BTC ~$66.2k (down from $68k yesterday)
+- Funding rates flipped positive (~10% APR across venues)
+- 21 crons healthy (deep-self-review self-healed timeout to 300s overnight)
+- Aboutme.md front-load-verdict — bro declined ("no need")
+- Biz idea cron updated to calibrate to bro's technical level
