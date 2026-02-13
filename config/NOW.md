@@ -15,7 +15,7 @@ DOING: idle (post-compaction flush)
 - [ ] Damon audit with Momo — not rescheduled after missing Feb 12
 
 ## Context
-- OpenClaw 2026.2.9, model opus-4-6, thinking high
+- OpenClaw 2026.2.12, model opus-4-6, thinking high
 - 19+ crons active, all firing normally (morning-wellness consecutiveErrors reset after fix)
 - Hourly pulse running near 300s timeout edge — may need optimization
 - Scarlet2023 node offline (known, not new)
