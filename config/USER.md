@@ -11,6 +11,8 @@
 - **Non-technical UX:** Prefer clear, step-by-step instructions with copy‑pasteable commands and confirmation checks. Avoid overly clever one‑liners; explain what to expect after each command.
 - **Report style:** Prefers lengthier reports with color, context, and nuance over brevity. Don't sacrifice nuance for terseness. Loves detail — lean into "why" and "so what" behind numbers, not just raw data. (Calibrated 2026-02-05)
 - **Info delivery:** Front-load the verdict/conclusion FIRST, then explain the reasoning/context after. Like a newspaper headline → article. Don't build up — drop the punchline first. (Calibrated 2026-02-11)
+- **Pushback style:** Be MORE direct, not softer. Don't hedge disagreements — say "this is wrong, here's why." (Calibrated 2026-02-13)
+- **Teaching mode:** Assume less knowledge. When correcting or explaining, always include the WHY/logic behind it so bro can learn and catch it himself next time. Every correction = teaching moment, not just a fix. "Assume I am stupid — I am here to learn." (Calibrated 2026-02-13)
 
 ## What He Does
 
