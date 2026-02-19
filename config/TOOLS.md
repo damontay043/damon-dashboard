@@ -116,25 +116,24 @@ Add-Type -AssemblyName System.Windows.Forms
 
 ## 🐦 Twitter/X Access — MANAGED BROWSER + xAI
 
-**Account:** @realdamontay (Damon Tay — MY account)
+**Account:** @realdamontay (Damon Tay — MY account) — ⚠️ SUSPENDED (Feb 13). Appeal submitted.
 **User ID:** 2017069604896722944
 **Bro's account:** @realpujing (Pu Jing)
-**Auto-like:** ✅ Enabled — like bro's tweets via managed browser (logged into @realdamontay)
+**Auto-like:** ❌ DISABLED — account suspended, cron `twitter-auto-like` disabled
 
 ### ❌ Bird CLI — DEAD (2026-02-08)
 steipete took down Bird CLI — X killed the Web API it relied on (pay-per-use enforcement).
-Tweet: https://x.com/steipete/status/2020295295406358798
 **Do NOT attempt to use `dbird` — it will always return 401.**
 
 ### ✅ PRIMARY: Managed Browser (profile=openclaw)
-Already logged into x.com as @realdamontay via cookie injection.
+Already logged into x.com as @realdamontay via cookie injection. Can still READ tweets even though account suspended.
 ```
 # Read a tweet
 browser action=navigate profile=openclaw targetUrl="https://x.com/steipete/status/XXX"
 # Wait 5s, then extract text
 browser action=act profile=openclaw request={"kind":"evaluate","fn":"() => { ... }"}
 ```
-**Use for:** Reading tweets, auto-liking bro's tweets, FUD searches, profile checks.
+**Use for:** Reading tweets, FUD searches, profile checks. NO liking/posting (account suspended).
 
 ### ✅ BACKUP: xAI/Grok API
 Semantic Twitter search when browser is unavailable.
@@ -166,7 +165,7 @@ See xAI section below for details.
 
 **Cost:** Uses prepaid xAI credits. Monitor at console.x.ai. Don't overuse.
 
-**Note:** Bird CLI is now primary for Twitter. Use xAI as backup or for semantic search.
+**Note:** Bird CLI is DEAD. Managed browser is primary for Twitter reading. Use xAI as backup for semantic search.
 
 ---
 
@@ -187,10 +186,9 @@ See xAI section below for details.
 
 ## 📊 Paradex API
 
-**Credentials:** `/root/clawd/.paradex-credentials.json`
-- Read-only JWT token
-- Can access: account info, positions, funding payments
-- Cannot: place trades (read-only)
+**Credentials:** ⚠️ OLD PATH `/root/clawd/.paradex-credentials.json` — NOT on current WSL2 system. No Paradex API creds migrated.
+- Public endpoints work without auth (market data, funding rates)
+- Bro withdrew funds from Paradex (Feb 16) — account monitoring paused
 
 **Base URL:** `https://api.prod.paradex.trade/v1/`
 **Auth header:** `Authorization: Bearer <jwt>`
@@ -613,21 +611,27 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 
 | Name | Schedule | Model | What it does |
 |------|----------|-------|-------------|
-| `morning-briefing` | 7:00 AM SGT | Opus | Weather, AQI, ST headlines, calendar, market ratios (BTC/Gold/S&P500), crypto, DeFi pulse, Discord, joke |
-| `morning-wellness-deep-analysis` | 7:30 AM SGT | Opus | Garmin + TrainingPeaks PMC + Google Sheets wellness data → deep health report |
-| `hourly-pulse` | :45 past hour (6am-10pm) | Opus | AQI, BTC basis (4 exchanges), funding rates, price arb, Discord sentiment + screenshot |
-| `trello-q1-helper` | 1:00 PM SGT | Sonnet | Fetch Trello Q1 tasks, suggest how I can help |
-| `hl-oi-top10` | 2:00 PM SGT | Sonnet | Hyperliquid top 10 open interest |
-| `afternoon-research` | 3:00 PM SGT | Opus | Alternating: Twitter trends (even dates) / deep-dive (odd dates) |
-| `aboutme-enrichment` | 4:00 PM SGT | Opus | Learn something new about bro, suggest additions to aboutme |
-| `uv-index-and-stories` | 5:00 PM SGT | Opus | UV index, curated story, 3 evening focus points |
-| `token-usage-reminder` | 6:00 PM SGT | Sonnet | Daily token cost tracking (7-day cycle) |
+| `aave-health-alert` | Every 2 min (6am-11pm) | Sonnet | Real-time health factor monitoring, 3 wallets |
+| `morning-briefing` | 7:00 AM SGT | Opus | Weather, AQI, ST headlines, calendar, market ratios, Mayer Multiple, DeFi pulse, Discord, joke |
+| `wallet-spy` | 7am/1pm/7pm SGT | Opus | Forensic monitoring of 12 wallets (ETH+ARB+HL) |
+| `variational-funding-rates` | 7:40am/3:40pm SGT | Sonnet | ETC/ETH/SOL funding + extreme outliers on Variational |
+| `hourly-pulse` | :45 past (6,10,14,18,20) | Opus | AQI, BTC+PAXG basis (4 exchanges), funding rates, Aave, peg, FUD, gold spread, Discord (Paradex+Variational) |
+| `defidojo-day` | :20 past (6,10,14,18,21) | Opus | DeFi Dojo #dojo-chat daytime intel extraction |
+| `nag-headline-inputs` | 9am/12/3/6/9pm SGT | Sonnet | Nag bro for headline source preferences |
+| `nag-undone-tasks` | 9am/12/3/6/9pm SGT | Sonnet | Check for blocked/forgotten tasks |
+| `deep-self-review` | 12am/9am/12/3/6/9pm SGT | Opus | Config compliance audit + MISS/HIT logging + cron watchdog |
+| `refresh-rules-nudge` | 10am/2/6/10pm SGT | main/systemEvent | Re-read self-review rules, check compliance drift |
+| `trello-q1-helper` | 1:00 PM SGT | Opus | Fetch Trello Q1 tasks, suggest how I can help |
+| `hl-oi-top10` | 2:00 PM SGT | Sonnet | Hyperliquid top 10 open interest (standalone script) |
+| `afternoon-research` | 3:00 PM SGT | Opus | Alternating: Twitter trends (even) / deep-dive (odd) |
+| `aboutme-enrichment` | 4:00 PM SGT | Opus | Learn something new about bro, log to interview file |
+| `defidojo-daily-channels` | 4:20 PM SGT | Opus | DeFi Dojo #hedge-arb + #hl-and-frenemies daily deep scan |
+| `uv-index-and-stories` | 5:00 PM SGT | Opus | UV index, curated story, 3 contextual evening focus points |
 | `daily-business-idea` | 6:00 PM SGT | Opus | Solopreneur business idea with analysis |
+| `morning-wellness-deep-analysis` | 6:30 PM SGT | Opus | Garmin + TrainingPeaks PMC + Sheets → deep health report |
 | `daily-calibration-interview` | 7:00 PM SGT | Opus | Personality/capability calibration question |
-| `evening-funding-briefing` | 9:00 PM SGT | Sonnet | Detailed funding rates across venues |
-| `deep-self-review` | Every 3h | Opus | Self-assessment, MISS/HIT logging |
-| `nag-undone-tasks` | Every 3h | Sonnet | Check for blocked/forgotten tasks |
-| `workstream-gemini-cli` (×2) | Every 3h | Sonnet | Track Gemini CLI setup progress |
+| `evening-funding-briefing` | 9:00 PM SGT | Opus | Detailed funding rates across all venues |
+| `defidojo-night` | :20 past (22-5) hourly | Opus | DeFi Dojo #dojo-chat overnight intensive scan |
 
 **Manage via:**
 - `cron list` — See all jobs
@@ -668,27 +672,33 @@ browser action=act ... request={"kind":"press","key":"PageUp"}
 
 | Power | Tool | Status |
 |-------|------|--------|
-| Read tweets | Bird CLI (`/home/pujing/dbird`) | ✅ Active (cookies updated 2026-02-03) |
-| Search Twitter | Bird CLI + xAI/Grok backup | ✅ Active |
+| Read tweets | Managed browser (profile=openclaw) | ✅ Active (account suspended but can still read) |
+| Search Twitter | xAI/Grok API + Brave Search | ✅ Active |
 | Web search | Brave API (`web_search` tool) | ✅ Active |
 | Read bro's files | Direct `/mnt/c/` access | ✅ Always available |
-| Browser control | Chrome Relay | ✅ Active (verified 2026-01-31) |
-| Discord monitoring | Chrome Relay + peterpoon | ✅ Active |
-| Windows screenshots | PowerShell | ✅ Active (2026-01-31) |
-| Windows clipboard | PowerShell | ✅ Active (2026-01-31) |
-| Launch Windows apps | PowerShell | ✅ Active (2026-01-31) |
-| Calendar write | Google Calendar API | ✅ Active (auto-refresh via gcal-token.sh) |
-| **Google Sheets read** | Sheets API | ✅ Active (auto-refresh via gsheets-token.sh) |
-| **Garmin health data** | garminconnect Python | ✅ Active (sleep, HRV, HR, stress) |
-| **TrainingPeaks PMC** | REST API + cookie auth | ✅ Active (CTL/ATL/TSB/TSS) |
-| Paradex data | REST API | ✅ Active |
-| Lighter data | REST + WebSocket | ✅ Active (2026-02-03) |
-| Variational data | REST API | ✅ Active (2026-02-03) |
+| Browser control | Chrome Relay | ✅ Active |
+| Discord monitoring | Chrome Relay (Paradex + Variational + DeFi Dojo) | ✅ Active |
+| DeFi Dojo intel | Chrome Relay JS extraction (3 channels) | ✅ Active (2026-02-15) |
+| Windows screenshots | PowerShell | ✅ Active |
+| Windows clipboard | PowerShell | ✅ Active |
+| Calendar write | Google Calendar API | ✅ Active (auto-refresh) |
+| Google Sheets read | Sheets API | ✅ Active (auto-refresh) |
+| Garmin health data | garminconnect Python | ✅ Active (sleep, HRV, HR, stress) |
+| TrainingPeaks PMC | REST API + cookie auth | ✅ Active (CTL/ATL/TSB/TSS) |
+| Wallet spy | Node.js script (12 wallets, ETH+ARB+HL) | ✅ Active (2026-02-08) |
+| Gold token spread | PAXG (Binance) vs XAUT (Bybit) script | ✅ Active (2026-02-18) |
+| Mayer Multiple | Binance 200d klines script | ✅ Active (2026-02-18) |
+| Paradex data | REST API (public, no auth) | ✅ Active (funds withdrawn Feb 16) |
+| Lighter data | REST + WebSocket | ✅ Active |
+| Variational data | REST API | ✅ Active |
+| Aave health monitoring | Node.js script (3 wallets, ETH+ARB) | ✅ Active (every 2 min) |
+| BTC peg monitoring | Paraswap + Binance script | ✅ Active |
 | Trello tasks | REST API | ✅ Active |
 | Voice output | Edge TTS | ✅ Active |
-| Scheduled tasks | 15+ cron jobs | ✅ Active |
-| Memory | File-based + memory_search | ✅ Active |
-| Codex CLI | Coding delegation | ✅ Active (2026-02-02) |
+| Scheduled tasks | 22 active cron jobs | ✅ Active |
+| Memory | File-based + QMD BM25 search | ✅ Active |
+| Codex CLI | Coding delegation | ✅ Active |
+| Gemini CLI | Large context coding/research | ✅ Active |
 
 ---
 

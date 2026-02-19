@@ -1,25 +1,25 @@
 # NOW.md — Current Task
 
-DOING: idle (post-compaction flush)
+DOING: Full config file compliance fix (Feb 19 morning)
 
 ## Just Completed (last 3 items)
-- ✅ Cron delivery audit — patched 6 crons with explicit message delivery (fix-one-audit-all)
-- ✅ Run EF direction fix — HIGHER = better, updated wellness cron + logged MISS
-- ✅ Wallet spy fix — each wallet = different operator, no aggregated P&L
-- ✅ DeFi Pulse format — show all 3 timeframes (7d/30d/90d)
+- ✅ Config compliance audit — found 4 critical, 3 high, 5 medium issues
+- ✅ Gold spread live in hourly-pulse — first reading Feb 19 07:12 (+$26.21, +0.53%)
+- ✅ Mayer Multiple live in morning briefing — first reading Feb 19: 0.664 Deep Value
 
 ## Blocked On
-- [ ] Google auth re-auth — bro was working on it ~06:45, waiting for auth code paste
-- [ ] Headlines source config — bro hasn't chosen preferences
-- [ ] Twitter cookie refresh — bro hasn't done it
-- [ ] Damon audit with Momo — not rescheduled after missing Feb 12
+- [ ] Twitter @realdamontay appeal — waiting on X response
+- [ ] Headlines source config — bro hasn't picked CoinDesk/The Block/CNN/CNBC preferences
+- [ ] Damon audit with Momo — overdue since Feb 12 (7+ days)
+- [ ] OpenClaw update: 2026.2.12 → 2026.2.17 available (alerted 5+ times, no action)
+- [ ] Variational Discord Chrome relay consistently failing — tab unresponsive
+- [ ] PAXG redistribution execution — consensus reached, awaiting bro's go-ahead to start leapfrog migration
 
 ## Context
-- OpenClaw 2026.2.12, model opus-4-6, thinking high
-- 19+ crons active, all firing normally (morning-wellness consecutiveErrors reset after fix)
-- Hourly pulse running near 300s timeout edge — may need optimization
-- Scarlet2023 node offline (known, not new)
-- BTC ~$66.4k, funding rates positive ~10% APR across venues
-- Lighter funding notably low (2.63% vs peers ~10%)
-- Key cron IDs: hourly-pulse `91f41b4b`, hl-oi-top10 `0747f05d`, wellness `158b3650`
-- Dashboard last synced: commit `0d755de` (Feb 13 08:07)
+- OpenClaw 2026.2.12 (2026.2.17 available — 5 versions behind)
+- 22 active crons, ALL healthy, zero failures
+- Mayer Multiple: 0.664 (Deep Value 🟢🟢) — BTC 33.6% below 200d SMA
+- Gold spread: PAXG +$26.21 over XAUT (+0.53%) — Binance + Bybit sources
+- Market bearish: SOL funding deeply negative, wallet spy bearish, Mayer deep value
+- PAXG redistribution plan: Lighter 250 → 50-80, HL 0 → 200+, leapfrog Strategy A
+- Wellness cron shifted to 6:30pm (cron 158b3650)

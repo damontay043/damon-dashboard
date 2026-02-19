@@ -69,15 +69,27 @@ These are now handled by dedicated cron jobs with explicit formats:
 
 | Check | Cron | Schedule |
 |-------|------|----------|
-| AQI (3 regions) | 30min-pulse | Every 30 min |
-| BTC Basis Spread | 30min-pulse | Every 30 min |
-| Funding Rates (HL + Paradex) | 30min-pulse | Every 30 min |
-| Discord Sentiment (Lighter) | 30min-pulse | Every 30 min (6am-11pm SGT) |
-| Weather + Headlines | morning-briefing | 7am SGT |
+| Aave Health (3 wallets) | aave-health-alert | Every 2 min (6am-11pm) |
+| AQI + BTC/PAXG Basis + Funding + Aave + Peg + FUD + Gold Spread + Discord (Paradex+Variational) | hourly-pulse | 5x/day (06:45, 10:45, 14:45, 18:45, 20:45 SGT) |
+| Weather + Headlines + Mayer Multiple | morning-briefing | 7am SGT |
+| Wallet Spy (12 wallets) | wallet-spy | 7am/1pm/7pm SGT |
+| Variational Funding Snapshot | variational-funding-rates | 7:40am/3:40pm SGT |
+| DeFi Dojo #dojo-chat (daytime) | defidojo-day | 5x/day (06:20–21:20 SGT) |
+| DeFi Dojo #hedge-arb + #hl-and-frenemies | defidojo-daily-channels | 4:20pm SGT |
+| DeFi Dojo #dojo-chat (overnight) | defidojo-night | Hourly 10pm-5am SGT |
+| Trello Q1 Tasks | trello-q1-helper | 1pm SGT |
+| HL OI Top 10 | hl-oi-top10 | 2pm SGT |
 | Research Report | afternoon-research | 3pm SGT |
+| Aboutme Enrichment | aboutme-enrichment | 4pm SGT |
 | UV Index + Stories | uv-index-and-stories | 5pm SGT |
+| Business Idea | daily-business-idea | 6pm SGT |
+| Wellness Deep Analysis | morning-wellness-deep-analysis | 6:30pm SGT |
+| Calibration Interview | daily-calibration-interview | 7pm SGT |
 | Detailed Funding Report | evening-funding-briefing | 9pm SGT |
-| Blocked Tasks Nag | nag-undone-tasks | Every 3h |
+| Config Compliance + MISS Review | deep-self-review | 6x/day (12am, 9am-9pm every 3h) |
+| Blocked Tasks Nag | nag-undone-tasks | 5x/day (9am-9pm every 3h) |
+| Headline Source Nag | nag-headline-inputs | 5x/day (9am-9pm every 3h) |
+| Rules Refresh | refresh-rules-nudge | 4x/day (10am, 2pm, 6pm, 10pm) |
 
 ## Discord Monitoring (updated 2026-01-31)
 
