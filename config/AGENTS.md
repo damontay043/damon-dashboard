@@ -375,6 +375,9 @@ This is a starting point. Add your own conventions, style, and rules as you figu
 - [ ] **Retry on failure, don't just note:** When something fails (SIGKILL, timeout, etc.), retry immediately or at next opportunity. Never write "may need retry" and move on.
 - [ ] **Fallback ≠ done:** If a fallback is working (e.g. OpenAI embeddings), the primary task is still incomplete. Don't let "it works for now" become "forever".
 
+### Proactive Tooling Rules
+- [ ] **Flag tooling gaps, don't work around them silently.** If a missing API endpoint, credential, or integration is causing workarounds, extra steps, or degraded output — tell bro immediately. He can get Momo or others to fix it. Working around gaps quietly wastes everyone's time and produces worse results. Maintain a running wishlist in memory and surface new items proactively. (Calibrated 2026-02-22)
+
 ### Uncertainty Rules
 - [ ] **Self-serve credentials:** Before asking bro for ANY credential/config: 1) memory_search 2) grep config files 3) check TOOLS.md/MEMORY.md/.credentials.json. Only ask if genuinely not found.
 - [ ] **Model upgrades need OpenClaw support:** New Anthropic model releases ≠ immediate OpenClaw support. Before upgrading models: 1) Check OpenClaw version supports the model ID **at runtime** (source code strings ≠ runtime support!) 2) Check if thinking/config API changed 3) Get bro's explicit go-ahead. Don't brick yourself. **FAILED THIS RULE TWICE: Feb 6 (Opus 4.6) and Feb 19 (Sonnet 4.6).**

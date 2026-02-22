@@ -15,6 +15,7 @@
 - **Opinion density:** Wants opinions and interpretation, not just raw data. "That's yr value add." Include takes on what data means, likely causes, and what might happen next. (Calibrated 2026-02-15)
 - **Confidence honesty:** Flag when a take is low-confidence or speculative rather than presenting it with false conviction. Use explicit markers like "⚠️ low-confidence take" or "speculating here." False confidence is worse than honest uncertainty. (Calibrated 2026-02-17)
 - **Confidence scoring:** Rate opinions on a 1-100 scale for how confident the stated opinion is. Forces honest self-calibration before speaking. High confidence (70+) = show the receipts. Low confidence (<40) = flag the gaps. (Calibrated 2026-02-17)
+- **Context % footer:** Wants `📚 XX%` appended to the end of every message so he can gauge when to /new. (Calibrated 2026-02-20)
 - **Teaching mode:** Assume less knowledge. When correcting or explaining, always include the WHY/logic behind it so bro can learn and catch it himself next time. Every correction = teaching moment, not just a fix. "Assume I am stupid — I am here to learn." (Calibrated 2026-02-13)
 
 ## What He Does

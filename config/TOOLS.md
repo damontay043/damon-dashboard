@@ -116,10 +116,10 @@ Add-Type -AssemblyName System.Windows.Forms
 
 ## 🐦 Twitter/X Access — MANAGED BROWSER + xAI
 
-**Account:** @realdamontay (Damon Tay — MY account) — ⚠️ SUSPENDED (Feb 13). Appeal submitted.
+**Account:** @realdamontay (Damon Tay — MY account) — ✅ RESTORED (Feb 19). Was suspended Feb 13 due to auto-like cron.
 **User ID:** 2017069604896722944
 **Bro's account:** @realpujing (Pu Jing)
-**Auto-like:** ❌ DISABLED — account suspended, cron `twitter-auto-like` disabled
+**Auto-like:** ❌ PERMANENTLY DISABLED — caused the Feb 13 suspension. X explicitly cited "aggressive/random liking" as violation. Repeated violations = permanent ban. Cron `twitter-auto-like` must NEVER be re-enabled.
 
 ### ❌ Bird CLI — DEAD (2026-02-08)
 steipete took down Bird CLI — X killed the Web API it relied on (pay-per-use enforcement).
@@ -133,7 +133,7 @@ browser action=navigate profile=openclaw targetUrl="https://x.com/steipete/statu
 # Wait 5s, then extract text
 browser action=act profile=openclaw request={"kind":"evaluate","fn":"() => { ... }"}
 ```
-**Use for:** Reading tweets, FUD searches, profile checks. NO liking/posting (account suspended).
+**Use for:** Reading tweets, FUD searches, profile checks. NO automated liking/posting (caused suspension, will cause permanent ban if repeated).
 
 ### ✅ BACKUP: xAI/Grok API
 Semantic Twitter search when browser is unavailable.
@@ -181,6 +181,54 @@ See xAI section below for details.
 | **CoinGecko** | 🔴 Low | Can be stale/wrong, especially for wrapped tokens — avoid for accuracy-critical checks |
 
 **Rule:** For wrapped token pegs (WBTC, cbBTC), use on-chain swap quotes (Paraswap) or CEX direct pairs (Binance), NOT aggregator prices like CoinGecko.
+
+---
+
+## 📊 Perp Dashboard API ✅ WORKING (2026-02-21)
+
+**Built by Momo.** JSON API for bro's perp positions dashboard.
+**Dashboard UI:** `https://perp-dashboard.pages.dev/` (password: partyhat2026)
+**Worker Proxy (API):** `https://perp-funding-proxy.wuayteck.workers.dev`
+**Direct VPS:** `http://46.225.5.248:3001` (port 3001, NOT 3000)
+**Auth:** None required
+
+**Endpoints:**
+| Endpoint | What |
+|----------|------|
+| `/api/positions` | All perp positions across HL/Lighter/Paradex (entry, live price, PnL, liq) |
+| `/api/collateral?leverage=10` | Equity, collateral needed, surplus per exchange |
+| `/api/aave` | All 4 Aave wallet cards with HF, collateral, debt |
+| `/api/perp-funding` | Funding rates (existing, blended + timeframes) |
+
+**Quick fetch:**
+```bash
+# Collateral health (for monitoring)
+curl -s "https://perp-funding-proxy.wuayteck.workers.dev/api/collateral?leverage=10"
+
+# Aave health
+curl -s "https://perp-funding-proxy.wuayteck.workers.dev/api/aave"
+
+# All positions
+curl -s "https://perp-funding-proxy.wuayteck.workers.dev/api/positions"
+
+# Net P&L (funding earned - Aave borrow cost + Aave supply interest)
+curl -s "https://perp-funding-proxy.wuayteck.workers.dev/api/net-pnl"
+```
+
+**`/api/net-pnl` schema (added 2026-02-22):**
+- `dailyFundingEarned` — net funding from all perp positions (negative = shorts paying)
+- `dailyBorrowCost` — Aave stablecoin borrow interest
+- `dailySupplyEarning` — Aave collateral supply interest (offsets borrow cost)
+- `dailyNetAaveCost` — borrow - supply = true Aave cost
+- `dailyNetPnl` — funding - netAaveCost = TRUE daily P&L
+- `annualizedNetPnl` — dailyNetPnl × 365
+- `totalPerpNotional` / `fundingAnnualizedRate` / `netPnlAnnualizedRate` — rates as % of notional
+- `assets` — per-asset breakdown (BTC/ETH/PAXG) with `fundingByExchange`, `notionalWeight`
+- `meta.positionsError` — check for empty string; if non-empty, per-asset data unavailable (Lighter rate limit)
+- `meta.aaveError` — check for empty string; if non-empty, Aave cost data unavailable
+- **Graceful degradation:** 15s per-upstream timeout. If positions times out (Lighter rate limit), returns aggregate funding + Aave costs with empty `assets`. Cache warms from successful positions fetch → subsequent calls instant.
+
+**Note:** `/api/positions` currently missing `funding24h` field — requested from Momo. Once added, will integrate into hourly pulse for per-instrument funding earned reporting.
 
 ---
 
