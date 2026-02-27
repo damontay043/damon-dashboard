@@ -51,6 +51,16 @@ If `browser action=tabs profile=chrome` returns empty:
 
 If genuinely disconnected → tell bro: "Chrome tab detached, please reattach the OpenClaw extension to Discord tab"
 
+**Chrome Relay "Ghost Tab" Fix (learned 2026-02-24):**
+Sometimes a tab shows up in `tabs` list but ALL actions on it fail with "tab not found". The tab is "ghost" — relay sees it but can't interact. Navigating within the tab (via evaluate/navigate) can cause this.
+**Fix:** Bro must:
+1. Close the dead/ghost tab entirely
+2. Open a brand new tab
+3. Navigate to the Discord channel URL
+4. Click the OpenClaw extension icon on the new tab
+Re-clicking the extension on the ghost tab does NOT work — must be a fresh tab.
+**Do NOT try to navigate between Discord servers in the same tab** — this breaks the relay connection. Each Discord server should have its own dedicated tab.
+
 ---
 
 ## 🖥️ Local Setup: WSL2 on Home PC (DESKTOP-HT67ISQ)

@@ -1,23 +1,20 @@
 # NOW.md — Current Task
 
-DOING: idle — morning crons completed, awaiting bro
+DOING: idle — just completed user context enrichment for 4 crons
 
-## Just Completed (last 3 items)
-- ✅ Added TRUE Net P&L (incl Aave costs) to hourly pulse cron — step 5d fetches /api/net-pnl, first run at 10:45
-- ✅ Updated all 3 DeFi Dojo crons with "QUIET CHANNEL RULE" — no more rehashing old news when channel is dead
-- ✅ Added aboutme false merge + travel question to nag cron (items 8 & 9)
+## Just Completed (last 1-3 items)
+- ✅ Enriched 4 cron prompts with `## USER CONTEXT` blocks (evening-funding-briefing, daily-funding-analysis, wallet-spy, hourly-pulse)
+- ✅ Lighter prices fix — lighter-prices.js script instructions added to hourly-pulse for BTC/ETH basis
+- ✅ Logged proactivity HIT in self-review.md
 
 ## Blocked On (if any)
-- [ ] OpenClaw update (2026.2.17 → 2026.2.21-2) — awaiting bro's go-ahead
-- [ ] GitHub PAT expired — dashboard sync broken
-- [ ] ClawdStrike security fixes — mDNS, firewall, config secrets
-- [ ] Aave watchdog threshold in deep-self-review cron — needs updating from 6min → 20min (minor)
+- [ ] Bro to select evening-funding-briefing time slot (17:50, 18:15, or 18:45)
+- [ ] GitHub PAT expired — dashboard sync blocked
+- [ ] Wire /api/positions into daily-funding-analysis for exact per-venue notional
 
 ## Context
-- All 22 crons at PERFECT health — zero consecutive errors
-- Headlines scraper first live run successful in morning briefing
-- 24h funding flipped positive: +$583/day (from -$518 yesterday)
-- Google OAuth restored (yesterday) — Sheets + Calendar working
-- Twitter @realdamontay restored — bro confirmed profile looks normal
-- Nag cron has false positive issue on Google Sheets (reports 401 but API actually returns 200) — needs investigation
-- Context was at 69% before compaction
+- Context at 89% — approaching threshold
+- User context blocks include: positions, P&L baseline, venue restrictions, recent developments, what bro values per report
+- Need to periodically refresh context blocks when positions/strategy change
+- Next hourly-pulse at 14:45 SGT will be first to use enriched prompt
+- MFP nutrition cron live at 4:40pm SGT
