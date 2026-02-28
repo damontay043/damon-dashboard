@@ -91,6 +91,14 @@ Re-clicking the extension on the ghost tab does NOT work — must be a fresh tab
 | `/mnt/c/.../clawdbot-shared/aboutme.md` | Full unredacted profile (health, wealth, wisdom, relationships) | Start of main sessions, or when you need deep user context |
 | `/mnt/c/.../clawdbot-shared/wisdom.md` | Life principles, mental models, PVRR protocol | When you need deep context on bro's philosophy |
 | `/mnt/c/.../clawdbot-shared/vps-config/` | Mirror of my workspace config files | Sync here after any changes to core files |
+| `/mnt/c/.../clawdbot-shared/archive chatlogs/` | Momo/Cody archived session logs (YYMMDD.md) | Session start — read only NEW files since last marker (see below) |
+
+**Momo Archive Read Protocol:**
+- Last read marker: `260226.md` (all 16 files 260110–260226 available as of Feb 28)
+- At session start: `ls` the directory, check for files newer than marker
+- If new files → read only the delta, update marker here
+- If no new files → skip. Zero token cost.
+- Do NOT read all archives on every session — read only the delta
 
 ### 🖥️ PowerShell Integration (WSL2 → Windows)
 
@@ -1089,6 +1097,16 @@ AGENT FAILED 3 PASSES →
 ---
 
 *Add whatever helps you do your job. This is your cheat sheet.*
+
+## 📅 Google Calendar — Dual Calendar Setup
+
+**Two calendars to query for complete view:**
+1. `damontay043@gmail.com` (primary, owner) — events I create
+2. `wuayteck@gmail.com` (reader) — bro's personal calendar, shared Feb 28
+
+Morning briefing + any calendar queries must check BOTH calendars and merge results.
+
+---
 
 ## 📋 Trello API
 
