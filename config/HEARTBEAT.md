@@ -34,12 +34,12 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
      - MEMORY.md (private, not on public GitHub)
    - This gives bro a private local copy of everything
 
-4. **Memory Maintenance** — Every 3 days minimum (check `memory/memory-maintenance.json`)
-   - Review daily notes in `memory/YYYY-MM-DD.md` since last maintenance
-   - Consolidate important items into MEMORY.md
-   - Update the "Last updated" date in MEMORY.md header
-   - Track last maintenance date in `memory/memory-maintenance.json`
-   - Silent unless MEMORY.md was significantly updated
+4. **Memory Maintenance** — ~~Every 3 days via heartbeat~~ **NOW AUTOMATED via nightly-memory-consolidation cron (1:50am SGT daily)**
+   - Cron reviews daily notes + session history, updates MEMORY.md/TOOLS.md/USER.md
+   - Also runs bottleneck scan (flags corrections bro made → automation candidates)
+   - Heartbeat no longer needs to do memory maintenance — just verify the cron ran:
+     - Check `cron action=list` for `nightly-memory-consolidation` lastStatus
+     - If last run failed, do a manual consolidation pass
 
 5. **Background Task Verification** — Check `memory/background-tasks.json` for any tasks with `status: "in_progress"`.
    - Verify each task using its `verifyCommand`
