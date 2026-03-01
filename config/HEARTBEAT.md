@@ -6,6 +6,19 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
 
 ## Active Checks (conditional/silent)
 
+0. **🚨 REPORT RELAY CHECK (RUN FIRST — highest priority)**
+   Scan `/tmp/cron-reports/` for unreleyed review-mode cron reports.
+   - Read `memory/report-relay-state.json` for last relay timestamps
+   - Run: `stat -c '%n %Y' /tmp/cron-reports/*.md 2>/dev/null` to get file modification times
+   - For each file: if file mtime > last relay timestamp (or null), the report is NEW and needs relaying
+   - For each new report, use TWO-MESSAGE FORMAT:
+     1. Read the full report file
+     2. **Message 1:** Send the FULL original report (adapted for WhatsApp — no markdown tables, use bullets). Include ALL data, ALL timeframes, ALL sections. If report contains `SCREENSHOT:` path, attach via `filePath` parameter.
+     3. **Message 2:** Send separate "DAMON'S TAKE" with contextual analysis, connections to recent conversations, QA corrections. This is ADDITIVE — don't repeat data from Message 1.
+     4. Update `memory/report-relay-state.json` with current timestamp
+   - This catches any reports that `delivery: announce` failed to push to the main session
+   - **WHY THIS EXISTS:** On Mar 1 2026, switching to `delivery: none` caused 2:30/2:45 PM reports to silently sit in files for 2+ hours. This scanner is the safety net.
+
 1. **Crypto Movers** — Fetch top 20 coins from CoinGecko:
    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&price_change_percentage=24h`
    - ONLY alert if any coin moved **±8% in 24h**
