@@ -6,16 +6,11 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
 
 ## Active Checks (conditional/silent)
 
-0. **🚨 REPORT RELAY CHECK (BACKUP ONLY — 30-min stale threshold)**
-   ⚠️ This is a BACKUP mechanism. Primary delivery is via `delivery: announce` on each cron.
-   Only relay reports that have been sitting unreleyed for 30+ MINUTES. This prevents duplicate sends
-   when both announce and heartbeat fire on the same report. (Bug found Mar 2 — bro received double messages.)
-   
+0. **🚨 REPORT RELAY CHECK (RUN FIRST — highest priority)**
    Scan `/tmp/cron-reports/` for unreleyed review-mode cron reports.
    - Read `memory/report-relay-state.json` for last relay timestamps
    - Run: `stat -c '%n %Y' /tmp/cron-reports/*.md 2>/dev/null` to get file modification times
-   - For each file: if file mtime > last relay timestamp (or null) AND file is 30+ MINUTES old, the report needs relaying
-   - If file is < 30 minutes old and not yet relayed, SKIP IT — the announce path will handle it
+   - For each file: if file mtime > last relay timestamp (or null), the report is NEW and needs relaying
    - For each new report, use TWO-MESSAGE FORMAT:
      1. Read the full report file
      2. **Message 1:** Send the FULL original report (adapted for WhatsApp — no markdown tables, use bullets). Include ALL data, ALL timeframes, ALL sections. If report contains `SCREENSHOT:` path, attach via `filePath` parameter.
@@ -67,6 +62,17 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - Silent unless action needed
 
 6. ~~Self-Review~~ — **MOVED TO DEDICATED CRON** (Opus, every 3hrs)
+
+7. **Bootstrap File Size Monitor** — Once daily (first heartbeat after 6am SGT), check bootstrap file sizes:
+   - Run: `wc -c AGENTS.md TOOLS.md MEMORY.md /mnt/c/Users/pujing/OneDrive/clawdbot-shared/aboutme.md`
+   - If ANY file > 15,000 chars: alert bro:
+     ```
+     ⚠️ Bootstrap file approaching limit:
+     - [FILE]: Xk chars (limit: 20k)
+     Action: graduation review needed — move older content to reference files
+     ```
+   - If all files < 15,000 chars: silent pass
+   - Track last check in `memory/heartbeat-state.json` (`lastBootstrapSizeCheck`)
 
 ## When to message bro
 
