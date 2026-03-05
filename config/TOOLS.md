@@ -193,7 +193,7 @@ BM25 is weak for conceptual queries. Use exact words bro would have used. Direct
 
 ---
 
-## Cron Jobs (22 active)
+## Cron Jobs (21 active, 3 undocumented)
 
 | Name | Schedule | Model | Purpose |
 |------|----------|-------|---------|
@@ -218,6 +218,8 @@ BM25 is weak for conceptual queries. Use exact words bro would have used. Direct
 | daily-calibration-interview | 7:00 PM | Opus | Personality/capability calibration |
 | evening-funding-briefing | 9:00 PM | Opus | Detailed funding rates all venues |
 | defidojo-night | :20 past (22-5) hourly | Opus | DeFi Dojo overnight scan |
+
+**Note:** 3 additional crons discovered in system (perp-collateral-alert, funding-rate-alert, daily-funding-report) - schedule/purpose TBD.
 
 Manage: `cron list`, `cron add`, `cron update`, `cron remove`, `cron runs <jobId>`
 
