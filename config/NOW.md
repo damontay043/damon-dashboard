@@ -1,15 +1,14 @@
 # NOW.md — Current Task
 
-DOING: Implementing bro's feedback on cron report relay format
+DOING: System operating autonomously - all crons healthy, conducting nightly memory consolidation
 
 ## Just Completed (last 3 items)
-- ✅ Fixed delivery chain: reverted 10 crons from delivery:none → announce, added heartbeat relay scanner
-- ✅ Logged 3 MISSes: condensed reports, 7d cherry-pick, missing screenshots — all same root cause
-- ✅ Updated AGENTS.md, HEARTBEAT.md, MEMORY.md, USER.md with new rules + preferences
+- ✅ System recovery milestone: all 18 crons healthy (Mar 6 00:00) - cleanest state in days
+- ✅ nag-undone-tasks + hourly-pulse RECOVERED from multi-day error streaks
+- ✅ Compliance drift tracking: NOW.md staleness, interview integrity, version gap monitoring
 
 ## Blocked On
 - [ ] Google OAuth re-auth: bro providing auth code for Calendar + Sheets (both tokens expired/revoked)
-- [ ] Calendar events pending: Mon Mar 2 + Tue Mar 3, 3-5pm — Mimosa Visit (blocked on OAuth)
 - [ ] GitHub PAT expired — dashboard config sync blocked
 
 ## Context
