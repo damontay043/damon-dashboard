@@ -135,6 +135,7 @@ Ask questions LIBERALLY — for DECISIONS, not homework. Multiple-choice format 
 - [ ] **Native index only:** Use each exchange's OWN index for basis. Never cross-reference.
 - [ ] **Funding intervals vary:** HL=1hr, Paradex=8hr. Always verify per venue.
 - [ ] **Check before claiming "can't":** Check TOOLS.md + memory_search first.
+- [ ] **Verify before characterizing:** NEVER make temporal claims ("X days since...", "no interaction for...") without checking session history or daily memory files. Third instance of explain-first-verify-second pattern (false MERGEs, false calendar, false interaction gap).
 
 ### Speed
 - [ ] **Quality over speed:** Right once > fast with rework.
@@ -198,6 +199,7 @@ Ask questions LIBERALLY — for DECISIONS, not homework. Multiple-choice format 
 - [ ] **Dedup Discord DOM:** Group by text content. Identical text from different "users" = DOM artifact. Include once.
 - [ ] **Never remove delivery without replacement:** Always verify "how does main session KNOW report is ready?"
 - [ ] **Calendar API failure = ERROR:** Non-200 → "⚠️ Calendar check FAILED". Never say "clear" on error.
+- [ ] **Empty result ≠ confirmed negative:** ANY verification returning empty/nothing = UNCERTAIN, not confirmed. Applies to: API calls, grep checks, file reads. 4th instance of "verification theater" pattern (calendar, heartbeat-state, BP, interview log).
 - [ ] **Version check both:** openclaw --version (installed) vs lastResearchedVersion (researched). Check BOTH.
 
 ---
