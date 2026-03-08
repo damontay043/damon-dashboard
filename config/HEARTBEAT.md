@@ -19,17 +19,12 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    - This catches any reports that `delivery: announce` failed to push to the main session
    - **WHY THIS EXISTS:** On Mar 1 2026, switching to `delivery: none` caused 2:30/2:45 PM reports to silently sit in files for 2+ hours. This scanner is the safety net.
 
-1. **Crypto Movers** — Fetch top 20 coins from CoinGecko:
-   `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&price_change_percentage=24h`
-   - ONLY alert if any coin moved **±8% in 24h**
-   - Exclude stablecoins (USDT, USDC)
-   - If none moved ±8%, stay silent on this check
-   - If API rate-limited or fails, skip quietly
-   - Format (only if triggered):
-     ```
-     🚨 *Crypto Alert*
-     • [COIN]: $[price] ([+/-X.X]% 24h)
-     ```
+1. **Crypto Movers** — Use the blacklist-aware script:
+   `bash /home/pujing/.openclaw/workspace/scripts/crypto-movers/crypto-movers.sh`
+   - Script handles: Binance top volume, ±8% threshold, blacklist filtering, auto-expiry
+   - If script produces output, send it to bro
+   - If no output (all quiet or blacklisted), stay silent
+   - Do NOT use raw Binance/CoinGecko API directly — always go through the script to respect blacklist
 
 2. **Dashboard + Config Sync** — Check if any core files changed since last GitHub push.
    - Files to sync: `DASHBOARD.md`, `AGENTS.md`, `SOUL.md`, `USER.md`, `IDENTITY.md`, `TOOLS.md`, `HEARTBEAT.md`, `NOW.md`
