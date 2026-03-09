@@ -1,6 +1,34 @@
 # NOW.md — Current Task
 
-DOING: Routine monitoring + Mar 14 spot-check prep
+DOING: Regime header DEPLOYED. Monitoring next run (18:45 pulse) for verification
+
+## Regime Header Implementation Spec (from brainstorm 260309-0041)
+**Add to TOP of every funding report (hourly-pulse + daily-funding-report cron payloads):**
+
+```
+📊 FUNDING REGIME STATUS
+Mode: NEGATIVE (or POSITIVE)
+Day X of current cycle (started YYYY-MM-DD)
+Severity: mild/moderate/severe
+  - mild: net funding < 2x borrow cost gap
+  - moderate: 2-4x borrow cost gap  
+  - severe: >4x borrow cost gap
+Expected duration: 5-15 days (historical avg for negative regimes)
+Position safety: green/amber/red (based on Aave HF + margin status)
+Next review: [date] (only if severe — 2 consecutive months red = full strategy review)
+```
+
+**State tracking:** Create `memory/funding-regime-state.json`:
+- regime: positive/negative
+- startDate: ISO date when blended went net negative
+- dayCount: auto-calculated
+- lastSeverity: mild/moderate/severe
+
+**Status:**
+1. ✅ funding-regime-state.json created (negative since Mar 7, day 3, severe)
+2. ✅ hourly-pulse cron payload updated with STEP 0: REGIME HEADER
+3. ✅ daily-funding-report cron payload updated with STEP 0: REGIME HEADER
+4. ⏳ Test on 18:45 pulse run — verify header appears at top of report
 
 ## Just Completed (last 3 items)
 - ✅ Deployed 4 remediation scripts from Cody (model-preflight, announce-fallback, sibling-sweep, commitment-tracker)
