@@ -1,60 +1,32 @@
 # NOW.md — Current Task
 
-DOING: Regime header DEPLOYED. Monitoring next run (18:45 pulse) for verification
-
-## Regime Header Implementation Spec (from brainstorm 260309-0041)
-**Add to TOP of every funding report (hourly-pulse + daily-funding-report cron payloads):**
-
-```
-📊 FUNDING REGIME STATUS
-Mode: NEGATIVE (or POSITIVE)
-Day X of current cycle (started YYYY-MM-DD)
-Severity: mild/moderate/severe
-  - mild: net funding < 2x borrow cost gap
-  - moderate: 2-4x borrow cost gap  
-  - severe: >4x borrow cost gap
-Expected duration: 5-15 days (historical avg for negative regimes)
-Position safety: green/amber/red (based on Aave HF + margin status)
-Next review: [date] (only if severe — 2 consecutive months red = full strategy review)
-```
-
-**State tracking:** Create `memory/funding-regime-state.json`:
-- regime: positive/negative
-- startDate: ISO date when blended went net negative
-- dayCount: auto-calculated
-- lastSeverity: mild/moderate/severe
-
-**Status:**
-1. ✅ funding-regime-state.json created (negative since Mar 7, day 3, severe)
-2. ✅ hourly-pulse cron payload updated with STEP 0: REGIME HEADER
-3. ✅ daily-funding-report cron payload updated with STEP 0: REGIME HEADER
-4. ⏳ Test on 18:45 pulse run — verify header appears at top of report
+DOING: Nothing active — monitoring crons + awaiting bro
 
 ## Just Completed (last 3 items)
-- ✅ Deployed 4 remediation scripts from Cody (model-preflight, announce-fallback, sibling-sweep, commitment-tracker)
-- ✅ REM-002/003/004 auto-closed on deployment. Commitment tracker operational.
-- ✅ Logged MISS: false "11 day autonomous stretch" claim — explain-first-verify-second pattern (3rd instance)
-- ✅ Updated morning briefing joke rotation (banned Pavlov/Schrödinger, added 9 topic categories)
-- ✅ Fixed headline relay format — preserve per-source labels (CoinDesk/Block/CNN/CNBC), don't merge
+- ✅ Regime duration backtest: 61 days HL data → negative regimes avg 2.7 days (max 4, n=7). Script: scripts/funding/regime-backtest.js
+- ✅ Regime header updated in both hourly-pulse + daily-funding crons with real backtested data (replaced "5-15 days" placeholder)
+- ✅ Paradex API investigated — working fine, 18:45 timeout was transient. /v1/markets/summary = reliable endpoint (300-400ms, no auth)
+- ✅ Sent full methodology writeup to bro for Cody/Momo to reproduce + extend
 
 ## Blocked On
-- [ ] GitHub PAT expired — dashboard config sync blocked
+- [ ] Chrome relay broken — Discord tab CDP connection failing ("tab not found"). Needs bro to re-click toolbar icon
 - [ ] EDMW digest stale — Momo's scout script hasn't run since Mar 7 07:39
 
 ## Open Commitments (from commitment-tracker + bro requests)
-- REM-005: NOW.md/DASHBOARD.md/MEMORY.md freshness <3 days — NOW.md updating now, DASHBOARD.md 17 days stale
-- REM-006: Stop Reasoning: dumps in replies — needs verification command
+- REM-005: NOW.md/DASHBOARD.md/MEMORY.md freshness <3 days — NOW.md updated, DASHBOARD.md stale
+- REM-006: Stop Reasoning: dumps in replies — needs verification
 - REM-007: aboutme.md size guard for enrichment cron — due Mar 14
 - REM-008: Wire commitment-tracker into daily cron — due Mar 14
-- REGIME-DURATION: Build backtest script to compute actual negative funding regime durations from 6 weeks of daily reports. Replace placeholder in regime header with real data. Due: Mar 14 (before Momo spot-check)
+- REGIME-DURATION: ✅ DONE. Bro approved adding real data to headers. Deployed.
 
 ## Active Alerts
-- 🔔 **Funding spread monitor:** Alert bro if blended funding APR delta between HL-BTC vs Paradex-BTC or Lighter-BTC exceeds 4%. Check on every pulse/funding report. Current: HL-PX 3.4%, HL-LI 2.6% (Mar 9 06:45).
+- 🔔 **Funding spread monitor:** Alert bro if blended funding APR delta between HL-BTC vs Paradex-BTC or Lighter-BTC exceeds 4%. Current: HL-PX ~21% spread on current rates (HL +10.95%, PX -10.18%) — but this is spot rate, not blended.
 
 ## Context
-- **Net P&L crisis:** -$1,067/day (Mar 9 06:45). New worst on record. ETH HL at -46% APR.
-- **Google OAuth:** Fixed (Mar 9). Calendar + Sheets both working.
-- **Chrome relay:** Fixed (Mar 9). Bro restarted Chrome, all 4 tabs attached.
-- **Chrome memory:** 2.4GB across 4 Discord tabs. RAM headroom now 4.5GB after closing Vivaldi/Edge.
-- **Mar 14 spot-check:** 5 days away. Scripts deployed, need to wire tracker into cron.
-- **Bro interactions:** Active Mar 9 — OAuth fix, Chrome relay fix, funding spread monitor request
+- **Net P&L:** -$560/day at 20:45 pulse (improving from -$976 Sat). Day 3 of negative regime.
+- **Regime outlook:** HL BTC already flipped positive (+10.95%). Paradex BTC still deeply negative (-10.18%). Historical avg negative regime = 2.7 days — at tail end.
+- **Paradex BTC = biggest bleeder:** -$329/day (59% of all funding losses). If PX flips positive, net P&L could swing near breakeven.
+- **Chrome relay:** Broken since afternoon. DeFi Dojo + Discord scans failing.
+- **Google OAuth:** Fixed (Mar 9). Calendar + Sheets working.
+- **Mar 14 spot-check:** 5 days away. Scripts deployed.
+- **Bro interactions:** Active evening Mar 9 — regime backtest, header update, Paradex API check
