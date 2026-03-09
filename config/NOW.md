@@ -1,6 +1,6 @@
 # NOW.md — Current Task
 
-DOING: Deploying Momo/Cody remediation scripts + preparing for Mar 14 spot-check
+DOING: Routine monitoring + Mar 14 spot-check prep
 
 ## Just Completed (last 3 items)
 - ✅ Deployed 4 remediation scripts from Cody (model-preflight, announce-fallback, sibling-sweep, commitment-tracker)
@@ -19,9 +19,13 @@ DOING: Deploying Momo/Cody remediation scripts + preparing for Mar 14 spot-check
 - REM-007: aboutme.md size guard for enrichment cron — due Mar 14
 - REM-008: Wire commitment-tracker into daily cron — due Mar 14
 
+## Active Alerts
+- 🔔 **Funding spread monitor:** Alert bro if blended funding APR delta between HL-BTC vs Paradex-BTC or Lighter-BTC exceeds 4%. Check on every pulse/funding report. Current: HL-PX 3.4%, HL-LI 2.6% (Mar 9 06:45).
+
 ## Context
-- **Net P&L crisis:** -$441/day at 6:45 AM (worst reading). All BTC funding negative. ETH bleeding on HL/Lighter/Variational.
-- **Paradex Discord:** 20-35/100 sentiment. DIME TGE backlash, "slowly dying" talk.
-- **Session context:** 75% — approaching compaction territory
-- **Mar 14 spot-check:** 6 days away. Scripts deployed, need to wire tracker into cron.
-- **Bro interactions:** Active on Mar 4, 5, 6, 7, 8 (correcting earlier false "11 day" claim)
+- **Net P&L crisis:** -$1,067/day (Mar 9 06:45). New worst on record. ETH HL at -46% APR.
+- **Google OAuth:** Fixed (Mar 9). Calendar + Sheets both working.
+- **Chrome relay:** Fixed (Mar 9). Bro restarted Chrome, all 4 tabs attached.
+- **Chrome memory:** 2.4GB across 4 Discord tabs. RAM headroom now 4.5GB after closing Vivaldi/Edge.
+- **Mar 14 spot-check:** 5 days away. Scripts deployed, need to wire tracker into cron.
+- **Bro interactions:** Active Mar 9 — OAuth fix, Chrome relay fix, funding spread monitor request
