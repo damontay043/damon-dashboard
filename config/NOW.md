@@ -41,11 +41,12 @@ Next review: [date] (only if severe — 2 consecutive months red = full strategy
 - [ ] GitHub PAT expired — dashboard config sync blocked
 - [ ] EDMW digest stale — Momo's scout script hasn't run since Mar 7 07:39
 
-## Open Commitments (from commitment-tracker)
+## Open Commitments (from commitment-tracker + bro requests)
 - REM-005: NOW.md/DASHBOARD.md/MEMORY.md freshness <3 days — NOW.md updating now, DASHBOARD.md 17 days stale
 - REM-006: Stop Reasoning: dumps in replies — needs verification command
 - REM-007: aboutme.md size guard for enrichment cron — due Mar 14
 - REM-008: Wire commitment-tracker into daily cron — due Mar 14
+- REGIME-DURATION: Build backtest script to compute actual negative funding regime durations from 6 weeks of daily reports. Replace placeholder in regime header with real data. Due: Mar 14 (before Momo spot-check)
 
 ## Active Alerts
 - 🔔 **Funding spread monitor:** Alert bro if blended funding APR delta between HL-BTC vs Paradex-BTC or Lighter-BTC exceeds 4%. Check on every pulse/funding report. Current: HL-PX 3.4%, HL-LI 2.6% (Mar 9 06:45).
