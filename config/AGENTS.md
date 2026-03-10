@@ -193,6 +193,7 @@ Ask questions LIBERALLY — for DECISIONS, not homework. Multiple-choice format 
 - [ ] **Rate summaries:** Default to 1d for pulse. 7d+ only for trend context.
 - [ ] **OpenClaw update research:** Once per version. Track lastResearchedVersion in heartbeat-state.json.
 - [ ] **Interview answer verify-before-MERGED:** grep aboutme.md for key phrase. No confirmation = stays PENDING.
+- [ ] **Preserve per-source labels in relay:** NEVER merge headlines into generic "Crypto News" / "World" buckets. Keep CoinDesk, The Block, CNN, CNBC as separate labeled sections. The cron generates them split — relay must preserve that. Repeated MISS.
 - [ ] **🚨 FUNDING DIRECTION:** Risk-off/selloff → MORE negative funding → BAD for shorts. NEVER claim selloffs "help" funding. Positive funding comes from greed/euphoria.
 - [ ] **Repeated MISS escalation:** Same MISS twice → escalate fix (triple-alarm, worked examples, scripts).
 - [ ] **No fabricated usernames:** Can't parse username → "(unknown user)". Never guess.

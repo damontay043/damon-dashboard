@@ -68,6 +68,20 @@ Lighter #trading:  https://discord.com/channels/987399783985590322/1343587329666
 
 ---
 
+## ⚠️ Funding Rate Annualization (NEVER GUESS — check this table)
+
+| Venue | Interval | Raw Field | APR Formula | API Source |
+|-------|----------|-----------|-------------|------------|
+| **HL** | 1 hour | `funding` | rate × 8760 × 100 | POST /info `metaAndAssetCtxs` |
+| **Paradex** | 8 hours | `funding_rate` | rate × 3 × 365 × 100 | GET /markets/summary?market=ALL |
+| **Lighter** | 8 hours | `rate` | rate × 3 × 365 × 100 | GET /api/v1/funding-rates (filter exchange="lighter") |
+| **Variational** | 8 hours | `funding_rate` | rate × 100 (already APR decimal) | GET /metadata/stats |
+| **GMX** | continuous | from blended script | already annualized | dashboard-funding.sh |
+
+**3rd-time MISS rule:** ALWAYS check this table before writing ANY funding rate formula. No exceptions.
+
+---
+
 ## Price Data Reliability
 
 | Source | Reliability | Best For |
