@@ -22,6 +22,7 @@ browser action=act ... request={"kind":"evaluate","fn":"() => { const msgs = doc
 **Multi-channel navigation:**
 ```
 Paradex #general:  https://discord.com/channels/1107916848193863740/1107916848193863743
+Variational #general-chat: https://discord.com/channels/1196857788220067943/1197568193313640509
 Lighter #general:  https://discord.com/channels/987399783985590322/1263245127674105877
 Lighter #trading:  https://discord.com/channels/987399783985590322/1343587329666711573
 # Navigate: browser action=act ... request={"kind":"evaluate","fn":"() => { window.location.href = '<URL>'; return 'navigating'; }"}
