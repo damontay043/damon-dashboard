@@ -214,7 +214,7 @@ BM25 is weak for conceptual queries. Use exact words bro would have used. Direct
 |------|----------|-------|---------|
 | aave-health-alert | Every 2m (6am-11pm) | Sonnet | Health factor monitoring, 3 wallets |
 | morning-briefing | 7:00 AM | Opus | Weather, AQI, headlines, calendar, markets, Discord, joke |
-| wallet-spy | 7am/1pm/7pm | Opus | 12 wallets (ETH+ARB+HL) |
+| wallet-spy | 1:15 PM | Opus | 12 wallets (ETH+ARB+HL) |
 | variational-funding-rates | 7:40am/3:40pm | Sonnet | ETC/ETH/SOL funding on Variational |
 | hourly-pulse | :45 past (6,10,14,18,20) | Opus | AQI, basis, funding, Aave, peg, FUD, gold, Discord |
 | defidojo-day | :20 past (6,10,14,18,21) | Opus | DeFi Dojo daytime intel |
