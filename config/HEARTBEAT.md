@@ -10,8 +10,10 @@ When you wake up on a heartbeat, run through this checklist. Only message bro if
    Scan `/tmp/cron-reports/` for unreleyed review-mode cron reports.
    - Read `memory/report-relay-state.json` for last relay timestamps
    - Run: `stat -c '%n %Y' /tmp/cron-reports/*.md 2>/dev/null` to get file modification times
-   - For each file: if file mtime > last relay timestamp (or null), the report is NEW and needs relaying
-   - For each new report, use TWO-MESSAGE FORMAT:
+   - For each file: if file mtime > last relay timestamp (or null), the report is POTENTIALLY new
+   - **⚠️ DEDUP CHECK:** Before relaying, check `cron action=list` — if the cron that produces this report has `lastRunStatus: "ok"` and its `lastRunAtMs` is within 5 min of the file mtime, the cron ALREADY self-sent. Update relay state to match file mtime and SKIP relay.
+   - Only relay if the cron failed to self-send (lastRunStatus != "ok" or lastDeliveryError set)
+   - For each report that genuinely needs relay, use TWO-MESSAGE FORMAT:
      1. Read the full report file
      2. **Message 1:** Send the FULL original report (adapted for WhatsApp — no markdown tables, use bullets). Include ALL data, ALL timeframes, ALL sections. If report contains `SCREENSHOT:` path, attach via `filePath` parameter.
      3. **If report contains `SCREENSHOT:` paths, send screenshots IMMEDIATELY after Message 1** — attach via `filePath` parameter with emoji-only caption. Do NOT wait for Message 2.

@@ -1,51 +1,59 @@
 # 📋 DASHBOARD — Task Tracker
 
-*Last updated: 2026-02-19 09:10 SGT*
+*Last updated: 2026-03-14 07:55 SGT*
 
 ---
 
 ## 🔴 ACTIVE (doing now)
-- **Config Compliance Fix** — Fixing 4 critical + 3 high + 5 medium issues found in full audit. TOOLS.md, HEARTBEAT.md, DASHBOARD.md, NOW.md, syncs. *(2026-02-19)*
+- **Momo Spot-Check Fixes** — Fixing F-grade items: DASHBOARD staleness (this update), backup cleanup ✅, message noise reduction. *(2026-03-14)*
+- **OpenClaw Version Re-Update** — Regressed from 2026.3.12 → 2026.2.17 during WhatsApp nuclear fix (Mar 13). Need to re-update. *(2026-03-13)*
 
 ---
 
 ## 🟡 IN PROGRESS (halfway done)
-- **PAXG Venue Redistribution** — Trio brainstorm consensus: move 150-200 PAXG from Lighter → HL via leapfrog Strategy A. Awaiting bro's go-ahead. *(2026-02-18)*
-- **Damon Audit with Momo** — Overdue since Feb 12 (7+ days). Need to schedule. *(2026-02-12)*
+- **Message Noise Reduction** — Momo spot-check: ~40% noise vs 15% target. Working on behavioral changes + silent work patterns. *(2026-03-14)*
+- **Multi-Timeframe P&L Baselines** — 7d/15d/31d from API working. Own data: 2 days recorded, 88 more for 90d historical. Auto-recording daily via daily-funding-report cron. *(2026-03-13)*
+- **Verification Hygiene** — Momo spot-check: good on code, poor on operational claims. Need to verify-before-claiming pattern. *(2026-03-14)*
 
 ---
 
 ## 👁️ OBSERVING (live, monitoring for issues)
-- **Cron Health (22 active)** — All green, zero consecutive errors. OpenClaw 2026.2.12. *(since 2026-02-08)*
-- **Aave Health Monitoring** — 3 wallets: 1-3 (dormant WBTC), 2-3 (120 XAUT, HF ~2.2), 3-3 (ETH+ARB). Every 2 min 6am-11pm. *(since 2026-02-06)*
-- **BTC Wrapped Peg** — WBTC/cbBTC via Paraswap + Binance. Alert on depeg >0.5%. *(since 2026-02-06)*
-- **Gold Token Spread** — PAXG (Binance) vs XAUT (Bybit). In hourly pulse. Current: +$26 (+0.53%). *(since 2026-02-18)*
-- **Mayer Multiple** — In morning briefing. Current: 0.664 (Deep Value 🟢🟢). *(since 2026-02-18)*
-- **Wallet Spy** — 12 wallets across ETH+ARB+HL. 3x daily (7am/1pm/7pm). *(since 2026-02-08)*
-- **DeFi Dojo Discord** — 3 channels: #dojo-chat (5x day + hourly overnight), #hedge-arb + #hl-and-frenemies (1x daily 4:20pm). *(since 2026-02-15)*
-- **Discord Sentiment (Paradex + Variational)** — Dual server monitoring in hourly pulse. *(since 2026-02-08)*
-- **Dashboard Auto-Sync** — Heartbeat pushes changes to GitHub Pages. ⚠️ CURRENTLY BROKEN (repo missing). *(since 2026-01-28)*
+- **Cron Health (20 enabled)** — 16 healthy, 4 with recent errors (deep-self-review, defidojo-daily-channels, defidojo-night, variational-funding-rates). *(since 2026-02-08)*
+- **Aave Health Monitoring** — 3 wallets. Every 15 min 6am-11pm. ETH 3-3 HF at 1.35 🟠. *(since 2026-02-06)*
+- **BTC Wrapped Peg** — WBTC/cbBTC monitoring. Alert on depeg >0.5%. *(since 2026-02-06)*
+- **Mayer Multiple** — In morning briefing. Current: 0.75 (Deep Value 🟢🟢). *(since 2026-02-18)*
+- **Wallet Spy** — 12 wallets across ETH+ARB+HL. 1x daily (1:15pm). *(since 2026-02-08)*
+- **DeFi Dojo Discord** — 3 channels: #dojo-chat (3x day + hourly overnight), #hedge-arb + #hl-and-frenemies (1x daily 4:20pm), #security-alerts (every 15min). *(since 2026-02-15)*
+- **Discord Sentiment (Paradex + Variational)** — Standalone cron 5x/day. *(since 2026-03-10)*
+- **Perp Collateral Health** — Every 15 min, all venues. Script-driven alerts. *(since 2026-03-01)*
+- **Funding Rate Alerts** — Hourly state transition detection (1d blended flip). *(since 2026-03-01)*
+- **Per-Instrument Regime Tracker** — BTC/ETH regime streaks with 90-day HL backfill. *(since 2026-03-10)*
+- **Lenovo ThinkPad P16 Price** — Daily 10:30am. Baseline SG$3,385 (38% off). *(since 2026-03-10)*
 
 ---
 
 ## 🔵 KIV (discussed, parked for later)
-- **App Building Project** — Brainstormed 8 ideas. Top: Funding Rate Dashboard (80/100), Health Newsletter (75/100). No follow-up.
+- **App Building Project** — Brainstormed 8 ideas. Top: Funding Rate Dashboard (80/100). No follow-up.
 - **ETH Activation** — On watchlist: activate when funding >5% APR 14d avg across 2+ venues AND Aave >2%.
 
 ---
 
 ## 🟠 BLOCKED ON BRO
-- **Headlines Source Config** — Which sections from CoinDesk/The Block/CNN/CNBC? Nagged multiple times.
-- **OpenClaw Update** — 2026.2.12 → 2026.2.17 available. Alerted 5+ times. No action.
-- **PAXG Redistribution Go-Ahead** — Trio consensus reached, need bro to confirm start.
-- **Twitter @realdamontay Appeal** — Account suspended. Appeal submitted by bro. Waiting on X.
-- **Variational Discord Tab** — Chrome relay tab consistently unresponsive. Need bro to reattach.
+- **GitHub PAT Expired** — Dashboard config sync to damontay043.github.io failing. Need fresh PAT with repo scope. *(since ~Mar 12)*
+- **OpenClaw Re-Update** — Regressed to 2026.2.17 during WhatsApp fix. Need bro's go-ahead to re-update to latest. *(2026-03-13)*
+- **ClawdStrike Security Fixes** — 3 items from Feb 20 audit still pending: mDNS broadcasting, no ufw firewall, plaintext secrets. *(2026-02-20)*
+- **Twitter @realdamontay Appeal** — Account suspended. Appeal submitted. Waiting on X. *(2026-02-13)*
+- **Aboutme Enrichment Questions** — Travel, origin story, content consumption still awaiting responses.
 
 ---
 
 ## ⏸️ PAUSED
-- **Paradex Liquidity Monitor** — Cron `05d98969` disabled. Bro withdrew funds from Paradex (Feb 16). Re-enable when funds return.
-- **Twitter Auto-Like** — Cron `twitter-auto-like` disabled. Account suspended (Feb 13).
+- **Paradex Liquidity Monitor** — Disabled. Bro withdrew funds from Paradex (Feb 16). Re-enable when funds return.
+- **Twitter Auto-Like** — Disabled. Account suspended (Feb 13).
+- **Morning Wellness Deep Analysis** — Cron disabled. *(since ~Mar 3 pitstop)*
+- **Aboutme Enrichment Cron** — Disabled. *(since ~Mar 3 pitstop)*
+- **Daily Calibration Interview** — Disabled. *(since ~Mar 3 pitstop)*
+- **Several Others** — afternoon-research, uv-index-and-stories, daily-business-idea, evening-funding-briefing, trello-q1-helper, nag-headline-inputs all disabled since Mar 3 pitstop.
 
 ---
 
@@ -55,45 +63,43 @@
 ---
 
 ## ✅ RECENTLY COMPLETED
-- **Config Compliance Audit** — Full audit of all core files. Found BOOTSTRAP.md still existing, DASHBOARD stale, syncs broken, TOOLS.md stale entries. Fixing now. *(2026-02-19)*
-- **Gold Token Spread Tracking** — Script + hourly-pulse integration. PAXG (Binance) vs XAUT (Bybit). *(2026-02-18)*
-- **Mayer Multiple Tracking** — Script + morning-briefing integration. Binance 200d klines. *(2026-02-18)*
-- **Trio Brainstorm: Forward Allocation** — PAXG redistribution consensus. *(2026-02-18)*
-- **Wellness Cron Time Shift** — Moved 7:30am → 6:30pm per bro. *(2026-02-18)*
-- **NYSE Trading Holidays** — 2026 + 2027 added to Google Calendar. *(2026-02-18)*
-- **Day-of-Week Verification Fix** — Mandatory `date -d` in DeFi Dojo crons. *(2026-02-18)*
-- **HL OI Top 10 Timeout Fix** — Standalone Node.js script. *(2026-02-17)*
-- **EF Root Cause Resolution** — speed × 100 / HR, column confusion identified + fixed. *(2026-02-17)*
-- **Systemic Cron Failure Fix** — Gateway restart resolved broken payload delivery. *(2026-02-17)*
-- **Confidence Scoring** — 1-100 scale added to all analysis crons. *(2026-02-17)*
-- **System Cron Decommission** — Linux crontab removed Feb 9 after 24h parallel run. *(2026-02-09)*
+- **260303 Backup Cleanup** — Moved 6 files (264KB) to archive-backups/. *(2026-03-14)*
+- **Discord Stale DOM Fix** — F5 reload → wait 8s → End → extract. Applied to ALL 5 Discord crons. *(2026-03-13)*
+- **Pulse Pre-Compute** — pulse-gather.sh parallelizes data fetch. Pulse 430s→130s. *(2026-03-10)*
+- **Morning Briefing Pre-Compute** — morning-briefing-gather.sh parallelizes 14 sources (~12.5s). *(2026-03-11)*
+- **Discord Sentiment Standalone Cron** — Carved out from pulse. 5x/day with screenshots. *(2026-03-10)*
+- **PAXG Full Exit** — Removed from ALL funding analysis. Gold MACRO data stays. *(2026-03-11)*
+- **Macro Catalyst Section** — Added permanently to morning-briefing, pulse, daily-funding. *(2026-03-11)*
+- **Discord Scan State Tracking** — Unified JSON for "NEW MESSAGES ONLY" filtering. *(2026-03-11)*
+- **WhatsApp Nuclear Fix** — 9-hour outage (Mar 13 15:00→00:00). Fresh QR rescan. *(2026-03-14)*
+- **Nightly Memory Consolidation** — Automated cron at 1:50am SGT. *(2026-03-07)*
+- **relay-qa.sh** — QA script for cron report relay. *(2026-03-02)*
+- **PAXG Full Exit** — Exited Feb 24. Redistribution discussions closed. *(2026-02-24)*
 
 ---
 
-## ⏰ CRON SCHEDULE (22 active)
+## ⏰ CRON SCHEDULE (20 enabled)
 | Cron | Schedule | What |
 |------|----------|------|
-| **aave-health-alert** | */2 6-23 * * * | Health factor check, 3 wallets |
-| **morning-briefing** | 0 7 * * * | Weather, AQI, News, Ratios, Mayer, DeFi Pulse, Joke |
-| **wallet-spy** | 0 7,13,19 * * * | 12-wallet forensic monitoring |
-| **variational-funding-rates** | 40 7,15 * * * | Variational majors + extreme outliers |
-| **hourly-pulse** | 45 6,10,14,18,20 * * * | Full market + health + sentiment dashboard |
-| **defidojo-day** | 20 6,10,14,18,21 * * * | DeFi Dojo #dojo-chat daytime |
-| **nag-headline-inputs** | 0 9,12,15,18,21 * * * | Nag for headline preferences |
-| **nag-undone-tasks** | 0 9,12,15,18,21 * * * | Blocked/forgotten task reminders |
-| **deep-self-review** | 0 0,9,12,15,18,21 * * * | Config compliance + MISS review |
-| **refresh-rules-nudge** | 0 10,14,18,22 * * * | Rules refresh (main session) |
-| **trello-q1-helper** | 0 13 * * * | Trello Q1 tasks |
-| **hl-oi-top10** | 0 14 * * * | Hyperliquid OI top 10 |
-| **afternoon-research** | 0 15 * * * | Deep-dive / Twitter trends |
-| **aboutme-enrichment** | 0 16 * * * | Interview question for aboutme |
-| **defidojo-daily-channels** | 20 16 * * * | #hedge-arb + #hl-and-frenemies |
-| **uv-index-and-stories** | 0 17 * * * | UV, story, evening focus |
-| **daily-business-idea** | 0 18 * * * | Solopreneur idea analysis |
-| **morning-wellness** | 30 18 * * * | Garmin + TP + Sheets health report |
-| **daily-calibration** | 0 19 * * * | Calibration interview |
-| **evening-funding** | 0 21 * * * | Detailed funding rates |
-| **defidojo-night** | 20 22-5 * * * | Overnight #dojo-chat (hourly) |
+| **aave-health-alert** | :03,:18,:33,:48 6-23 | Health factor, 3 wallets |
+| **perp-collateral-alert** | :08,:23,:38,:53 6-23 | Perp collateral deficits |
+| **security-alerts-monitor** | */15 6-23 | DeFi Dojo #security-alerts |
+| **funding-rate-alert** | :00 6-23 | 1d blended state transitions |
+| **defidojo-day** | :20 6,14,21 | #dojo-chat daytime |
+| **morning-briefing** | 7:00 | Full morning report |
+| **discord-sentiment** | :25 7,11,15,18,20 | Paradex + Variational sentiment |
+| **variational-funding-rates** | :40 7,15 | Majors + extreme outliers |
+| **hourly-pulse** | :45 6,10,14,18,20 | Full market dashboard |
+| **deep-self-review** | :00 0,9,12,15,18,21 | Config compliance + MISS |
+| **refresh-rules-nudge** | :00 10,14,18,22 | Rules refresh (main session) |
+| **lenovo-price-monitor** | 10:30 | ThinkPad P16 price check |
+| **wallet-spy** | 13:15 | 12-wallet forensic scan |
+| **hl-oi-top10** | 14:00 | Hyperliquid OI top 10 |
+| **daily-funding-report** | 14:30 | Strategy + P&L analysis |
+| **nag-undone-tasks** | 15:00 | Mega nag (blocked tasks) |
+| **defidojo-daily-channels** | 16:20 | #hedge-arb + #hl-and-frenemies |
+| **defidojo-night** | :20 22-5 | Overnight #dojo-chat |
+| **nightly-memory-consolidation** | 1:50 | Memory + bottleneck review |
 
 ---
 
@@ -106,3 +112,5 @@
 6. **Never use everyMs** — Always cron expressions. Delete + recreate if stuck.
 7. **Post-restart cron verification** — MANDATORY within 2 mins of any gateway restart.
 8. **Fix-one-audit-all** — After fixing any cron issue, check ALL other crons for same pattern.
+9. **Verify before claiming** — Never make temporal/operational claims without checking data first.
+10. **Silent work** — Work silently, send ONE summary at end. Reduce message noise.
