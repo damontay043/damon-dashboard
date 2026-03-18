@@ -5,7 +5,7 @@
 ## Just Completed
 - ✅ daily-funding-report PASSED 540s timeout test (39s! Error cleared, delivered)
 - ✅ Lunch with Yaozu reminder fired 8 AM
-- ✅ All 3 self-reviews today (00:00, 09:00, 12:00) clean — 0 MISSes
+- ✅ 6 self-reviews today (00:00-21:00) — 0 new MISSes
 
 ## Current State
 - **OpenClaw:** 2026.2.17 (REGRESSED — DO NOT self-upgrade per SOP-DAMON-RECOVERY.md)
@@ -13,6 +13,7 @@
 - **WhatsApp delivery:** Still intermittent (~50%). Reports saved to /tmp/cron-reports/.
 - **Cron health:** 20 enabled + 1 one-shot (haircut-reminder Mar 31)
   - ⚠️ wallet-spy: 1 consecutive error (timed out 425s > 420s). NEEDS BUMP 420→540s.
+  - ⚠️ defidojo-daily-channels: timed out at 300s limit. Report NOT delivered. NEEDS BUMP 300→420s.
   - All others: 0 consecutive errors
 - **Aave:** All wallets healthy
 - **BTC funding:** Shorts paying (BTC/PX -0.17% 1d)
@@ -24,6 +25,7 @@
 
 ## Needs Action (Damon)
 - **wallet-spy timeout bump 420→540s** — timed out today at 425s
+- **defidojo-daily-channels timeout bump 300→420s** — timed out today at 300s limit
 
 ## Open Commitments
 - REM-002: model upgrade pre-flight script (OVERDUE)
