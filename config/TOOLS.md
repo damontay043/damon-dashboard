@@ -111,6 +111,26 @@ Mark/Index prices: WebSocket only (`wss://mainnet.zklighter.elliot.ai/stream`). 
 
 ---
 
+## HL HIP-3 Positions API
+
+Standard `clearinghouseState` returns ONLY main dex positions. For HIP-3 positions, pass `"dex":"<name>"` param.
+- **List dexes:** POST `/info` body `{"type":"perpDexs"}` → array of dex names
+- **Get positions:** POST `/info` body `{"type":"clearinghouseState","user":"0x...","dex":"xyz"}`
+- **Known dexes:** xyz, flx, vntl, hyna, km, abcd, cash (7 total)
+- Wallet-spy scans all 7 per wallet with parallel fetch + cached dex list.
+
+---
+
+## Ostium API ✅ WORKING
+
+**Subgraph URL:** `https://api.subgraph.ormilabs.com/api/public/67a599d5-c8d2-4cc4-9c4d-2975a97bc5d8/subgraphs/ost-prod/live/gn`
+**No auth required.** GraphQL. Python SDK: `ostium-python-sdk` v3.1.0 installed.
+
+Key fields: `trader`, `isOpen`, `pair{from,to}`, `openPrice` (18 decimals), `collateral` (6 decimals USDC), `notional` (6 decimals), `leverage` (2 decimals), `isBuy`.
+Integrated into wallet-spy with parallel fetch.
+
+---
+
 ## Variational API ✅ WORKING
 
 **Base URL:** `https://omni-client-api.prod.ap-northeast-1.variational.io`

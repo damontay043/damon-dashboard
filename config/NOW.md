@@ -1,29 +1,28 @@
 # NOW.md — What Am I Doing?
-*Updated: 2026-03-13 01:55 SGT*
+
+*Updated: 2026-03-17 03:50 SGT*
 
 ## Just Completed
-- Nightly memory consolidation (Mar 13 1:50am) — MEMORY.md updated, Feb 28 archived
-- security-alerts-monitor escalation logged (8 consecutive timeouts)
-- TOOLS.md cron table drift identified (needs full refresh)
+- ✅ aave-3-3-unmute one-shot fired + auto-deleted (9 PM Mar 16)
+- ✅ Wallet-spy: HIP-3 (7 dexes) + Ostium integration deployed (Mar 16)
+- ✅ Perp collateral buffer 15%→20%, false RECOVERED alert fix (Mar 16)
 
-## In Progress
-- Nothing active (overnight)
+## Current State
+- **OpenClaw:** 2026.2.17 (REGRESSED — DO NOT self-upgrade per SOP-DAMON-RECOVERY.md)
+- **WhatsApp delivery:** ~23% success rate Mon (3 delivered / ~13 failed). 4th consecutive day intermittent.
+- **Cron health:** 19 enabled, 0 consecutive errors ✅ (funding-rate-alert had 1 transient timeout 11 PM — should self-clear 6 AM)
+- **Aave:** ETH 3-3 back to default thresholds (unmute confirmed)
+- **BTC funding:** All venues green for first time in 7+ days
+- **Net P&L:** $145/day (improving but still -$223 vs baseline)
 
-## Next Up (awaiting bro's go-ahead)
-1. Fix pulse output size (trim crypto-24hr JSON, currently 1.5MB of 1.8MB file)
-2. Fix discord-sentiment cron (3 consecutive timeouts — 443s > 420s limit)
-3. Daily-funding pre-compute as preventive measure
-4. Re-enable wellness cron with pre-compute
-5. TOOLS.md cron table full refresh (severely outdated)
-6. Fix security-alerts-monitor timeout (60s → 120-180s)
+## Blocked On Bro
+- GitHub PAT (dashboard sync broken)
+- OpenClaw re-update (ADQ protocol)
+- ClawdStrike security fixes (3 items)
+- Google OAuth tokens expired (Sheets + Calendar)
 
-## Blockers
-- GitHub PAT expired — dashboard sync failing
-- morning-wellness-deep-analysis cron missing from system
-- Discord-sentiment cron broken (3 consecutive timeouts)
-
-## Context
-- Today: Fri 13 Mar 2026
-- **Momo spot-check scheduled for tomorrow (Mar 14)** — from audit remediation
-- BTC ~$69.9K, ETH ~$2,035 — funding severely negative
-- OpenClaw 2026.3.8 installed, 2026.3.11 latest (already researched)
+## Open Commitments
+- REM-002: model upgrade pre-flight script (OVERDUE)
+- REM-003: announce fallback detection (SUPERSEDED by direct sends)
+- REM-004: sibling sweep script (OVERDUE — may be superseded)
+- REM-008: commitment tracker in daily review (DUE)
