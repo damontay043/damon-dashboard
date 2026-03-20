@@ -17,7 +17,6 @@
 - **Aave:** All wallets healthy
 
 ## Blocked On Bro
-- GitHub PAT (dashboard sync broken)
 - OpenClaw re-update (ADQ protocol)
 - ClawdStrike security fixes (3 items)
 
