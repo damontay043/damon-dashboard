@@ -1,138 +1,98 @@
 # MEMORY.md — Long-Term Memory
 
-*Last updated: 2026-02-04*
+*Last updated: 2026-03-20 09:50*
+*Older entries archived to: MEMORY-archive.md*
 
-## Recent Updates (2026-02-05, morning)
-- **QMD memory search FIXED and working as primary** — wrapper script at `/home/pujing/qmd-wrapper.sh` redirects heavy `qmd query` → fast `qmd search` (BM25). 0.25s, fully local, zero API cost. Tradeoff: keyword-only, no semantic matching. If BM25 returns nothing, retry with different keywords before giving up. Last resort: `qmd vsearch` (local vectors, 12s) for semantic matching.
-- **BTC/S&P 500 ratio added to morning briefing** — Yahoo Finance API for S&P 500 prev close. Ratio = BTC ÷ SPX.
-- **Discord monitoring back to Paradex (again)** — hourly-pulse cron updated.
-- **Self-review cron gated to active hours** — runs 12am, 9am, 12pm, 3pm, 6pm, 9pm SGT (was every 3hrs 24/7).
-- **3 crons upgraded to Opus + thinking high:** trello-q1-helper, evening-funding-briefing, deep-self-review.
-- **New rule: "Signal before going dark"** — always tell bro before tasks >30s or restarts. Don't go silent.
+## Recent Updates (2026-03-20)
+- **variational-funding-rates timeout FIXED** — Timed out at 7:40 AM (128s/120s). Bumped 120→180s. Testing 3:40 PM.
+- **Clean day** — 0 new MISSes across 3 self-reviews (09:00-15:00). All crons delivering. wallet-spy + daily-funding both delivered ✅.
 
-## Previous Updates (2026-02-04, evening)
-- **Discord monitoring back to Paradex (2026-02-05)** — bro flip-flopped from Lighter back to Paradex. Hourly pulse cron updated. Paradex #general is the monitored channel again.
-- **DeFi Pulse script built** — `scripts/defi-pulse/defi-pulse.js`, 5 metrics from DefiLlama (free), added to morning briefing cron as item #7 (7d/30d/90d trends)
-- **QMD memory backend enabled** — `memory.backend = "qmd"` in openclaw.json. QMD binary at `/home/pujing/.bun/bin/qmd`. 4 collections created. Needs 1.28GB GGUF model download to complete. OpenAI embedding fallback working in the meantime.
-- **Bro's daily routine captured** — added "Typical Day" section to aboutme_redacted.md. Wake 6-7am, HRV→weigh-in→markets→training, focus work after lunch, recovery (meditation, body scan, walks with wife) before dinner ~7pm.
-- **Learned rule added:** WSL2 = direct file access. `/mnt/c/` is ALWAYS accessible, never say "can't access because node offline" for local Windows filesystem files.
-- **Daily biz ideas:** Bro says keep ideas unrestricted, no shoehorning toward low-friction only
-- **HYPE dropped 10% in 24h** (flagged to bro), CC -8.5%
-- **Lighter Discord context:** S3 teaser confirmed by Watermelon (Lighter Daily). LIT token bleeding from $3, community frustrated but no panic. LLP as collateral coming "in 1 week more or less" per Robin4r.
+## Recent Updates (2026-03-19)
+- **FOMC result** — Fed held rates at 3.5-3.75%, 11-1 vote. No rate change as expected. Iran war dominating geopolitical backdrop.
+- **nanny-birthday-video-reminder** — Fired 8 AM ✅, auto-deleted. Birthday dinner at Garibaldi 7 PM tonight.
+- **Upcoming events** — HSBC Gang dinner Mon 23 Mar 7 PM, Guoxiang birthday Tue 24 Mar.
+- **Both timeout tests PASSED** — wallet-spy 195s/540s ✅, defidojo-daily-channels 259s/420s ✅. All 18+ crons at 0 consecutive errors.
+- **Best operational day** — 0 MISSes across 6 self-reviews (09:00-21:00). No bro corrections.
+- **Chrome relay instability** — CDP WebSocket goes stale after 1-2hrs, tabs show but "tab not found" on interact. Bro restarted Chrome 3x. OpenClaw 2026.3.13 has browser session lifecycle fix for this.
+- **OpenClaw 2026.3.13 update research done** — Key fixes: browser session lifecycle (relay issue), cron deadlock prevention, memory regression, compaction persona preservation. 80/100 confidence. Awaiting bro's approval.
+- **BTC funding flipped NEGATIVE** — HL BTC -13.22% instantaneous at 6:45 PM after 4-day positive run. Net P&L dropped +$335→-$63/day. BTC confirmed drag.
+- **KAT blacklisted** — +119% spike, bro said "BL kat".
+- **Cron snapshot exported** — Full 22-job list to `clawdbot-shared/vps-config/CRON-SNAPSHOT-260319.md` for Momo.
 
-## Previous Updates (2026-02-04, morning)
-- **Morning Wellness Pipeline fully operational** — 3 data sources verified + documented
-  - Garmin ✅ (garminconnect Python lib, auto-refresh)
-  - TrainingPeaks PMC ✅ (cookie-based auth, fetch-pmc.sh auto-retries on 401)
-  - Google Sheets ✅ (gsheets-token.sh auto-refreshes before API calls)
-- Created comprehensive pipeline doc: `scripts/MORNING-WELLNESS-PIPELINE.md`
-- Created `gsheets-token.sh` auto-refresh script (caught 401 during pre-flight — would've broken 7:30 AM cron)
-- Updated wellness cron to use token refresh before Sheets API calls
-- TOOLS.md updated: added Garmin + Google Sheets sections, updated cron list + superpowers table
-- **Two Google token files exist — don't confuse:**
-  - `google-calendar-token.json` = calendar scope only
-  - `google-token.json` = calendar + spreadsheets.readonly scopes
+## Recent Updates (2026-03-18)
+- **Position update confirmed** — Bro's current positions: SHORT BTC (HL, Lighter), SHORT ETH (HL, Paradex). NO GMX ETH. NO Lighter ETH. All crons updated with 📍/📎 tagging system.
+- **Google OAuth fixed** — Both Calendar + Sheets tokens refreshed Mar 17 3:36 PM. Wellness cron, calendar checks, haircut reminders all unblocked.
+- **Lunch with Yaozu** — Wed Mar 18 12pm, Fun Toast Woodleigh Mall. coffee-teck-reminder fired 8 AM ✅.
+- **daily-funding-report PASSED** — 39s with 540s timeout ✅. Massive improvement (was 437s).
+- **wallet-spy timeout bumped 420→540s** — Timed out at 425s. Bump applied. Testing Mar 19 1:15 PM.
+- **defidojo-daily-channels timeout bumped 300→420s** — Timed out at 300s limit. Bump applied. Testing Mar 19 4:20 PM.
+- **Clean day** — 7 self-reviews (00:00-00:00), 0 new MISSes. No bro corrections.
 
-## Previous Updates (2026-02-02)
-- Heartbeat model set to **Codex** (Sonnet not configured on this box). Active hours 06:00–23:00 SGT.
-- Deep self-review moved to dedicated cron (Opus every 3h).
-- New cron: **aboutme-enrichment** (4pm daily).
-- Pulse runs daytime only (6am–10pm SGT at :45) to save cost.
-- Discord screenshot calibration: **Chrome zoom 100%** best readability.
+## Recent Updates (2026-03-17)
+- **WhatsApp overnight instability** — Critical perp collateral alert queued ~45min during disconnects (00:55-06:50).
+- **Google Calendar tokens fixed** — Both refreshed Mar 17 3:36 PM ✅.
+- **Mayer Multiple 0.797** — Deep Value territory (20.4% below 200d SMA). BTC $74,680.
+- **Cron timeouts bumped** — daily-funding 420→540s (PASSED Mar 18 ✅), wallet-spy 300→420s→540s, deep-self-review 300→420s ✅.
+- **WA delivery** — ~50% success rate (up from 23% Mar 16). Still intermittent.
 
-## Browser Relay Verified Working (2026-01-31)
-- Chrome Relay fully operational on home PC setup
-- Discord monitoring via peterpoon account confirmed working
-- Method: `browser action=tabs` → get targetId → `action=act` (End/PageUp) → `action=screenshot`
-- End key works for scrolling to latest messages
-- PageUp works for getting more context
-- If "no tab connected" → bro needs to click extension icon on Discord tab to reattach
+## Recent Updates (2026-03-16)
+- **Wallet-spy HIP-3 integration deployed** — Scans all 7 HIP-3 dexes (xyz, flx, vntl, hyna, km, abcd, cash) per wallet. HL API: pass `"dex":"<name>"` to `clearinghouseState`. `perpDexs` endpoint lists available dexes. fab3+96e4 positions discovered.
+- **Wallet-spy Ostium integration deployed** — Public subgraph at `api.subgraph.ormilabs.com`, no auth. fab3: 7x SHORT CL/USD $5.75M on Ostium (bro says delta-neutral with long oil elsewhere).
+- **Perp collateral buffer raised 15% → 20%** — Bro's request via alert response.
+- **Aave ETH 3-3 muted till 9pm + false RECOVERED alert fix** — Added muteUntil check to suppress recovery msgs during mute period. One-shot unmute cron at 9 PM.
+- **BTC funding flipped green across ALL venues** — First time in 7+ days. Lighter diverging (deeply negative on BTC+ETH).
+- **WhatsApp delivery ~23% success rate** — 3 delivered out of ~13 attempts. Worst day yet. 3rd consecutive day intermittent.
 
-## Timezone Fix (2026-01-31)
-- Was sometimes using UTC instead of Singapore time
-- Fixed by adding to openclaw.json:
-  - `agents.defaults.userTimezone: "Asia/Singapore"`
-  - `agents.defaults.envelopeTimezone: "Asia/Singapore"`
-- System timezone already correct (`/etc/timezone` = Asia/Singapore)
+## Recent Updates (2026-03-14/15)
+- **Momo spot-check results (Mar 14)** — Mixed: 2A, 3B/C, 3F. Immediate fixes applied.
+- **Memory-consolidation rescheduled 4x/day (Mar 15)** — Runs at 03:50, 09:50, 15:50, 21:50 SGT.
+- **OpenClaw 2026.3.13 released (Mar 14)** — Researched + bro alerted. Awaiting update (still on 2026.2.17).
 
-## Infrastructure Migration (2026-01-31)
-- **Moved from Hetzner VPS to home PC** (DESKTOP-HT67ISQ)
-- Running on WSL2 Ubuntu 24.04, systemd auto-starts OpenClaw
-- Direct access to `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/` — no more node exec needed!
-- Same WhatsApp number, same personality files
-- Browser Relay coming soon (not yet configured)
+## Key Lessons (Added from 2026-03-01/02)
+- **Cron relay format LOCKED IN — TWO-MESSAGE mandatory** — All review-mode cron reports: (1) Full original report, no condensing. (2) Separate "Damon's Take" with contextual analysis. Bro confirmed nag persistence: keep nagging on schedule, don't self-censor.
+- **Review-mode delivery architecture** — Removing a delivery mechanism without replacing its function is worse than keeping it broken. Multiple delivery paths prevent single points of failure.
+- **Verification theater pattern** — Four consecutive reviews claimed fields existed when missing. Always verify actual data, never assume success without confirmation.
+- **Calendar API error handling** — Never report "clear" when API fails. Always flag errors explicitly: "⚠️ Calendar check FAILED" vs fabricating "clear week ahead" when there were 5 events.
+
+---
 
 ## About Bro
-- Reads aboutme_redacted.md on Scarlet2023 node for deep context
-- Prefers aqicn.org over NEA for air quality (US EPA AQI standard, stricter)
-- Uses Wispr Flow dictation — expect phonetic typos ("zhai" vs "zai", "CloudMD" vs "CLAUDE.md")
+- **Tier 1 files:** `aboutme-core.md` (condensed profile) + `aboutme-archive.md` (full details) + `wisdom.md` in clawdbot-shared/
+- Prefers aqicn.org over NEA for air quality (US EPA AQI standard)
+- Uses Wispr Flow dictation — expect phonetic typos
 - Calls me "zai" (capable) — appreciates competence over politeness
+- Gaming policy: only "polytopia-like" games (short sessions, no fixed time commitment)
 
 ## Setup & Config
-- **TTS:** Edge TTS configured, voice = en-SG-WayneNeural (Singapore male, free). Bro picked this over American/British options
-- **STT:** Pending — bro signing up for Groq API key (free tier). Python Whisper too heavy for VPS (3.7GB RAM)
-- **Morning briefing cron:** 7am SGT daily — 10 items:
-  1. Weather 2. AQI (3 regions) 3. Calendar 4. News 5. Market Ratios 6. Crypto overnight 7. Discord overnight 8. Workspace changes 9. Vault nudge 10. Joke
-- **Market Ratios details:**
-  - BTC price: `https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT`
-  - Gold price: `https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT`
-  - BTC/Gold ratio = BTC ÷ Gold (oz of gold per BTC)
-  - Gold/AISC ratio = Gold ÷ $1,550 (hardcoded AISC). Staleness reminder after Feb 11 2026
-  - Sanity checks: BTC $50K-200K, Gold $2.5K-6K
-- **Cron timeout:** 300s for morning briefing (extra API calls)
+- **TTS:** Edge TTS, voice = en-SG-WayneNeural (Singapore male, free)
+- **STT:** Groq Whisper (WhatsApp voice notes)
+- **Morning briefing:** 7am SGT daily — Weather, AQI, Calendar, News, Market Ratios, Crypto overnight, Discord, Workspace changes, Vault nudge, Joke
+- **Market Ratios:** BTC/Gold ratio, Gold/AISC ratio ($1,550 hardcoded). Sanity checks: BTC $50K-200K, Gold $2.5K-6K
 - **Heartbeat:** Active hours 6am–11pm SGT (model = Codex)
-- **Node:** Scarlet2023 (bro's home PC via WSL2) — has aboutme file and shared vault
-
-## Bro's Interests (from conversations)
-- Interested in building apps to make money — brainstormed 8 ideas
-- Top picks: Funding Rate Dashboard (#1, 80/100) and Health Newsletter (#2, 75/100)
-- Hasn't picked one to pursue yet — waiting for his response
 
 ## The Team — Two Agents, One Lord
-- **Damon (me)** = Guan Yu at the frontier. 24/7 WhatsApp, always-on, proactive. Limited access by design (unsupervised = small blast radius)
-- **Momo** = Zhuge Liang in the tent. Claude Code running locally on bro's PC (Scarlet2023). Summoned for heavy lifting — coding, analysis, spreadsheets, deep dives
-- **Momo has full access:** Trello, Gmail, Google Sheets, full vault. I don't — intentional security boundary
-- **"Momo said X"** = bro relaying from the other agent
-- **Chatlogs:** DISCONTINUED (2026-01-28) — Momo now pulls conversations directly from WhatsApp MCP during /pitstop. No action needed from me.
-- **Don't lose Jingzhou** = don't overreach, stay in lane, coordinate. Guan Yu's lesson.
+- **Damon (me)** = Guan Yu at the frontier. 24/7 WhatsApp, always-on, proactive
+- **Momo** = Zhuge Liang in the tent. Claude Code on bro's PC. Full MCP access (Trello, Gmail, Sheets)
+- **Don't lose Jingzhou** = don't overreach, stay in lane, coordinate
 
 ## Platform Notes
-- Moltbot rebranded from Clawdbot on 2026-01-27 (Anthropic trademark)
 - WhatsApp is primary comms channel
-- No email, calendar, or social integrations yet (Momo handles Gmail/Sheets for now)
+- Google Calendar write access, Sheets read access, Gmail IMAP read access
+- Twitter read access via Bird CLI (@realdamontay). No posting.
 
-## Lessons Learned (Recent: 2026-01-30)
-- **Discord scroll fix:** End/Ctrl+End doesn't work in Discord's virtualized message list. Use PageDown x5-10 to scroll to latest messages.
-- **Browser relay tab bug:** `browser action=open` creates NEW tab without relay attached. Always use `action=tabs` first to find existing attached tab, then use its `targetId` for snapshots. Never open new tabs for Discord monitoring!
-- **30-min pulse cron** now includes: AQI (3 regions), BTC Basis (HL + Paradex), Funding Rates (HL + Paradex), Discord Sentiment
-- **Funding rate spread** between HL and Paradex can be significant (saw ~20% APR delta) — useful arb signal for bro
-- **Memory maintenance cron** added: Mon/Thu 2pm SGT, auto-updates MEMORY.md + syncs config to GitHub + sends bro .txt file
-
-## Lessons Learned (Older)
-- data.gov.sg PSI API works but bro doesn't trust NEA numbers
-- Demo token on waqi.info API returns Shanghai data (useless), just scrape aqicn.org directly
-- VPS too small for PyTorch/Python Whisper — always check resources before heavy installs
-- **Don't lose Jingzhou!** Always check what Momo has already built before proposing new approaches
-- Datacenter IP (Hetzner) = instant bot detection on Discord/social platforms. Residential IP only.
-- Headless Chrome leaves fingerprints (webdriver flag, no audio devices). Not viable for bot-detecting platforms.
-- Don't contaminate damontay043@gmail.com with risky activities (Discord bots etc.)
-- Momo has **peterpoon** Discord account with Paradex access + extraction scripts already built
-- For Discord sentiment monitoring: defer to Momo's setup on bro's PC, don't duplicate on VPS
-- **Browser Relay pipeline working!** Chrome (Windows) → Relay (18791/18792) → Tailscale Serve → VPS Gateway → Damon
-- controlUrl: https://scarlet2023.taile92d1e.ts.net/
-- Use `profile="chrome"` to access bro's Chrome tabs
-- Requires: Chrome open with extension ON + browser serve running (auto-starts via VBS) + Tailscale serve (backgrounded) + WSL2 node
-- After PC reboot: only manual step is open Chrome Relay profile → go to Discord → click extension icon. Everything else auto-starts.
-- Sentiment scoring: mood 30%, team responsiveness 25%, FUD intensity 20%, activity 15%, topic quality 10%. Alert if <40 or drop >15pts or exploit/hack/rug keywords
-- **Discord monitoring shifted Paradex → Lighter (2026-02-04) → back to Paradex (2026-02-05)** — bro flip-flopped, now back on Paradex
-- Lighter Discord channels: #general, #feedback, #ticker-requests, #community-content, #general-info, #system-upgrades
-- Old: Paradex Discord channels: #general, #announcements, #network-upgrades, #trading-guild, #wen-tge, #developers, #feedback
-- Node exec via `nodes run` needs approval — can't freely write files to Scarlet2023 yet
-- GitHub Pages legacy build = simpler than workflow build for static HTML (no Actions workflow needed)
+## Key Lessons (Stable)
+- Browser Relay: Use `profile="chrome"`. Use `action=tabs` first, never `action=open` for monitoring
+- Discord scroll: PageDown x5-10 (End key doesn't work in virtualized list)
+- Cron delivery: Always use explicit `message` tool calls, don't rely on `announce`
+- WSL2 = direct file access via `/mnt/c/`. Always accessible.
+- Signal before going dark: always tell bro before tasks >30s or restarts
 
 ## Infrastructure
-- **GitHub**: damontay043 account, PAT with repo scope. Dashboard at damontay043.github.io/damon-dashboard/
-- **Gmail IMAP**: damontay043@gmail.com with app password (for email checking)
-- **Brave Search**: API key configured in gateway
-- **Dashboard system**: DASHBOARD.md → dashboard.html → GitHub Pages (heartbeat auto-sync)
-- **Git repo clone**: /tmp/damon-dashboard (may not persist across reboots — re-clone if needed)
+- **Platform:** WSL2 Ubuntu 24.04 on home PC (DESKTOP-HT67ISQ). OpenClaw 2026.2.17 (REGRESSED from 2026.3.12 — needs re-update)
+- **GitHub**: damontay043 account. Dashboard at damontay043.github.io/damon-dashboard/
+- **Gmail IMAP**: damontay043@gmail.com with app password
+- **Direct file access**: `/mnt/c/Users/pujing/OneDrive/clawdbot-shared/`
+- **Morning briefing pre-compute**: `scripts/morning-briefing/morning-briefing-gather.sh` parallelizes 14 sources (~12.5s)
+- **Discord scan state**: Unified JSON at `memory/discord-scan-state.json` for 5 channels ("NEW MESSAGES ONLY" filtering)
+- **PAXG**: Removed from ALL funding analysis (bro's decision). Gold MACRO data stays in morning briefing.
+- **Macro Catalyst**: Added permanently to morning-briefing, hourly-pulse, daily-funding-report
