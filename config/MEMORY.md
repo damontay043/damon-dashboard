@@ -1,11 +1,16 @@
 # MEMORY.md — Long-Term Memory
 
-*Last updated: 2026-03-20 09:50*
+*Last updated: 2026-03-20 21:50*
 *Older entries archived to: MEMORY-archive.md*
 
 ## Recent Updates (2026-03-20)
-- **variational-funding-rates timeout FIXED** — Timed out at 7:40 AM (128s/120s). Bumped 120→180s. Testing 3:40 PM.
-- **Clean day** — 0 new MISSes across 3 self-reviews (09:00-15:00). All crons delivering. wallet-spy + daily-funding both delivered ✅.
+- **variational-funding-rates CONFIRMED** — Bumped 120→180s, ran 3:40 PM in 93s ✅. consecutiveErrors=0.
+- **nag-undone-tasks timeout** — Timed out at 3:00 PM (180s). Bumped 180→240s. Next test tomorrow 3 PM.
+- **Momo audit 49/100** — Down from 51. Housekeeping/noise issues, not output quality.
+- **Session cleanup** — 501MB → 26MB (95% reduction). `cron.sessionRetention: "1h"` configured. Gateway SIGUSR1 restart, all 22 crons verified.
+- **Morning briefing enriched** — Google Trends SG added (RSS feed). Discord-sentiment updated with deposit/withdrawal highlights.
+- **defidojo-daily-channels close to wire** — 393s/420s (93.6%). Monitor for timeout bump.
+- **Clean day** — 0 new MISSes across 5 self-reviews (09:00-21:00). Best operational day continues from Mar 19.
 
 ## Recent Updates (2026-03-19)
 - **FOMC result** — Fed held rates at 3.5-3.75%, 11-1 vote. No rate change as expected. Iran war dominating geopolitical backdrop.
