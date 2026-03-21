@@ -8,6 +8,7 @@
 - **Communication style:** Singlish/colloquial EDMW lingo. Loves analogies to gaming (RTK, Diablo, XCOM), soccer, Romance of Three Kingdoms, Water Margin. Appreciates numerical worked examples and 1-100 ratings. Uses footnotes for jargon.
 - **Date format:** YYMMDD (e.g., 260127 = 27 Jan 2026)
 - **Input method:** Often uses Wispr Flow dictation — expect phonetic typos (e.g., "CloudMD" = "CLAUDE.md"). Interpret intent over literal text. Typo corrections often appear at the end of messages rather than inline.
+- **Calendar reminders:** Always set THREE reminders: (1) 1 day before, (2) 8 AM on the day of the event, (3) 2 hours before. Calculate 8 AM reminder as minutes before event start (e.g., 4:30 PM event = 510 min).
 - **Non-technical UX:** Prefer clear, step-by-step instructions with copy‑pasteable commands and confirmation checks. Avoid overly clever one‑liners; explain what to expect after each command.
 - **Report style:** Prefers lengthier reports with color, context, and nuance over brevity. Don't sacrifice nuance for terseness. Loves detail — lean into "why" and "so what" behind numbers, not just raw data. (Calibrated 2026-02-05)
 - **Info delivery:** Front-load the verdict/conclusion FIRST, then explain the reasoning/context after. Like a newspaper headline → article. Don't build up — drop the punchline first. (Calibrated 2026-02-11)
