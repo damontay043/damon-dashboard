@@ -1,10 +1,10 @@
 # NOW.md — What Am I Doing?
 
-*Updated: 2026-03-22 03:50 SGT*
+*Updated: 2026-03-22 09:50 SGT*
 
 ## Just Completed
-- ✅ 🆕 Position change: SHORT BTC Variational ADDED (detected midnight review). BTC now: HL📍 LI📍 VAR📍.
-- ✅ Saturday 7/7 reviews clean. 14+ consecutive clean reviews (Mar 20-22).
+- ✅ Discord extraction fix deployed — username misattribution + DOM dedup. 5 crons updated. Codex 0.116.0.
+- ✅ Weather fallback (Open-Meteo) added to morning briefing.
 - ✅ ALL 21 crons at 0 consecutive errors — full health
 
 ## Current State
